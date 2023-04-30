@@ -1,10 +1,10 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { WelcomePage } from './pages/WelcomePage/WelcomePage';
-import { FormPage } from './pages/FormPage/FormPage';
-import { PlaygroundPage } from './pages/PlaygroundPage/PlaygroundPage';
-import { ErrorPage } from './pages/ErrorPage/ErrorPage';
+import { WelcomePage } from './pages/WelcomePage';
+import { FormPage } from './pages/FormPage';
+import { PlaygroundPage } from './pages/PlaygroundPage';
+import { ErrorPage } from './pages/ErrorPage';
 
 export const App = () => (
   <Routes>
