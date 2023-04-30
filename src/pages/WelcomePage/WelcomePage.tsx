@@ -1,9 +1,15 @@
-import { Header } from '../../components/Header';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-export const WelcomePage = () => (
-  <>
-    <Header />
-    <h1>Welcome!</h1>
-  </>
-);
+import { Header } from '../../components/Header';
+
+export const WelcomePage = () => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Header />
+      <h1>{t('greeting')}</h1>
+    </>
+  );
+};
