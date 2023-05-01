@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { WelcomePage } from './pages/WelcomePage';
 import { FormPage } from './pages/FormPage';
@@ -11,7 +11,6 @@ export const App = () => (
     <Route path="/" element={<WelcomePage />} />
     <Route path="/form" element={<FormPage />} />
     <Route path="/playground" element={<PlaygroundPage />} />
-    <Route path="/404" element={<ErrorPage />} />
-    <Route path="*" element={<Navigate to="/404" replace />} />
+    <Route path="*" element={<ErrorPage />} />
   </Routes>
 );
