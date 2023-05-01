@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import { singUp, singIn } from '../firebase';
+import { auth, singUp, singIn } from '../firebase';
 
 const FormWrapper = styled.form`
   display: flex;
@@ -29,19 +30,22 @@ interface FormProps {
 
 export const Form = ({ mode }: FormProps) => {
   const { t } = useTranslation();
-
   const { register, handleSubmit, reset } = useForm();
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     reset();
     if (mode === 'register') {
-      console.log(data);
       singUp(data.email, data.password);
     } else {
-      console.log(data);
       singIn(data.email, data.password);
     }
   };
+
+  useEffect(() => {
+    if (user) navigate('/playground');
+  }, [user, navigate]);
 
   return (
     <FormWrapper onSubmit={handleSubmit(onSubmit)}>
