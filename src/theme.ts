@@ -6,6 +6,9 @@ const theme = {
     bgBlue: '#172b3a',
     bgDarkBlue: '#0f202d',
     textGrey: '#ffffff99',
+    bgPlayBtn: '#b9bfc4',
+    bgPlayBtnHover: '#c3c9ce',
+    textInactive: '#555e66',
   },
 };
 
