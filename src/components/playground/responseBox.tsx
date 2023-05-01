@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
+import { useTranslation } from 'react-i18next';
 
 const Container = styled.section`
   display: flex;
@@ -32,10 +33,11 @@ const StartMessage = styled.div`
   transform: translate(-50%, -50%);
 `;
 export const ResponseBox = () => {
+  const { t } = useTranslation();
   return (
     <Container>
       <ResponseSection>
-        <StartMessage>Hit the Play Button to get a response here</StartMessage>
+        <StartMessage>{t('playgroundMsg')}</StartMessage>
       </ResponseSection>
     </Container>
   );

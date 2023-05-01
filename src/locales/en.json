@@ -1,3 +1,4 @@
 {
-  "greeting": "Welcome!"
+  "greeting": "Welcome!",
+  "playgroundMsg": "Hit the Play Button to get a response here"
 }
