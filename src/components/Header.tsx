@@ -22,7 +22,8 @@ const NavLink = styled(Link)`
 export const Header = () => (
   <HeaderContainer>
     <NavLink to="/">Home</NavLink>
-    <NavLink to="/form">Form</NavLink>
+    <NavLink to="/login">Sign In</NavLink>
+    <NavLink to="/register">Sign Up</NavLink>
     <NavLink to="/playground">Playground</NavLink>
   </HeaderContainer>
 );

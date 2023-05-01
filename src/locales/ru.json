@@ -1,3 +1,5 @@
 {
-  "greeting": "Привет"
+  "greeting": "Привет",
+  "formHeaderRegister": "Регистрация в GraphiQL",
+  "formHeaderLogin": "Вход в GraphiQL"
 }
