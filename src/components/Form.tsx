@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
+import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
@@ -28,22 +29,27 @@ export const Form = ({ mode }: FormProps) => {
 
   return (
     <FormWrapper>
-      <FormHeader>{t(mode === 'register' ? 'formHeaderRegister' : 'formHeaderLogin')}</FormHeader>
-      <TextField id="email" type="email" label="Enter email" variant="outlined" />
-      <TextField id="password" type="password" label="Enter password" variant="outlined" />
+      <FormHeader>{t(`form.${mode}.header`)}</FormHeader>
+      <TextField id="email" type="email" label={t('form.emailInput')} variant="outlined" />
+      <TextField id="password" type="password" label={t('form.passwordInput')} variant="outlined" />
       {mode === 'register' && (
         <TextField
           id="password-confirm"
           type="password"
-          label="Confirm password"
+          label={t('form.passwordInputConfirm')}
           variant="outlined"
         />
       )}
       <Button type="submit" variant="contained" size="large">
-        Sign Up
+        {t(`form.${mode}.submit`)}
       </Button>
-      <Button variant="outlined" size="large">
-        Sign In
+      <Button
+        component={Link}
+        to={mode === 'login' ? '/register' : '/login'}
+        variant="outlined"
+        size="large"
+      >
+        {t(`form.${mode}.redirect`)}
       </Button>
     </FormWrapper>
   );

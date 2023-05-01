@@ -1,5 +1,18 @@
 {
   "greeting": "Привет",
-  "formHeaderRegister": "Регистрация в GraphiQL",
-  "formHeaderLogin": "Вход в GraphiQL"
+  "form": {
+    "register": {
+      "header": "Регистрация в GraphiQL",
+      "submit": "Зарегистрироваться",
+      "redirect": "Войти"
+    },
+    "login": {
+      "header": "Вход в GraphiQL",
+      "submit": "Войти",
+      "redirect": "Зарегистрироваться"
+    },
+    "emailInput": "Введите почту",
+    "passwordInput": "Введите пароль",
+    "passwordInputConfirm": "Подтвердите пароль"
+  }
 }

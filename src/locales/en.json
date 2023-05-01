@@ -1,5 +1,18 @@
 {
   "greeting": "Welcome!",
-  "formHeaderRegister": "Sign Up to GraphiQL",
-  "formHeaderLogin": "Sign In to GraphiQL"
+  "form": {
+    "register": {
+      "header": "Sign Up to GraphiQL",
+      "submit": "Sign Up",
+      "redirect": "Sign In"
+    },
+    "login": {
+      "header": "Sign In to GraphiQL",
+      "submit": "Sign In",
+      "redirect": "Sign Up"
+    },
+    "emailInput": "Enter email",
+    "passwordInput": "Enter password",
+    "passwordInputConfirm": "Confirm password"
+  }
 }
