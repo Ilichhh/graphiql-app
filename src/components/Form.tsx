@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -27,17 +28,38 @@ interface FormProps {
 export const Form = ({ mode }: FormProps) => {
   const { t } = useTranslation();
 
+  const { register, handleSubmit, reset } = useForm();
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    reset();
+    if (mode === 'register') {
+      console.log(data);
+    } else {
+      console.log(data);
+    }
+  };
+
   return (
-    <FormWrapper>
+    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
       <FormHeader>{t(`form.${mode}.header`)}</FormHeader>
-      <TextField id="email" type="email" label={t('form.emailInput')} variant="outlined" />
-      <TextField id="password" type="password" label={t('form.passwordInput')} variant="outlined" />
+      <TextField
+        type="email"
+        label={t('form.emailInput')}
+        variant="outlined"
+        {...register('email', { required: true })}
+      />
+      <TextField
+        type="password"
+        label={t('form.passwordInput')}
+        variant="outlined"
+        {...register('password', { required: true })}
+      />
       {mode === 'register' && (
         <TextField
-          id="password-confirm"
           type="password"
           label={t('form.passwordInputConfirm')}
           variant="outlined"
+          {...register('password-confirm', { required: true })}
         />
       )}
       <Button type="submit" variant="contained" size="large">
