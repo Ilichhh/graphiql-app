@@ -2,9 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Header } from '../components/Header';
+import { DeveloperCard } from '../components/DeveloperCard';
+import { default as devs } from '../data/devs';
 
 export const WelcomePage = () => {
   const { t } = useTranslation();
+  const cards = devs.map((dev) => <DeveloperCard key={dev.id} {...dev} />);
 
   return (
     <>
@@ -21,6 +24,7 @@ export const WelcomePage = () => {
       </section>
       <section>
         <h2>{t('landing.team.title')}</h2>
+        {cards}
       </section>
     </>
   );
