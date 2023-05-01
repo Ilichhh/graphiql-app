@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
+import { singUp, singIn } from '../firebase';
+
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
@@ -34,8 +36,10 @@ export const Form = ({ mode }: FormProps) => {
     reset();
     if (mode === 'register') {
       console.log(data);
+      singUp(data.email, data.password);
     } else {
       console.log(data);
+      singIn(data.email, data.password);
     }
   };
 
