@@ -1,5 +1,4 @@
 {
-  "greeting": "Welcome!",
   "form": {
     "register": {
       "header": "Sign Up to GraphiQL",
@@ -15,5 +14,18 @@
     "passwordInput": "Enter password",
     "passwordInputConfirm": "Confirm password"
   },
-  "playgroundMsg": "Hit the Play Button to get a response here"
+  "playgroundMsg": "Hit the Play Button to get a response here",
+  "landing": {
+    "hero": {
+      "title": "GraphQL IDE",
+      "subtitle": "A convenient way to run GraphQL queries"
+    },
+    "explore": {
+      "title": "Explore how to work with the app",
+      "subtitle": "This video is a quick overview of how to use the app"
+    },
+    "team": {
+      "title": "Meet the team"
+    }
+  }
 }
