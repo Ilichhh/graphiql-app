@@ -10,6 +10,12 @@ const theme = {
     bgPlayBtnHover: '#c3c9ce',
     textInactive: '#555e66',
   },
+  headings: {
+    margin: '0',
+    'letter-spacing': '0em',
+    'text-align': 'center',
+    color: '#444444',
+  },
 };
 
 export default theme;

@@ -1,7 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+// import styled from 'styled-components';
 
-import { Header, Footer, DeveloperCard } from '../components';
+import { Header, Footer } from '../components';
+import { Hero, DeveloperCard } from '../components/landing';
 import { useDevs } from '../hooks';
 
 export const WelcomePage = () => {
@@ -13,11 +15,7 @@ export const WelcomePage = () => {
     <>
       <Header />
       <main>
-        <section>
-          <h1>{t('landing.hero.title')}</h1>
-          <h3>{t('landing.hero.subtitle')}</h3>
-          <img src="/hero.jpg" alt="App screenshot" />
-        </section>
+        <Hero />
         <section>
           <h2>{t('landing.explore.title')}</h2>
           <h3>{t('landing.explore.subtitle')}</h3>
