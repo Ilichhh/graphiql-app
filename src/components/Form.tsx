@@ -51,22 +51,27 @@ export const Form = ({ mode }: FormProps) => {
     <FormWrapper onSubmit={handleSubmit(onSubmit)}>
       <FormHeader>{t(`form.${mode}.header`)}</FormHeader>
       <TextField
+        id="email"
         type="email"
         label={t('form.emailInput')}
         variant="outlined"
         {...register('email', { required: true })}
       />
       <TextField
+        id={mode === 'login' ? 'current-password' : 'new-password'}
         type="password"
         label={t('form.passwordInput')}
         variant="outlined"
+        autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
         {...register('password', { required: true })}
       />
       {mode === 'register' && (
         <TextField
+          id="password-confirm"
           type="password"
           label={t('form.passwordInputConfirm')}
           variant="outlined"
+          autoComplete="new-password"
           {...register('password-confirm', { required: true })}
         />
       )}
