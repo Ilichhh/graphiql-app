@@ -12,7 +12,6 @@ const theme = {
   },
   headings: {
     margin: '0',
-    'letter-spacing': '0em',
     'text-align': 'center',
     color: '#444444',
   },

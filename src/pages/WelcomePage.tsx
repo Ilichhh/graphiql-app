@@ -1,9 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-// import styled from 'styled-components';
 
 import { Header, Footer } from '../components';
-import { Hero, DeveloperCard } from '../components/landing';
+import { Hero, DeveloperCard, Explore } from '../components/landing';
 import { useDevs } from '../hooks';
 
 export const WelcomePage = () => {
@@ -16,11 +15,7 @@ export const WelcomePage = () => {
       <Header />
       <main>
         <Hero />
-        <section>
-          <h2>{t('landing.explore.title')}</h2>
-          <h3>{t('landing.explore.subtitle')}</h3>
-          <video src="" poster="/video.jpg"></video>
-        </section>
+        <Explore />
         <section>
           <h2>{t('landing.team.title')}</h2>
           {cards}
