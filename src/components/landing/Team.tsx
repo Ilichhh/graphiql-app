@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { DeveloperCard } from './';
 import theme from '../../theme';
+import devs from '../../data/devs.json';
 
 const Container = styled.section`
   margin-top: 100px;
@@ -29,14 +30,14 @@ const ListItem = styled.li`
 
 export const Team = () => {
   const { t } = useTranslation();
-  const devs = ['ilya', 'artyom', 'alena'].map((dev, index) => ({
-    id: index + 1,
-    name: `${t(`developers.${dev}.firstName`)} ${t(`developers.${dev}.secondName`)}`,
-    text: `${t(`developers.${dev}.info`)}`,
-    image: `${index + 1}.jpg`,
+  const cardContent = devs.map((dev) => ({
+    id: dev.id,
+    name: `${t(`developers.${dev.name}.firstName`)} ${t(`developers.${dev.name}.secondName`)}`,
+    text: `${t(`developers.${dev.name}.info`)}`,
+    image: `${dev.id}.jpg`,
   }));
 
-  const cards = devs.map((dev) => (
+  const cards = cardContent.map((dev) => (
     <ListItem key={dev.id}>
       <DeveloperCard {...dev} />
     </ListItem>
