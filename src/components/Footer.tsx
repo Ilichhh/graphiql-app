@@ -3,11 +3,15 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import devs from '../data/devs.json';
+import theme from '../theme';
 
 const Container = styled.footer`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  max-width: ${theme.contentWidth};
+  margin: 0 auto;
 
   padding: 10px;
 `;
@@ -26,7 +30,7 @@ const Link = styled.a`
   gap: 10px;
 
   text-decoration: none;
-  color: #000000;
+  color: ${theme.colors.text};
 `;
 
 const Copyright = styled.div`

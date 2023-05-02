@@ -7,7 +7,9 @@ import theme from '../../theme';
 import devs from '../../data/devs.json';
 
 const Container = styled.section`
-  margin-top: 100px;
+  max-width: ${theme.contentWidth};
+
+  margin: 100px auto 50px;
 `;
 
 const Title = styled.h2`

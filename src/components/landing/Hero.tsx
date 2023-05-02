@@ -7,7 +7,9 @@ const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
 
-  margin: 120px 0;
+  max-width: ${theme.contentWidth};
+
+  margin: 120px auto;
 `;
 
 const Title = styled.h1`

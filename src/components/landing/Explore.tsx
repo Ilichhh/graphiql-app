@@ -4,9 +4,16 @@ import styled from 'styled-components';
 import theme from '../../theme';
 
 const Container = styled.section`
+  background-color: ${theme.colors.bgBlue};
+`;
+
+const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background-color: #172a3a;
+
+  max-width: ${theme.contentWidth};
+
+  margin: 0 auto;
 `;
 
 const Title = styled.h2`
@@ -21,7 +28,7 @@ const Title = styled.h2`
   font-weight: 500;
   font-size: 40px;
   line-height: 47px;
-  color: #ffffff;
+  color: ${theme.colors.textWhite};
 `;
 
 const Subtitle = styled.h3`
@@ -31,14 +38,14 @@ const Subtitle = styled.h3`
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
-  color: #ffffff;
+  color: ${theme.colors.textWhite};
 `;
 
 const Video = styled.video`
   grid-column: 2 / 3;
   grid-row: 1 / 3;
 
-  padding: 50px 0 30px;
+  padding: 50px 0 50px;
 `;
 
 export const Explore = () => {
@@ -46,9 +53,11 @@ export const Explore = () => {
 
   return (
     <Container>
-      <Title>{t('landing.explore.title')}</Title>
-      <Subtitle>{t('landing.explore.subtitle')}</Subtitle>
-      <Video src="" poster="/video.jpg"></Video>
+      <Grid>
+        <Title>{t('landing.explore.title')}</Title>
+        <Subtitle>{t('landing.explore.subtitle')}</Subtitle>
+        <Video src="" poster="/video.jpg"></Video>
+      </Grid>
     </Container>
   );
 };
