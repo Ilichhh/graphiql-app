@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
-import playSvg from '../../assets/img/play-arrow-rounded.svg';
+import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 
 const ButtonContainer = styled.div`
   display: flex;
   position: absolute;
   top: 70px;
-  left: calc(50% - 55px);
+  left: calc(50% - 50px);
   margin: 0 15px;
   z-index: 10;
   @media (max-width: 600px) {
@@ -38,22 +38,11 @@ const PlayBtnSvgContainer = styled.div`
   }
 `;
 
-const PlayBtnSvg = styled.div`
-  background-image: url(${playSvg});
-  background-size: contain;
-  height: 45px;
-  width: 45px;
-  @media (max-width: 600px) {
-    width: 20px;
-    height: 20px;
-  }
-`;
-
 export const PlayButton = () => {
   return (
     <ButtonContainer>
       <PlayBtnSvgContainer>
-        <PlayBtnSvg />
+        <PlayArrowRoundedIcon fontSize="large" />
       </PlayBtnSvgContainer>
     </ButtonContainer>
   );

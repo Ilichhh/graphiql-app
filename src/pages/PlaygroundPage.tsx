@@ -1,12 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../theme';
-import { PlaygroundHeader } from '../components/playground/header';
-import { Editor } from '../components/playground/editor';
-import { ResponseBox } from '../components/playground/responseBox';
-import { PlayButton } from '../components/playground/playBtn';
+import { PlaygroundHeader, Editor, ResponseBox, PlayButton } from '../components/playground';
 
-const Wrapper = styled.section`
+const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
   height: 100vh;
