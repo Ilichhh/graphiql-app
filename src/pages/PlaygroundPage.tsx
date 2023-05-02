@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import theme from '../theme';
 import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
+import { usePlayground } from '../hooks/usePlayground';
 
 const Wrapper = styled.main`
   display: flex;
@@ -19,32 +20,8 @@ const Playground = styled.div`
   }
 `;
 
-const ENDPOINT_URL = 'https://swapi-graphql.netlify.app/.netlify/functions/index';
 export const PlaygroundPage = () => {
-  const [endpoint, setEndpoint] = useState(ENDPOINT_URL);
-  const [response, setResponse] = useState('');
-  const [query, setQuery] = useState(`query {
-  allFilms {
-    films {
-      id
-      title
-    }
-  }
-}`);
-
-  const sendRequest = () => {
-    fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      body: JSON.stringify({ query }),
-    })
-      .then((res) => res.json())
-      .then((json) => JSON.stringify(json, null, 2))
-      .then((str) => setResponse(str))
-      .catch((error) => setResponse(error));
-  };
+  const { endpoint, setEndpoint, query, setQuery, response, sendRequest } = usePlayground();
 
   return (
     <Wrapper>
