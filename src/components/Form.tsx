@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import { auth, singUp, singIn } from '../firebase';
+import { auth, signUp, signIn } from '../firebase';
 
 const FormWrapper = styled.form`
   display: flex;
@@ -37,9 +37,9 @@ export const Form = ({ mode }: FormProps) => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     reset();
     if (mode === 'register') {
-      singUp(data.email, data.password);
+      signUp(data.email, data.password);
     } else {
-      singIn(data.email, data.password);
+      signIn(data.email, data.password);
     }
   };
 

@@ -18,7 +18,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
-export const singUp = async (email: string, password: string) => {
+export const signUp = async (email: string, password: string) => {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
   } catch (error) {
@@ -26,7 +26,7 @@ export const singUp = async (email: string, password: string) => {
   }
 };
 
-export const singIn = async (email: string, password: string) => {
+export const signIn = async (email: string, password: string) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
