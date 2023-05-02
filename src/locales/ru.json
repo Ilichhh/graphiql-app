@@ -1,4 +1,19 @@
 {
   "greeting": "Привет",
+  "form": {
+    "register": {
+      "header": "Регистрация в GraphiQL",
+      "submit": "Зарегистрироваться",
+      "redirect": "Войти"
+    },
+    "login": {
+      "header": "Вход в GraphiQL",
+      "submit": "Войти",
+      "redirect": "Зарегистрироваться"
+    },
+    "emailInput": "Введите почту",
+    "passwordInput": "Введите пароль",
+    "passwordInputConfirm": "Подтвердите пароль"
+  },
   "playgroundMsg": "Нажми на кнопку, чтобы получить ответ"
 }

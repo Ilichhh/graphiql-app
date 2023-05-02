@@ -9,7 +9,8 @@ import { ErrorPage } from './pages/ErrorPage';
 export const App = () => (
   <Routes>
     <Route path="/" element={<WelcomePage />} />
-    <Route path="/form" element={<FormPage />} />
+    <Route path="/login" element={<FormPage mode="login" />} />
+    <Route path="/register" element={<FormPage mode="register" />} />
     <Route path="/playground" element={<PlaygroundPage />} />
     <Route path="*" element={<ErrorPage />} />
   </Routes>
