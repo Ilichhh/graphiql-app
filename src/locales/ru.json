@@ -14,5 +14,6 @@
     "emailInput": "Введите почту",
     "passwordInput": "Введите пароль",
     "passwordInputConfirm": "Подтвердите пароль"
-  }
+  },
+  "playgroundMsg": "Нажми на кнопку, чтобы получить ответ"
 }

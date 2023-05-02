@@ -14,5 +14,6 @@
     "emailInput": "Enter email",
     "passwordInput": "Enter password",
     "passwordInputConfirm": "Confirm password"
-  }
+  },
+  "playgroundMsg": "Hit the Play Button to get a response here"
 }
