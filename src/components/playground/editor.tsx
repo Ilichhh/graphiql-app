@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
+import { Textarea } from './textarea';
 
 const Container = styled.section`
   display: flex;
@@ -46,7 +47,9 @@ const Tab = styled.span`
 export const Editor = () => {
   return (
     <Container>
-      <EditorBox />
+      <EditorBox>
+        <Textarea />
+      </EditorBox>
       <EditorTools>
         <Bar>
           <Tab color={`${theme.colors.textGrey}`}>Query Variables</Tab>
