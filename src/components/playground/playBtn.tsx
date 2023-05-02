@@ -38,9 +38,12 @@ const PlayBtnSvgContainer = styled.div`
   }
 `;
 
-export const PlayButton = () => {
+interface PlayButtonProps {
+  onClick: () => void;
+}
+export const PlayButton = ({ onClick }: PlayButtonProps) => {
   return (
-    <ButtonContainer>
+    <ButtonContainer onClick={onClick}>
       <PlayBtnSvgContainer>
         <PlayArrowRoundedIcon fontSize="large" />
       </PlayBtnSvgContainer>

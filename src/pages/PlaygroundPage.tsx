@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from '../theme';
-import { PlaygroundHeader, Editor, ResponseBox, PlayButton } from '../components/playground';
+import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
 
 const Wrapper = styled.main`
   display: flex;
@@ -18,15 +18,42 @@ const Playground = styled.div`
     flex-direction: column;
   }
 `;
-export const PlaygroundPage = () => (
-  <>
+
+const ENDPOINT_URL = 'https://swapi-graphql.netlify.app/.netlify/functions/index';
+export const PlaygroundPage = () => {
+  const [endpoint, setEndpoint] = useState(ENDPOINT_URL);
+  const [response, setResponse] = useState('');
+  const [query, setQuery] = useState(`query {
+  allFilms {
+    films {
+      id
+      title
+    }
+  }
+}`);
+
+  const sendRequest = () => {
+    fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({ query }),
+    })
+      .then((res) => res.json())
+      .then((json) => JSON.stringify(json, null, 2))
+      .then((str) => setResponse(str))
+      .catch((error) => setResponse(error));
+  };
+
+  return (
     <Wrapper>
-      <PlaygroundHeader />
+      <PlaygroundHeader onChange={(url) => setEndpoint(url)} endpoint={endpoint} />
       <Playground>
-        <Editor />
-        <PlayButton />
-        <ResponseBox />
+        <Editor query={query} onChange={(q) => setQuery(q)} />
+        <PlayButton onClick={sendRequest} />
+        <ResponseBox response={response} />
       </Playground>
     </Wrapper>
-  </>
-);
+  );
+};

@@ -16,6 +16,9 @@ const ResponseSection = styled.section`
   flex: 1 1 0;
   background: ${theme.colors.bgBlue};
   position: relative;
+  white-space: pre;
+  color: ${theme.colors.textGrey};
+  padding: 20px 50px;
 `;
 
 const StartMessage = styled.div`
@@ -32,12 +35,17 @@ const StartMessage = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
-export const ResponseBox = () => {
+
+interface ResponseBoxProps {
+  response: string;
+}
+export const ResponseBox = ({ response }: ResponseBoxProps) => {
   const { t } = useTranslation();
   return (
     <Container>
       <ResponseSection>
-        <StartMessage>{t('playgroundMsg')}</StartMessage>
+        {!response && <StartMessage>{t('playgroundMsg')}</StartMessage>}
+        {response}
       </ResponseSection>
     </Container>
   );

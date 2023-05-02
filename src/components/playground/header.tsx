@@ -40,12 +40,17 @@ const Input = styled.input.attrs(() => ({
   font-size: 0.9rem;
   outline: none;
 `;
-export const PlaygroundHeader = () => {
+
+interface PlaygroundHeaderProps {
+  endpoint: string;
+  onChange: (url: string) => void;
+}
+export const PlaygroundHeader = ({ endpoint, onChange }: PlaygroundHeaderProps) => {
   return (
     <Header>
       <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
       <InputContainer>
-        <Input autoFocus />
+        <Input autoFocus value={endpoint} onChange={(e) => onChange(e.target.value)} />
       </InputContainer>
     </Header>
   );

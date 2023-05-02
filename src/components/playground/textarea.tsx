@@ -2,7 +2,11 @@ import { TextareaAutosize } from '@mui/material';
 import theme from '../../theme';
 import React from 'react';
 
-export const Textarea = () => {
+interface TextareaProps {
+  query: string;
+  onChange: (query: string) => void;
+}
+export const Textarea = ({ query, onChange }: TextareaProps) => {
   return (
     <TextareaAutosize
       style={{
@@ -15,6 +19,8 @@ export const Textarea = () => {
       }}
       placeholder="Enter your query here..."
       autoFocus
+      value={query}
+      onChange={(e) => onChange(e.target.value)}
     />
   );
 };

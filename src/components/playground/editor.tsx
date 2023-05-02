@@ -44,11 +44,16 @@ const Tab = styled.span`
   cursor: pointer;
   color: ${(props) => props.color || `${theme.colors.textInactive}`};
 `;
-export const Editor = () => {
+
+interface EditorProps {
+  query: string;
+  onChange: (query: string) => void;
+}
+export const Editor = ({ query, onChange }: EditorProps) => {
   return (
     <Container>
       <EditorBox>
-        <Textarea />
+        <Textarea query={query} onChange={onChange} />
       </EditorBox>
       <EditorTools>
         <Bar>
