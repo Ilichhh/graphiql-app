@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../theme';
-import { PlaygroundHeader, Editor, ResponseBox, PlayButton } from '../components/playground';
+import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
+import { usePlayground } from '../hooks/usePlayground';
 
 const Wrapper = styled.main`
   display: flex;
@@ -18,15 +19,18 @@ const Playground = styled.div`
     flex-direction: column;
   }
 `;
-export const PlaygroundPage = () => (
-  <>
+
+export const PlaygroundPage = () => {
+  const { endpoint, setEndpoint, query, setQuery, response, sendRequest } = usePlayground();
+
+  return (
     <Wrapper>
-      <PlaygroundHeader />
+      <PlaygroundHeader onChange={(url) => setEndpoint(url)} endpoint={endpoint} />
       <Playground>
-        <Editor />
-        <PlayButton />
-        <ResponseBox />
+        <Editor query={query} onChange={(q) => setQuery(q)} />
+        <PlayButton onClick={sendRequest} />
+        <ResponseBox response={response} />
       </Playground>
     </Wrapper>
-  </>
-);
+  );
+};

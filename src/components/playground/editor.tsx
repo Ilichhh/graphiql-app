@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
+import { Textarea } from './textarea';
 
 const Container = styled.section`
   display: flex;
@@ -43,10 +44,17 @@ const Tab = styled.span`
   cursor: pointer;
   color: ${(props) => props.color || `${theme.colors.textInactive}`};
 `;
-export const Editor = () => {
+
+interface EditorProps {
+  query: string;
+  onChange: (query: string) => void;
+}
+export const Editor = ({ query, onChange }: EditorProps) => {
   return (
     <Container>
-      <EditorBox />
+      <EditorBox>
+        <Textarea query={query} onChange={onChange} />
+      </EditorBox>
       <EditorTools>
         <Bar>
           <Tab color={`${theme.colors.textGrey}`}>Query Variables</Tab>
