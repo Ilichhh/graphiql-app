@@ -4,14 +4,20 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { auth } from '../firebase';
 
-export const PrivateRoute = () => {
-  const [user] = useAuthState(auth);
+interface PrivateRoutesProps {
+  forLoggedInUser: boolean;
+}
 
-  return <>{user ? <Outlet /> : <Navigate to="/" />}</>;
-};
+export const PrivateRoutes = ({ forLoggedInUser }: PrivateRoutesProps) => {
+  const [user, loading] = useAuthState(auth);
 
-export const LoginRoutes = () => {
-  const [user] = useAuthState(auth);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  return <>{!user ? <Outlet /> : <Navigate to="/playground" />}</>;
+  if (forLoggedInUser) {
+    return <>{user ? <Outlet /> : <Navigate to="/" />}</>;
+  } else {
+    return <>{!user ? <Outlet /> : <Navigate to="/playground" />}</>;
+  }
 };
