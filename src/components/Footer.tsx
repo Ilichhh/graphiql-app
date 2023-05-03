@@ -50,7 +50,7 @@ export const Footer = () => {
 
   const items = devs.map((dev) => (
     <ListItem key={dev.id}>
-      <Link href={dev.github}>
+      <Link href={dev.github} target="_blank">
         <GitHubIcon fontSize="large" />
         <span>{t(`developers.${dev.name}.firstName`)}</span>
       </Link>
@@ -62,7 +62,7 @@ export const Footer = () => {
       <List>{items}</List>
       <Copyright>
         <Year>2023</Year>
-        <Link href="https://rs.school">
+        <Link href="https://rs.school" target="_blank">
           <img src="rss.svg" alt="RS School logo" width="122" height="45" />
         </Link>
       </Copyright>
