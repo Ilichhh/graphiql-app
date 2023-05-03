@@ -11,6 +11,8 @@ const theme = {
     textInactive: '#555e66',
     textWhite: '#ffffff',
     bgLanding: '#F5F5F5',
+    bgDocsTab: '#3d5866',
+    borderDocs: '#37b7a1ff',
   },
   headings: {
     margin: '0',
