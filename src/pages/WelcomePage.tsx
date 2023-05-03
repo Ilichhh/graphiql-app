@@ -11,7 +11,7 @@ const Container = styled.div`
 export const WelcomePage = () => {
   return (
     <Container>
-      <Header />
+      <Header currentPage="welcome" />
       <main>
         <Hero />
         <Explore />

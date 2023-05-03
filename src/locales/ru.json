@@ -1,4 +1,10 @@
 {
+  "header": {
+    "signIn": "Войти",
+    "signUp": "Зарегистрироваться",
+    "signOut": "Выйти",
+    "toMain" : "На главную"
+  },
   "form": {
     "register": {
       "header": "Регистрация в GraphiQL",

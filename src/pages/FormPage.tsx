@@ -8,7 +8,7 @@ interface FormPageProps {
 
 export const FormPage = ({ mode }: FormPageProps) => (
   <>
-    <Header />
+    <Header currentPage="form" />
     <Form mode={mode} />
   </>
 );

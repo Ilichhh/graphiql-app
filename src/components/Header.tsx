@@ -1,18 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 
 import theme from '../theme';
-import { logOut } from '../firebase';
+import { logOut, auth } from '../firebase';
 
 const HeaderContainer = styled.header`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
+  padding: 16px 48px;
+`;
+
+const Nav = styled.nav`
+  display: flex;
   gap: 32px;
-  padding: 16px;
 `;
 
 const NavLink = styled(Link)`
@@ -24,14 +30,40 @@ const NavLink = styled(Link)`
   }
 `;
 
-export const Header = () => (
-  <HeaderContainer>
-    <NavLink to="/">Home</NavLink>
-    <NavLink to="/login">Sign In</NavLink>
-    <NavLink to="/register">Sign Up</NavLink>
-    <NavLink to="/playground">Playground</NavLink>
-    <Button variant="contained" size="small" onClick={() => logOut()}>
-      Log Out
-    </Button>
-  </HeaderContainer>
-);
+interface HeaderProps {
+  currentPage: string;
+}
+
+export const Header = ({ currentPage }: HeaderProps) => {
+  const { t } = useTranslation();
+  const [user] = useAuthState(auth);
+
+  return (
+    <HeaderContainer>
+      <NavLink to="/">GraphiQL</NavLink>
+      <Nav>
+        {user ? (
+          <>
+            {currentPage !== 'playground' && (
+              <Button variant="contained" size="small" component={Link} to="/playground">
+                {t('header.toMain')}
+              </Button>
+            )}
+            <Button variant="contained" size="small" onClick={() => logOut()}>
+              {t('header.signOut')}
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button variant="contained" size="small" component={Link} to="/login">
+              {t('header.signIn')}
+            </Button>
+            <Button variant="contained" size="small" component={Link} to="/register">
+              {t('header.signUp')}
+            </Button>
+          </>
+        )}
+      </Nav>
+    </HeaderContainer>
+  );
+};

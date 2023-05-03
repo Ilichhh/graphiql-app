@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import theme from '../theme';
 import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
 import { usePlayground } from '../hooks/usePlayground';
+import { Header } from '../components';
 
 const Wrapper = styled.main`
   display: flex;
@@ -13,6 +14,7 @@ const Wrapper = styled.main`
 `;
 
 const Playground = styled.div`
+  position: relative;
   display: flex;
   flex: 1 1 0;
   @media (max-width: 600px) {
@@ -25,6 +27,7 @@ export const PlaygroundPage = () => {
 
   return (
     <Wrapper>
+      <Header currentPage="playground" />
       <PlaygroundHeader onChange={(url) => setEndpoint(url)} endpoint={endpoint} />
       <Playground>
         <Editor query={query} onChange={(q) => setQuery(q)} />
