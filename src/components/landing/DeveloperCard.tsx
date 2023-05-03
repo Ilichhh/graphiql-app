@@ -24,6 +24,8 @@ const Card = styled.div`
 const Image = styled.img`
   grid-column: 1 / 2;
   grid-row: 1 / 3;
+
+  border-radius: 50%;
 `;
 
 const Title = styled.h4`
