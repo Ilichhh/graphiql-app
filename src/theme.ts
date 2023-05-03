@@ -9,6 +9,8 @@ const theme = {
     bgPlayBtn: '#b9bfc4',
     bgPlayBtnHover: '#c3c9ce',
     textInactive: '#555e66',
+    bgDocsTab: '#3d5866',
+    borderDocs: '#37b7a1ff',
   },
 };
 
