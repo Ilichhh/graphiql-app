@@ -1,15 +1,23 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
-import { Header } from '../components/Header';
+import { Header, Footer } from '../components';
+import { Hero, Explore, Team } from '../components/landing';
+
+const Container = styled.div`
+  background-color: #f5f5f5;
+`;
 
 export const WelcomePage = () => {
-  const { t } = useTranslation();
-
   return (
-    <>
+    <Container>
       <Header />
-      <h1>{t('greeting')}</h1>
-    </>
+      <main>
+        <Hero />
+        <Explore />
+        <Team />
+      </main>
+      <Footer />
+    </Container>
   );
 };

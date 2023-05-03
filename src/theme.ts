@@ -9,7 +9,15 @@ const theme = {
     bgPlayBtn: '#b9bfc4',
     bgPlayBtnHover: '#c3c9ce',
     textInactive: '#555e66',
+    textWhite: '#ffffff',
+    bgLanding: '#F5F5F5',
   },
+  headings: {
+    margin: '0',
+    'text-align': 'center',
+    color: '#444444',
+  },
+  contentWidth: '1600px',
 };
 
 export default theme;

@@ -1,5 +1,4 @@
 {
-  "greeting": "Welcome!",
   "form": {
     "register": {
       "header": "Sign Up to GraphiQL",
@@ -15,5 +14,35 @@
     "passwordInput": "Enter password",
     "passwordInputConfirm": "Confirm password"
   },
-  "playgroundMsg": "Hit the Play Button to get a response here"
+  "playgroundMsg": "Hit the Play Button to get a response here",
+  "landing": {
+    "hero": {
+      "title": "GraphQL IDE",
+      "subtitle": "a convenient way to run GraphQL queries"
+    },
+    "explore": {
+      "title": "Explore how to work with the app",
+      "subtitle": "This video is a quick overview of how to use the app"
+    },
+    "team": {
+      "title": "Meet the team"
+    }
+  },
+  "developers": {
+    "ilya": {
+      "firstName": "Ilya",
+      "secondName": "Shakurov",
+      "info": "Lorem ipsum dolor sit amet, ne sit soluta audire assentior. Id dicta eloquentiam eam. Natum probo aliquip usu ex. Quo audiam saperet an, per agam clita et. Prima porro praesent cu eos, in quod minim possim eam, no eius patrioque splendide eos."
+    },
+    "artyom": {
+      "firstName": "Artyom",
+      "secondName": "Bagaev",
+      "info": "Lorem ipsum dolor sit amet, ne sit soluta audire assentior. Id dicta eloquentiam eam. Natum probo aliquip usu ex. Quo audiam saperet an, per agam clita et. Prima porro praesent cu eos, in quod minim possim eam, no eius patrioque splendide eos."
+    },
+    "alena": {
+      "firstName": "Alena",
+      "secondName": "Deviatova",
+      "info": "Lorem ipsum dolor sit amet, ne sit soluta audire assentior. Id dicta eloquentiam eam. Natum probo aliquip usu ex. Quo audiam saperet an, per agam clita et. Prima porro praesent cu eos, in quod minim possim eam, no eius patrioque splendide eos."
+    }
+  }
 }
