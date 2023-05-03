@@ -4,8 +4,14 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { auth } from '../firebase';
 
-export const PrivateRoutes = () => {
+export const PrivateRoute = () => {
   const [user] = useAuthState(auth);
 
   return <>{user ? <Outlet /> : <Navigate to="/" />}</>;
+};
+
+export const LoginRoutes = () => {
+  const [user] = useAuthState(auth);
+
+  return <>{!user ? <Outlet /> : <Navigate to="/playground" />}</>;
 };
