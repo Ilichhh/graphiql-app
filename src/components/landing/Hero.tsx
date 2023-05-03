@@ -39,7 +39,7 @@ const Img = styled.img`
   grid-row: 1 / 3;
 `;
 
-export const Hero = () => {
+export const Hero = React.memo(() => {
   const { t } = useTranslation();
 
   return (
@@ -49,4 +49,4 @@ export const Hero = () => {
       <Img src="/hero.jpg" alt="App screenshot" width="491" height="230" />
     </Container>
   );
-};
+});

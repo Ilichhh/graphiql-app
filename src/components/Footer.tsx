@@ -45,7 +45,7 @@ const Year = styled.span`
   line-height: 33px;
 `;
 
-export const Footer = () => {
+export const Footer = React.memo(() => {
   const { t } = useTranslation();
 
   const items = devs.map((dev) => (
@@ -68,4 +68,4 @@ export const Footer = () => {
       </Copyright>
     </Container>
   );
-};
+});

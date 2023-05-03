@@ -44,7 +44,7 @@ const Info = styled.p`
   line-height: 21px;
 `;
 
-export const DeveloperCard = ({ name, text, image }: DeveloperCardProps) => {
+export const DeveloperCard = React.memo(({ name, text, image }: DeveloperCardProps) => {
   return (
     <Card>
       <Image src={image} alt="Profile picture" width="114" height="114" />
@@ -52,4 +52,4 @@ export const DeveloperCard = ({ name, text, image }: DeveloperCardProps) => {
       <Info>{text}</Info>
     </Card>
   );
-};
+});

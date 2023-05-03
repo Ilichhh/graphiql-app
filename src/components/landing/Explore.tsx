@@ -48,7 +48,7 @@ const Video = styled.video`
   padding: 50px 0 50px;
 `;
 
-export const Explore = () => {
+export const Explore = React.memo(() => {
   const { t } = useTranslation();
 
   return (
@@ -60,4 +60,4 @@ export const Explore = () => {
       </Grid>
     </Container>
   );
-};
+});

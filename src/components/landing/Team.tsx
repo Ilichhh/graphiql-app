@@ -30,7 +30,7 @@ const ListItem = styled.li`
   margin: 17px 0;
 `;
 
-export const Team = () => {
+export const Team = React.memo(() => {
   const { t } = useTranslation();
   const cardContent = devs.map((dev) => ({
     id: dev.id,
@@ -51,4 +51,4 @@ export const Team = () => {
       <List>{cards}</List>
     </Container>
   );
-};
+});
