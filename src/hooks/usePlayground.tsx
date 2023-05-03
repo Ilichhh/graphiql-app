@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const ENDPOINT_URL = 'https://swapi-graphql.netlify.app/.netlify/functions/index';
 const INITIAL_QUERY = `query {
@@ -15,7 +15,7 @@ export const usePlayground = () => {
   const [query, setQuery] = useState(INITIAL_QUERY);
   const [response, setResponse] = useState('');
 
-  const sendRequest = () => {
+  const sendRequest = useCallback(() => {
     fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -27,7 +27,7 @@ export const usePlayground = () => {
       .then((json) => JSON.stringify(json, null, 2))
       .then((str) => setResponse(str))
       .catch((error) => setResponse(error.toString()));
-  };
+  }, [endpoint, query]);
 
   return { endpoint, setEndpoint, query, setQuery, response, sendRequest };
 };
