@@ -42,12 +42,13 @@ export const Header = ({ currentPage }: HeaderProps) => {
   const { t, i18n } = useTranslation();
   const [user] = useAuthState(auth);
 
+  const bgColor = currentPage === 'playground' ? theme.colors.bgDarkBlue : '#f5f5f5';
+  const textColor = currentPage === 'playground' ? theme.colors.textGrey : theme.colors.bgBlue;
+  const btnTextColor = currentPage === 'playground' ? theme.colors.textGrey : '#f5f5f5';
+
   const handleLanguageChange = (event: SelectChangeEvent) => {
     i18n.changeLanguage(event.target.value);
   };
-
-  const bgColor = currentPage === 'playground' ? theme.colors.bgDarkBlue : '#f5f5f5';
-  const textColor = currentPage === 'playground' ? theme.colors.textGrey : theme.colors.bgBlue;
 
   return (
     <HeaderContainer color={bgColor}>
@@ -59,25 +60,52 @@ export const Header = ({ currentPage }: HeaderProps) => {
         {user ? (
           <>
             {currentPage !== 'playground' && (
-              <Button variant="contained" component={Link} to="/playground">
+              <Button
+                style={{ backgroundColor: theme.colors.bgBlue, color: btnTextColor }}
+                variant="contained"
+                component={Link}
+                to="/playground"
+              >
                 {t('header.toMain')}
               </Button>
             )}
-            <Button variant="contained" onClick={() => logOut()}>
+            <Button
+              style={{ backgroundColor: theme.colors.bgBlue, color: btnTextColor }}
+              variant="contained"
+              onClick={() => logOut()}
+            >
               {t('header.signOut')}
             </Button>
           </>
         ) : (
           <>
-            <Button variant="contained" component={Link} to="/login">
+            <Button
+              style={{ backgroundColor: theme.colors.bgBlue, color: btnTextColor }}
+              variant="contained"
+              component={Link}
+              to="/login"
+            >
               {t('header.signIn')}
             </Button>
-            <Button variant="contained" component={Link} to="/register">
+            <Button
+              style={{ backgroundColor: theme.colors.bgBlue, color: btnTextColor }}
+              variant="contained"
+              component={Link}
+              to="/register"
+            >
               {t('header.signUp')}
             </Button>
           </>
         )}
         <Select
+          sx={{
+            '& .MuiSelect-icon': {
+              color: textColor,
+            },
+            '& .MuiInputBase-input': {
+              color: textColor,
+            },
+          }}
           value={i18n.language}
           onChange={handleLanguageChange}
           displayEmpty
