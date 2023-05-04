@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useIsAtTop } from '../hooks/useIsAtTop';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -12,12 +13,22 @@ import { GraphQLIcon } from './Icons';
 import theme from '../theme';
 import { logOut, auth } from '../firebase';
 
-const HeaderContainer = styled.header`
+const HeaderContainer = styled.header<{ sticky: boolean }>`
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 48px;
-  background-color: ${(props) => props.color};
+  background-color: ${({ color }) => color};
+  transition: all 0.3s ease-in-out;
+  ${({ sticky }) =>
+    sticky &&
+    css`
+      z-index: 999;
+      padding: 8px 48px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+    `}
 `;
 
 const Nav = styled.nav`
@@ -31,7 +42,7 @@ const Logo = styled(Link)`
   gap: 8px;
   text-decoration: none;
   font-size: 20px;
-  color: ${(props) => props.color};
+  color: ${({ color }) => color};
 `;
 
 interface HeaderProps {
@@ -41,6 +52,7 @@ interface HeaderProps {
 export const Header = ({ currentPage }: HeaderProps) => {
   const { t, i18n } = useTranslation();
   const [user] = useAuthState(auth);
+  const isAtTop = useIsAtTop();
 
   const bgColor = currentPage === 'playground' ? theme.colors.bgDarkBlue : '#f5f5f5';
   const textColor = currentPage === 'playground' ? theme.colors.textGrey : theme.colors.bgBlue;
@@ -51,7 +63,7 @@ export const Header = ({ currentPage }: HeaderProps) => {
   };
 
   return (
-    <HeaderContainer color={bgColor}>
+    <HeaderContainer color={bgColor} sticky={!isAtTop}>
       <Logo to="/" color={textColor}>
         <GraphQLIcon color={textColor} />
         GraphiQL
