@@ -26,14 +26,16 @@ export const PlaygroundPage = () => {
   const { endpoint, setEndpoint, query, setQuery, response, sendRequest } = usePlayground();
 
   return (
-    <Wrapper>
+    <>
       <Header currentPage="playground" />
-      <PlaygroundHeader onChange={(url) => setEndpoint(url)} endpoint={endpoint} />
-      <Playground>
-        <Editor query={query} onChange={(q) => setQuery(q)} />
-        <PlayButton onClick={sendRequest} />
-        <ResponseBox response={response} />
-      </Playground>
-    </Wrapper>
+      <Wrapper>
+        <PlaygroundHeader onChange={(url) => setEndpoint(url)} endpoint={endpoint} />
+        <Playground>
+          <Editor query={query} onChange={(q) => setQuery(q)} />
+          <PlayButton onClick={sendRequest} />
+          <ResponseBox response={response} />
+        </Playground>
+      </Wrapper>
+    </>
   );
 };

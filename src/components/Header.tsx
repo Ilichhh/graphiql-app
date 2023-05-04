@@ -5,6 +5,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import theme from '../theme';
 import { logOut, auth } from '../firebase';
@@ -13,7 +15,7 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 48px;
+  padding: 12px 48px;
 `;
 
 const Nav = styled.nav`
@@ -35,8 +37,12 @@ interface HeaderProps {
 }
 
 export const Header = ({ currentPage }: HeaderProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [user] = useAuthState(auth);
+
+  const handleLanguageChange = (event: SelectChangeEvent) => {
+    i18n.changeLanguage(event.target.value);
+  };
 
   return (
     <HeaderContainer>
@@ -45,24 +51,34 @@ export const Header = ({ currentPage }: HeaderProps) => {
         {user ? (
           <>
             {currentPage !== 'playground' && (
-              <Button variant="contained" size="small" component={Link} to="/playground">
+              <Button variant="contained" component={Link} to="/playground">
                 {t('header.toMain')}
               </Button>
             )}
-            <Button variant="contained" size="small" onClick={() => logOut()}>
+            <Button variant="contained" onClick={() => logOut()}>
               {t('header.signOut')}
             </Button>
           </>
         ) : (
           <>
-            <Button variant="contained" size="small" component={Link} to="/login">
+            <Button variant="contained" component={Link} to="/login">
               {t('header.signIn')}
             </Button>
-            <Button variant="contained" size="small" component={Link} to="/register">
+            <Button variant="contained" component={Link} to="/register">
               {t('header.signUp')}
             </Button>
           </>
         )}
+        <Select
+          value={i18n.language}
+          onChange={handleLanguageChange}
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+          size="small"
+        >
+          <MenuItem value="en">EN</MenuItem>
+          <MenuItem value="ru">RU</MenuItem>
+        </Select>
       </Nav>
     </HeaderContainer>
   );
