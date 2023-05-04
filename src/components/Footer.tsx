@@ -30,7 +30,7 @@ const Link = styled.a`
   gap: 10px;
 
   text-decoration: none;
-  color: ${theme.colors.text};
+  color: ${theme.colors.bgDarkBlue};
 `;
 
 const Copyright = styled.div`
