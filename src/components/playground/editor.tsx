@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
 import { Textarea } from './textarea';
+import { DocsExplorer } from './docsExplorer/docsExplorer';
 
 const Container = styled.section`
   display: flex;
@@ -61,6 +62,7 @@ export const Editor = ({ query, onChange }: EditorProps) => {
           <Tab>HTTP Headers</Tab>
         </Bar>
       </EditorTools>
+      <DocsExplorer />
     </Container>
   );
 };
