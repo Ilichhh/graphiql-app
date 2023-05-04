@@ -101,6 +101,7 @@ export const Header = ({ currentPage }: HeaderProps) => {
             },
           }}
           value={i18n.language}
+          defaultValue={i18n.language}
           onChange={handleLanguageChange}
           inputProps={{ 'aria-label': 'Without label' }}
           size="small"
