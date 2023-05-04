@@ -8,7 +8,7 @@ import { Header } from '../components';
 const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 68px);
   width: 100%;
   background: ${theme.colors.bgBlack};
 `;

@@ -19,7 +19,7 @@ const HeaderContainer = styled.header<{ sticky: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 48px;
+  padding: 14px 48px;
   background-color: ${({ color }) => color};
   transition: all 0.3s ease-in-out;
   ${({ sticky }) =>
@@ -54,9 +54,10 @@ export const Header = ({ currentPage }: HeaderProps) => {
   const [user] = useAuthState(auth);
   const isAtTop = useIsAtTop();
 
-  const bgColor = currentPage === 'playground' ? theme.colors.bgDarkBlue : '#f5f5f5';
+  const bgColor = currentPage === 'playground' ? theme.colors.bgDarkBlue : theme.colors.bgLight;
   const textColor = currentPage === 'playground' ? theme.colors.textGrey : theme.colors.bgBlue;
-  const btnTextColor = currentPage === 'playground' ? theme.colors.textGrey : '#f5f5f5';
+  const btnTextColor = currentPage === 'playground' ? theme.colors.textGrey : theme.colors.bgLight;
+  const btnStyles = { backgroundColor: theme.colors.bgBlue, color: btnTextColor };
 
   const handleLanguageChange = (event: SelectChangeEvent) => {
     i18n.changeLanguage(event.target.value);
@@ -72,39 +73,20 @@ export const Header = ({ currentPage }: HeaderProps) => {
         {user ? (
           <>
             {currentPage !== 'playground' && (
-              <Button
-                style={{ backgroundColor: theme.colors.bgBlue, color: btnTextColor }}
-                variant="contained"
-                component={Link}
-                to="/playground"
-              >
+              <Button style={btnStyles} variant="contained" component={Link} to="/playground">
                 {t('header.toMain')}
               </Button>
             )}
-            <Button
-              style={{ backgroundColor: theme.colors.bgBlue, color: btnTextColor }}
-              variant="contained"
-              onClick={() => logOut()}
-            >
+            <Button style={btnStyles} variant="contained" onClick={() => logOut()}>
               {t('header.signOut')}
             </Button>
           </>
         ) : (
           <>
-            <Button
-              style={{ backgroundColor: theme.colors.bgBlue, color: btnTextColor }}
-              variant="contained"
-              component={Link}
-              to="/login"
-            >
+            <Button style={btnStyles} variant="contained" component={Link} to="/login">
               {t('header.signIn')}
             </Button>
-            <Button
-              style={{ backgroundColor: theme.colors.bgBlue, color: btnTextColor }}
-              variant="contained"
-              component={Link}
-              to="/register"
-            >
+            <Button style={btnStyles} variant="contained" component={Link} to="/register">
               {t('header.signUp')}
             </Button>
           </>

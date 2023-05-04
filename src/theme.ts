@@ -1,7 +1,5 @@
 const theme = {
   colors: {
-    text: '#000',
-    background: '#6c757d',
     bgBlack: '#141823',
     bgBlue: '#172b3a',
     bgDarkBlue: '#0f202d',
@@ -10,7 +8,7 @@ const theme = {
     bgPlayBtnHover: '#c3c9ce',
     textInactive: '#555e66',
     textWhite: '#ffffff',
-    bgLanding: '#F5F5F5',
+    bgLight: '#F5F5F5',
     bgDocsTab: '#3d5866',
     borderDocs: '#37b7a1ff',
   },
