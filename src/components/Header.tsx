@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { GraphQLIcon } from './Icons';
 
 import theme from '../theme';
 import { logOut, auth } from '../firebase';
@@ -16,6 +17,7 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 12px 48px;
+  background-color: ${(props) => props.color};
 `;
 
 const Nav = styled.nav`
@@ -23,13 +25,13 @@ const Nav = styled.nav`
   gap: 32px;
 `;
 
-const NavLink = styled(Link)`
+const Logo = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 8px;
   text-decoration: none;
-  color: ${theme.colors.text};
-
-  &:hover {
-    color: #000;
-  }
+  font-size: 20px;
+  color: ${(props) => props.color};
 `;
 
 interface HeaderProps {
@@ -44,9 +46,15 @@ export const Header = ({ currentPage }: HeaderProps) => {
     i18n.changeLanguage(event.target.value);
   };
 
+  const bgColor = currentPage === 'playground' ? theme.colors.bgDarkBlue : '#f5f5f5';
+  const textColor = currentPage === 'playground' ? theme.colors.textGrey : theme.colors.bgBlue;
+
   return (
-    <HeaderContainer>
-      <NavLink to="/">GraphiQL</NavLink>
+    <HeaderContainer color={bgColor}>
+      <Logo to="/" color={textColor}>
+        <GraphQLIcon color={textColor} />
+        GraphiQL
+      </Logo>
       <Nav>
         {user ? (
           <>
