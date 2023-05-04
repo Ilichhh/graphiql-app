@@ -17,6 +17,8 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.2",
     "@reduxjs/toolkit": "^1.9.3",
+    "@uiw/react-codemirror": "^4.19.16",
+    "cm6-graphql": "^0.0.5",
     "firebase": "^9.21.0",
     "i18next": "^22.4.15",
     "i18next-browser-languagedetector": "^7.0.1",
