@@ -9,6 +9,7 @@ const Container = styled.section`
   flex-direction: column;
   background: ${theme.colors.bgDarkBlue};
   flex: 1 1 0;
+  overflow: hidden;
 `;
 
 const ResponseSection = styled.section`
@@ -20,6 +21,18 @@ const ResponseSection = styled.section`
   white-space: pre;
   color: ${theme.colors.textGrey};
   padding: 0 50px 20px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${theme.colors.bgDarkBlue};
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: ${theme.colors.bgBlue};
+  }
 `;
 
 const StartMessage = styled.div`
