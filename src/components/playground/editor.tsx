@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
 import { Textarea } from './textarea';
-import { DocsExplorer } from './docsExplorer/docsExplorer';
+import { DocsPanel } from './docsExplorer/docsPanel';
 
 const Container = styled.section`
   display: flex;
@@ -47,10 +47,11 @@ const Tab = styled.span`
 `;
 
 interface EditorProps {
+  endpoint: string;
   query: string;
   onChange: (query: string) => void;
 }
-export const Editor = ({ query, onChange }: EditorProps) => {
+export const Editor = ({ endpoint, query, onChange }: EditorProps) => {
   return (
     <Container>
       <EditorBox>
@@ -62,7 +63,7 @@ export const Editor = ({ query, onChange }: EditorProps) => {
           <Tab>HTTP Headers</Tab>
         </Bar>
       </EditorTools>
-      <DocsExplorer />
+      <DocsPanel endpoint={endpoint} />
     </Container>
   );
 };

@@ -27,7 +27,7 @@ export const PlaygroundPage = () => {
     <Wrapper>
       <PlaygroundHeader onChange={(url) => setEndpoint(url)} endpoint={endpoint} />
       <Playground>
-        <Editor query={query} onChange={(q) => setQuery(q)} />
+        <Editor endpoint={endpoint} query={query} onChange={(q) => setQuery(q)} />
         <PlayButton onClick={sendRequest} />
         <ResponseBox response={response} />
       </Playground>
