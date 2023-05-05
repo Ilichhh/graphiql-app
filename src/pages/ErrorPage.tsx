@@ -3,7 +3,7 @@ import React from 'react';
 
 export const ErrorPage = () => (
   <>
-    <Header />
+    <Header currentPage="error" />
     <h1>404 - Page Not Found</h1>
     <p>Sorry, the requested page could not be found.</p>
   </>

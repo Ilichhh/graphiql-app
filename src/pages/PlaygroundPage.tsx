@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import theme from '../theme';
 import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
 import { usePlayground } from '../hooks/usePlayground';
+import { Header } from '../components';
 
 const Wrapper = styled.main`
+  position: relative;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - ${theme.headerHeight});
   width: 100%;
   background: ${theme.colors.bgBlack};
 `;
@@ -24,13 +26,16 @@ export const PlaygroundPage = () => {
   const { endpoint, setEndpoint, query, setQuery, response, sendRequest } = usePlayground();
 
   return (
-    <Wrapper>
-      <PlaygroundHeader onChange={(url) => setEndpoint(url)} endpoint={endpoint} />
-      <Playground>
-        <Editor query={query} onChange={(q) => setQuery(q)} />
-        <PlayButton onClick={sendRequest} />
-        <ResponseBox response={response} />
-      </Playground>
-    </Wrapper>
+    <>
+      <Header currentPage="playground" />
+      <Wrapper>
+        <PlaygroundHeader onChange={(url) => setEndpoint(url)} endpoint={endpoint} />
+        <Playground>
+          <Editor query={query} onChange={(q) => setQuery(q)} />
+          <PlayButton onClick={sendRequest} />
+          <ResponseBox response={response} />
+        </Playground>
+      </Wrapper>
+    </>
   );
 };
