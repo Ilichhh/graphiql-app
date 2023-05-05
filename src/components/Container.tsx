@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 import theme from '../theme';
@@ -8,10 +8,6 @@ const StyledContainer = styled.div`
   background-color: ${theme.colors.bgLight};
 `;
 
-interface ContainerProps {
-  children: React.ReactNode;
-}
-
-export const Container = ({ children }: ContainerProps) => {
+export const Container = ({ children }: PropsWithChildren) => {
   return <StyledContainer>{children}</StyledContainer>;
 };

@@ -18,6 +18,7 @@ const theme = {
     color: '#444444',
   },
   contentWidth: '1600px',
+  headerHeight: '68px',
 };
 
 export default theme;

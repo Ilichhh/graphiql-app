@@ -6,15 +6,15 @@ import { usePlayground } from '../hooks/usePlayground';
 import { Header } from '../components';
 
 const Wrapper = styled.main`
+  position: relative;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 68px);
+  height: calc(100vh - ${theme.headerHeight});
   width: 100%;
   background: ${theme.colors.bgBlack};
 `;
 
 const Playground = styled.div`
-  position: relative;
   display: flex;
   flex: 1 1 0;
   @media (max-width: 600px) {

@@ -6,7 +6,7 @@ import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 const ButtonContainer = styled.div`
   display: flex;
   position: absolute;
-  top: 15px;
+  top: 65px;
   left: calc(50% - 50px);
   margin: 0 15px;
   z-index: 10;

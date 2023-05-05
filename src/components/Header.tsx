@@ -19,14 +19,15 @@ const HeaderContainer = styled.header<{ sticky: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 48px;
+  height: ${theme.headerHeight};
+  padding: 0 48px;
   background-color: ${({ color }) => color};
   transition: all 0.3s ease-in-out;
   ${({ sticky }) =>
     sticky &&
     css`
       z-index: 999;
-      padding: 8px 48px;
+      height: calc(${theme.headerHeight} - 12px);
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
     `}
 `;
