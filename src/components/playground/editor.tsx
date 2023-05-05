@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
-import { Textarea } from './textarea';
 import { DocsExplorer } from './docsExplorer/docsExplorer';
+import { CodeEditor } from './codemirror';
 
 const Container = styled.section`
   display: flex;
@@ -50,11 +50,12 @@ interface EditorProps {
   query: string;
   onChange: (query: string) => void;
 }
+
 export const Editor = ({ query, onChange }: EditorProps) => {
   return (
     <Container>
       <EditorBox>
-        <Textarea query={query} onChange={onChange} />
+        <CodeEditor value={query} onChange={onChange} />
       </EditorBox>
       <EditorTools>
         <Bar>
