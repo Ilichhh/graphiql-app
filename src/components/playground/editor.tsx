@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Textarea } from './textarea';
 import { DocsExplorer } from './docsExplorer/docsExplorer';
 import { TextareaAutosize } from '@mui/material';
 
 import styled from 'styled-components';
 import theme from '../../theme';
+import { CodeEditor } from './codemirror';
 
 const Container = styled.section`
   display: flex;
@@ -54,6 +54,7 @@ interface EditorProps {
   query: string;
   onChange: (query: string) => void;
 }
+
 export const Editor = ({ query, onChange }: EditorProps) => {
   const [activeToolsTab, setActiveToolsTab] = useState('variables');
   const { t } = useTranslation();
@@ -61,7 +62,7 @@ export const Editor = ({ query, onChange }: EditorProps) => {
   return (
     <Container>
       <EditorBox>
-        <Textarea query={query} onChange={onChange} />
+        <CodeEditor value={query} onChange={onChange} />
       </EditorBox>
       <EditorTools>
         <ToolsBar>
