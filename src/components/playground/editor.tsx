@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
-import { DocsExplorer } from './docsExplorer/docsExplorer';
 import { CodeEditor } from './codemirror';
-import { Textarea } from './textarea';
 import { DocsPanel } from './docsExplorer/docsPanel';
 
 const Container = styled.section`

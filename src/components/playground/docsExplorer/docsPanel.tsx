@@ -24,7 +24,7 @@ interface DocsPanelProps {
 }
 
 export const DocsPanel = ({ endpoint }: DocsPanelProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <DocsPanelWrapper isOpen={isOpen}>
