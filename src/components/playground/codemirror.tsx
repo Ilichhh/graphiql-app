@@ -5,8 +5,12 @@ import theme from '../../theme';
 
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 
-const editorTheme = vscodeDarkInit({
+const requestEditorTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgDarkBlue, gutterBackground: '#0f202d' },
+});
+
+const variablesEditorTheme = vscodeDarkInit({
+  settings: { background: theme.colors.bgBlack, gutterBackground: theme.colors.bgBlack },
 });
 
 const responseTheme = vscodeDarkInit({
@@ -16,7 +20,11 @@ const responseTheme = vscodeDarkInit({
 type CodeMirrorProps = React.ComponentProps<typeof CodeMirror>;
 
 const CodeEditor = React.memo((props: CodeMirrorProps) => {
-  return <CodeMirror extensions={[graphql()]} theme={editorTheme} {...props} />;
+  return <CodeMirror extensions={[graphql()]} theme={requestEditorTheme} {...props} />;
+});
+
+const VariablesEditor = React.memo((props: CodeMirrorProps) => {
+  return <CodeMirror extensions={[graphql()]} theme={variablesEditorTheme} {...props} />;
 });
 
 const ResponseWindow = React.memo((props: CodeMirrorProps) => {
@@ -31,4 +39,4 @@ const ResponseWindow = React.memo((props: CodeMirrorProps) => {
   );
 });
 
-export { CodeEditor, ResponseWindow };
+export { CodeEditor, VariablesEditor, ResponseWindow };
