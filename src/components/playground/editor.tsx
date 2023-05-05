@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
 import { DocsExplorer } from './docsExplorer/docsExplorer';
-import CodeMirror from '@uiw/react-codemirror';
-import { graphql } from 'cm6-graphql';
+import { CodeEditor } from './codemirror';
 
 const Container = styled.section`
   display: flex;
@@ -51,19 +50,12 @@ interface EditorProps {
   query: string;
   onChange: (query: string) => void;
 }
-const MemoizedCodeMirror = React.memo(CodeMirror);
 
 export const Editor = ({ query, onChange }: EditorProps) => {
   return (
     <Container>
       <EditorBox>
-        <MemoizedCodeMirror
-          value={query}
-          height="100%"
-          extensions={[graphql()]}
-          onChange={onChange}
-          theme="dark"
-        />
+        <CodeEditor value={query} onChange={onChange} />
       </EditorBox>
       <EditorTools>
         <Bar>
