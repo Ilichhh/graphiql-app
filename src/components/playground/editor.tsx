@@ -1,8 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import theme from '../../theme';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { Textarea } from './textarea';
 import { DocsExplorer } from './docsExplorer/docsExplorer';
+import { TextareaAutosize } from '@mui/material';
+
+import styled from 'styled-components';
+import theme from '../../theme';
 
 const Container = styled.section`
   display: flex;
@@ -24,13 +28,13 @@ const EditorTools = styled.section`
   flex-direction: column;
 `;
 
-const Bar = styled.div`
+const ToolsBar = styled.div`
   display: flex;
+  padding: 12px 20px;
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.5px;
   font-size: 0.9rem;
-  padding: 10px 14px 15px 21px;
   user-select: none;
   @media (max-width: 600px) {
     padding: 8px;
@@ -38,12 +42,12 @@ const Bar = styled.div`
   }
 `;
 
-const Tab = styled.span`
+const ToolsTab = styled.span<{ isActive: boolean }>`
   display: flex;
   margin-right: 20px;
   flex-shrink: 0;
   cursor: pointer;
-  color: ${(props) => props.color || `${theme.colors.textInactive}`};
+  color: ${({ isActive }) => (isActive ? theme.colors.textGrey : theme.colors.textInactive)};
 `;
 
 interface EditorProps {
@@ -51,16 +55,39 @@ interface EditorProps {
   onChange: (query: string) => void;
 }
 export const Editor = ({ query, onChange }: EditorProps) => {
+  const [activeToolsTab, setActiveToolsTab] = useState('variables');
+  const { t } = useTranslation();
+
   return (
     <Container>
       <EditorBox>
         <Textarea query={query} onChange={onChange} />
       </EditorBox>
       <EditorTools>
-        <Bar>
-          <Tab color={`${theme.colors.textGrey}`}>Query Variables</Tab>
-          <Tab>HTTP Headers</Tab>
-        </Bar>
+        <ToolsBar>
+          <ToolsTab
+            isActive={activeToolsTab === 'variables'}
+            onClick={() => setActiveToolsTab('variables')}
+          >
+            {t('playground.variablesTabHeader')}
+          </ToolsTab>
+          <ToolsTab
+            isActive={activeToolsTab === 'headers'}
+            onClick={() => setActiveToolsTab('headers')}
+          >
+            {t('playground.headersTabHeader')}
+          </ToolsTab>
+        </ToolsBar>
+        <TextareaAutosize
+          style={{
+            padding: '10px 20px',
+            backgroundColor: `${theme.colors.bgDarkBlue}`,
+            color: `${theme.colors.textGrey}`,
+            outline: 'none',
+            border: 'none',
+          }}
+          placeholder={activeToolsTab}
+        />
       </EditorTools>
       <DocsExplorer />
     </Container>

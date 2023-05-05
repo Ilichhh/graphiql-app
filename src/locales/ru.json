@@ -20,7 +20,11 @@
     "passwordInput": "Введите пароль",
     "passwordInputConfirm": "Подтвердите пароль"
   },
-  "playgroundMsg": "Нажми на кнопку, чтобы получить ответ",
+  "playground": {
+    "responsePlaceholder": "Нажми на кнопку Play, чтоб получить ответ здесь",
+    "variablesTabHeader": "Переменные запроса",
+    "headersTabHeader": "HTTP Заголовки"
+  },
   "landing": {
     "hero": {
       "title": "GraphQL IDE",

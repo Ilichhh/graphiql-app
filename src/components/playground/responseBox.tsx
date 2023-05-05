@@ -44,7 +44,7 @@ export const ResponseBox = ({ response }: ResponseBoxProps) => {
   return (
     <Container>
       <ResponseSection>
-        {!response && <StartMessage>{t('playgroundMsg')}</StartMessage>}
+        {!response && <StartMessage>{t('playground.responsePlaceholder')}</StartMessage>}
         {response}
       </ResponseSection>
     </Container>
