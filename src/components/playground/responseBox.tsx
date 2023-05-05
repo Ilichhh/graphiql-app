@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
 import { useTranslation } from 'react-i18next';
+import { ResponseWindow } from './codemirror';
 
 const Container = styled.section`
   display: flex;
@@ -18,7 +19,7 @@ const ResponseSection = styled.section`
   position: relative;
   white-space: pre;
   color: ${theme.colors.textGrey};
-  padding: 20px 50px;
+  padding: 0 50px 20px;
 `;
 
 const StartMessage = styled.div`
@@ -41,11 +42,13 @@ interface ResponseBoxProps {
 }
 export const ResponseBox = ({ response }: ResponseBoxProps) => {
   const { t } = useTranslation();
+
   return (
     <Container>
       <ResponseSection>
-        {!response && <StartMessage>{t('playgroundMsg')}</StartMessage>}
-        {response}
+        <ResponseWindow value={response}>
+          {!response && <StartMessage>{t('playgroundMsg')}</StartMessage>}
+        </ResponseWindow>
       </ResponseSection>
     </Container>
   );
