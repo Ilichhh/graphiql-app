@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
+import { DocsExplorer } from './docsExplorer/docsExplorer';
+import { CodeEditor } from './codemirror';
 import { Textarea } from './textarea';
 import { DocsPanel } from './docsExplorer/docsPanel';
 
@@ -51,11 +53,12 @@ interface EditorProps {
   query: string;
   onChange: (query: string) => void;
 }
+
 export const Editor = ({ endpoint, query, onChange }: EditorProps) => {
   return (
     <Container>
       <EditorBox>
-        <Textarea query={query} onChange={onChange} />
+        <CodeEditor value={query} onChange={onChange} />
       </EditorBox>
       <EditorTools>
         <Bar>
