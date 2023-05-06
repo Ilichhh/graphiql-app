@@ -19,11 +19,11 @@ const responseTheme = vscodeDarkInit({
 
 type CodeMirrorProps = React.ComponentProps<typeof CodeMirror>;
 
-const CodeEditor = React.memo((props: CodeMirrorProps) => {
+const RequestEditor = React.memo((props: CodeMirrorProps) => {
   return <CodeMirror extensions={[graphql()]} theme={requestEditorTheme} {...props} />;
 });
 
-const VariablesEditor = React.memo((props: CodeMirrorProps) => {
+const MetadataEditor = React.memo((props: CodeMirrorProps) => {
   return <CodeMirror extensions={[graphql()]} theme={variablesEditorTheme} {...props} />;
 });
 
@@ -39,4 +39,4 @@ const ResponseWindow = React.memo((props: CodeMirrorProps) => {
   );
 });
 
-export { CodeEditor, VariablesEditor, ResponseWindow };
+export { RequestEditor, MetadataEditor, ResponseWindow };

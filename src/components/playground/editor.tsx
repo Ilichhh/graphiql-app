@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { CodeEditor, VariablesEditor } from './codemirror';
+import { RequestEditor, MetadataEditor } from './codemirror';
 import { DocsPanel } from './docsExplorer/docsPanel';
 
 import styled from 'styled-components';
@@ -14,11 +14,23 @@ const Container = styled.section`
   flex: 1 1 0;
 `;
 
-const EditorBox = styled.section`
+const EditorBox = styled.section<{ isDark: boolean }>`
   position: relative;
   display: flex;
   flex: 1 1 0;
   flex-flow: column;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ isDark }) => (isDark ? theme.colors.bgDarkBlue : theme.colors.bgBlack)};
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: ${theme.colors.bgBlue};
+  }
 `;
 
 const EditorTools = styled.section<{ isOpen: boolean }>`
@@ -71,8 +83,8 @@ export const Editor = ({ endpoint, query, setQuery, variables, setVariables }: E
 
   return (
     <Container>
-      <EditorBox>
-        <CodeEditor value={query} onChange={setQuery} />
+      <EditorBox isDark={false}>
+        <RequestEditor value={query} onChange={setQuery} />
       </EditorBox>
       <EditorTools isOpen={isEditorToolsOpen}>
         <ToolsBar onClick={() => setIsEditorToolsOpen(!isEditorToolsOpen)}>
@@ -89,7 +101,9 @@ export const Editor = ({ endpoint, query, setQuery, variables, setVariables }: E
             {t('playground.headersTabHeader')}
           </ToolsTab>
         </ToolsBar>
-        {isEditorToolsOpen && <VariablesEditor value={variables} onChange={setVariables} />}
+        <EditorBox isDark>
+          {isEditorToolsOpen && <MetadataEditor value={variables} onChange={setVariables} />}
+        </EditorBox>
       </EditorTools>
       <DocsPanel endpoint={endpoint} />
     </Container>
