@@ -1,22 +1,21 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { GraphQLField } from 'graphql/type';
 import { ReturnType } from './components/returnType';
 import { TitleBar } from './components/titleBar';
 import { Args } from './components/args';
 
-interface FieldProps {
-  field: GraphQLField<any, any>;
+interface FieldProps<T, V> {
+  field: GraphQLField<T, V>;
 }
 
-const Type = ({ field: { type } }: FieldProps) => (
+const Type = <T, V>({ field: { type } }: FieldProps<T, V>) => (
   <>
     <TitleBar title="Type" />
     <ReturnType type={type} />
   </>
 );
 
-const FieldArgs = ({ field: { args } }: FieldProps) => {
+const FieldArgs = <T, V>({ field: { args } }: FieldProps<T, V>) => {
   if (!args.length) {
     return null;
   }
@@ -29,7 +28,7 @@ const FieldArgs = ({ field: { args } }: FieldProps) => {
   );
 };
 
-export const FieldDoc = ({ field }: FieldProps) => {
+export const FieldDoc = <T, V>({ field }: FieldProps<T, V>) => {
   return (
     <>
       <Type field={field} />

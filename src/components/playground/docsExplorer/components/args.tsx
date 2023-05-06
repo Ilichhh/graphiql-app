@@ -4,10 +4,10 @@ import { ReturnType } from './returnType';
 
 interface FieldArgsProps {
   args: readonly GraphQLArgument[];
-  isFieldContext: boolean;
+  isFieldContext?: boolean;
 }
 
-export const Args = ({ args, isFieldContext }: FieldArgsProps) => {
+export const Args = ({ args, isFieldContext = false }: FieldArgsProps) => {
   if (!args.length) {
     return <></>;
   }
@@ -25,8 +25,4 @@ export const Args = ({ args, isFieldContext }: FieldArgsProps) => {
       {isFieldContext && <>)</>}
     </>
   );
-};
-
-Args.defaultProps = {
-  isFieldContext: false,
 };
