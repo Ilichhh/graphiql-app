@@ -37,6 +37,7 @@ export const PlaygroundPage = () => {
         <PlaygroundHeader onChange={setEndpoint} endpoint={endpoint} />
         <Playground>
           <Editor
+            endpoint={endpoint}
             query={query}
             setQuery={setQuery}
             variables={variables}

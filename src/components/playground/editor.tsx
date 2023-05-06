@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DocsExplorer } from './docsExplorer/docsExplorer';
 import { CodeEditor, VariablesEditor } from './codemirror';
+import { DocsPanel } from './docsExplorer/docsPanel';
 
 import styled from 'styled-components';
 import theme from '../../theme';
@@ -51,13 +51,14 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 `;
 
 interface EditorProps {
+  endpoint: string;
   query: string;
   setQuery: (query: string) => void;
   variables: string;
   setVariables: (variables: string) => void;
 }
 
-export const Editor = ({ query, setQuery, variables, setVariables }: EditorProps) => {
+export const Editor = ({ endpoint, query, setQuery, variables, setVariables }: EditorProps) => {
   const [activeToolsTab, setActiveToolsTab] = useState('variables');
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { t } = useTranslation();
@@ -90,7 +91,7 @@ export const Editor = ({ query, setQuery, variables, setVariables }: EditorProps
         </ToolsBar>
         {isEditorToolsOpen && <VariablesEditor value={variables} onChange={setVariables} />}
       </EditorTools>
-      <DocsExplorer />
+      <DocsPanel endpoint={endpoint} />
     </Container>
   );
 };
