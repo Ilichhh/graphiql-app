@@ -1,5 +1,6 @@
 import React from 'react';
 import { GraphQLType, isListType, isNonNullType } from 'graphql/type';
+import { TypeLink } from './typeLink';
 
 interface ReturnTypeProps {
   type: GraphQLType;
@@ -22,5 +23,5 @@ export const ReturnType = ({ type }: ReturnTypeProps) => {
     );
   }
 
-  return <a href="#">{type.name}</a>;
+  return <TypeLink type={type} />;
 };

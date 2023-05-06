@@ -1,6 +1,13 @@
 import React from 'react';
 import { GraphQLSchema } from 'graphql/type';
 import { TitleBar } from './components/titleBar';
+import { ReturnType } from './components/returnType';
+import styled from 'styled-components';
+import theme from '../../../theme';
+
+const Field = styled.span`
+  color: ${theme.docs.field};
+`;
 
 interface SchemaTypeProps {
   schema: GraphQLSchema;
@@ -16,17 +23,17 @@ export const SchemaDoc = ({ schema }: SchemaTypeProps) => {
       <TitleBar title="Root types" />
       {query && (
         <div>
-          query: <a href="#">{query.name}</a>
+          <Field>query</Field>: <ReturnType type={query} />
         </div>
       )}
       {mutation && (
         <div>
-          mutation: <a href="#">{mutation.name}</a>
+          <Field>mutation</Field>: <ReturnType type={mutation} />
         </div>
       )}
       {subscription && (
         <div>
-          subscription: <a href="#">{subscription.name}</a>
+          <Field>subscription</Field>: <ReturnType type={subscription} />
         </div>
       )}
     </>

@@ -1,28 +1,28 @@
 import React from 'react';
 import { GraphQLArgument } from 'graphql/type';
 import { ReturnType } from './returnType';
+import theme from '../../../../theme';
+import styled from 'styled-components';
 
 interface FieldArgsProps {
   args: readonly GraphQLArgument[];
-  isFieldContext?: boolean;
 }
 
-export const Args = ({ args, isFieldContext = false }: FieldArgsProps) => {
+const Name = styled.span`
+  color: ${theme.docs.args};
+`;
+export const Args = ({ args }: FieldArgsProps) => {
   if (!args.length) {
     return <></>;
   }
 
   return (
     <>
-      {isFieldContext && <>(</>}
-      <div style={{ padding: '0 10px' }}>
-        {args.map(({ name, type }) => (
-          <div key={name}>
-            {name}: <ReturnType type={type} />
-          </div>
-        ))}
-      </div>
-      {isFieldContext && <>)</>}
+      {args.map(({ name, type }) => (
+        <div key={name}>
+          <Name>{name}</Name>: <ReturnType type={type} />
+        </div>
+      ))}
     </>
   );
 };
