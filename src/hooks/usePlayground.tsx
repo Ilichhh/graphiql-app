@@ -1,6 +1,11 @@
 import { useCallback, useState } from 'react';
 
-import { DocumentNode, DefinitionNode, OperationDefinitionNode, GraphQLError } from 'graphql';
+import {
+  DefinitionNode,
+  OperationDefinitionNode,
+  GraphQLError,
+  VariableDefinitionNode,
+} from 'graphql';
 import { parse } from 'graphql/language';
 
 export const usePlayground = (
@@ -15,16 +20,15 @@ export const usePlayground = (
 
   const sendRequest = useCallback(() => {
     // Extract variables definitions from the parsed query
-    let parsedQuery: DocumentNode;
+    let variableDefinitions: VariableDefinitionNode[];
     try {
-      parsedQuery = parse(query);
-      const variableDefinitions = parsedQuery.definitions
+      const parsedQuery = parse(query);
+      variableDefinitions = parsedQuery.definitions
         .filter(
           (def: DefinitionNode): def is OperationDefinitionNode =>
             def.kind === 'OperationDefinition'
         )
         .flatMap((def) => def.variableDefinitions || []);
-      console.log(variableDefinitions);
     } catch (error) {
       if (error instanceof GraphQLError) {
         console.log(error);
@@ -37,7 +41,6 @@ export const usePlayground = (
     let parsedVariables: Record<string, unknown> = {};
     try {
       parsedVariables = variables ? JSON.parse(variables) : {};
-      console.log(parsedVariables);
     } catch (error) {
       if (error instanceof SyntaxError) {
         console.log(error);
@@ -46,13 +49,25 @@ export const usePlayground = (
       throw error;
     }
 
+    // Replace the variable reference in the query with its value
+    let replacedQuery = query;
+    for (const def of variableDefinitions) {
+      const variableName = def.variable.name.value;
+
+      replacedQuery = replacedQuery.replace(/(\(|\s)*\$[^\s]+\s*:\s*[^\s]+\s*(\))?/g, '');
+
+      const regex = new RegExp(`\\$${variableName}(?=[^A-Za-z0-9_]|$)`, 'g');
+      replacedQuery = replacedQuery.replace(regex, JSON.stringify(parsedVariables[variableName]));
+    }
+    console.log(replacedQuery);
+
     // Send request
     fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query: replacedQuery }),
     })
       .then((res) => res.json())
       .then((json) => JSON.stringify(json, null, 2))
