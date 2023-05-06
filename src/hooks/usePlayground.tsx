@@ -1,21 +1,29 @@
 import { useCallback, useState } from 'react';
 
-const ENDPOINT_URL = 'https://swapi-graphql.netlify.app/.netlify/functions/index';
-const INITIAL_QUERY = `query {
-  allFilms {
-    films {
-      id
-      title
-    }
-  }
-}`;
-
-export const usePlayground = () => {
-  const [endpoint, setEndpoint] = useState(ENDPOINT_URL);
-  const [query, setQuery] = useState(INITIAL_QUERY);
+export const usePlayground = (
+  initialEndpoint: string,
+  initialQuery: string,
+  initialVariables: string
+) => {
+  const [endpoint, setEndpoint] = useState(initialEndpoint);
+  const [query, setQuery] = useState(initialQuery);
+  const [variables, setVariables] = useState(initialVariables);
   const [response, setResponse] = useState('');
 
   const sendRequest = useCallback(() => {
+    let parsedVariables: Record<string, unknown> = {};
+    try {
+      parsedVariables = variables ? JSON.parse(variables) : {};
+      console.log(parsedVariables);
+    } catch (error) {
+      if (error instanceof SyntaxError) {
+        console.log(error);
+        return;
+      }
+      throw error;
+    }
+
+    // Send request
     fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -27,7 +35,7 @@ export const usePlayground = () => {
       .then((json) => JSON.stringify(json, null, 2))
       .then((str) => setResponse(str))
       .catch((error) => setResponse(error.toString()));
-  }, [endpoint, query]);
+  }, [endpoint, query, variables]);
 
-  return { endpoint, setEndpoint, query, setQuery, response, sendRequest };
+  return { endpoint, setEndpoint, query, setQuery, variables, setVariables, response, sendRequest };
 };

@@ -52,13 +52,14 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 
 interface EditorProps {
   query: string;
-  onChange: (query: string) => void;
+  setQuery: (query: string) => void;
+  variables: string;
+  setVariables: (variables: string) => void;
 }
 
-export const Editor = ({ query, onChange }: EditorProps) => {
+export const Editor = ({ query, setQuery, variables, setVariables }: EditorProps) => {
   const [activeToolsTab, setActiveToolsTab] = useState('variables');
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
-  const [variables, setVariables] = useState('');
   const { t } = useTranslation();
 
   const handleToolsTabClick = (e: React.MouseEvent, tab: string) => {
@@ -70,7 +71,7 @@ export const Editor = ({ query, onChange }: EditorProps) => {
   return (
     <Container>
       <EditorBox>
-        <CodeEditor value={query} onChange={onChange} />
+        <CodeEditor value={query} onChange={setQuery} />
       </EditorBox>
       <EditorTools isOpen={isEditorToolsOpen}>
         <ToolsBar onClick={() => setIsEditorToolsOpen(!isEditorToolsOpen)}>
@@ -87,9 +88,7 @@ export const Editor = ({ query, onChange }: EditorProps) => {
             {t('playground.headersTabHeader')}
           </ToolsTab>
         </ToolsBar>
-        {isEditorToolsOpen && (
-          <VariablesEditor value={variables} onChange={(value) => setVariables(value)} />
-        )}
+        {isEditorToolsOpen && <VariablesEditor value={variables} onChange={setVariables} />}
       </EditorTools>
       <DocsExplorer />
     </Container>
