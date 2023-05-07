@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
-import theme from './theme';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';

@@ -6,10 +6,14 @@ import React from 'react';
 const Title = styled.span`
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0;
   font-size: 1rem;
   font-weight: 500;
   color: ${theme.colors.textInactive};
+`;
+
+const Content = styled.div`
+  margin-bottom: 10px;
 `;
 
 interface TitleBarProps {
@@ -18,9 +22,9 @@ interface TitleBarProps {
 
 export const TitleBar = ({ title }: TitleBarProps) => {
   return (
-    <>
+    <Content>
       <Title>{title}</Title>
       <Divider />
-    </>
+    </Content>
   );
 };

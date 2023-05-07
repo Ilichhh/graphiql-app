@@ -21,7 +21,7 @@ const ExplorerWrapper = styled.div`
   &:before {
     content: '';
     display: block;
-    background-color: ${theme.colors.borderDocs};
+    background-color: ${theme.docs.border};
     width: 7px;
     height: 100%;
   }
@@ -33,6 +33,7 @@ const ExplorerContent = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
+  margin: 0 10px 10px 15px;
 `;
 
 const ExplorerTitle = styled.h1`

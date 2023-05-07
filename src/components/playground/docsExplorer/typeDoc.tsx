@@ -13,6 +13,7 @@ import {
 import { ReturnType } from './components/returnType';
 import { Field } from './components/field';
 import { TitleBar } from './components/titleBar';
+import styled from 'styled-components';
 
 interface TypeProps {
   type: GraphQLType;
@@ -103,18 +104,23 @@ const ImplementedBy = ({ schema, type }: TypeWithSchemaProps) => {
   );
 };
 
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
 export const TypeDoc = ({ schema, type }: TypeWithSchemaProps) => {
   if (!isNamedType(type)) {
     return null;
   }
 
   return (
-    <>
+    <Content>
       <Description type={type} />
       <Implements type={type} />
       <Fields type={type} />
       <EnumValues type={type} />
       <ImplementedBy schema={schema} type={type} />
-    </>
+    </Content>
   );
 };
