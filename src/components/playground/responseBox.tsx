@@ -60,7 +60,7 @@ export const ResponseBox = ({ response }: ResponseBoxProps) => {
     <Container>
       <ResponseSection>
         <ResponseWindow value={response}>
-          {!response && <StartMessage>{t('playgroundMsg')}</StartMessage>}
+          {!response && <StartMessage>{t('playground.responsePlaceholder')}</StartMessage>}
         </ResponseWindow>
       </ResponseSection>
     </Container>
