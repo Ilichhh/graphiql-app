@@ -105,6 +105,9 @@ export const Editor = ({
   const handleToolsTabResize = () => {
     if (isEditorToolsOpen) {
       handleResize();
+    } else {
+      setIsEditorToolsOpen(true);
+      handleResize();
     }
   };
 

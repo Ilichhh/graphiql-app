@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { JSONParser } from '../utils/JSONparser';
 
 export const usePlayground = (
   initialEndpoint: string,
@@ -12,19 +13,8 @@ export const usePlayground = (
   const [response, setResponse] = useState('');
 
   const sendRequest = useCallback(() => {
-    let parsedVariables: Record<string, unknown> = {};
-    let parsedHeaders: Record<string, unknown> = {};
-
-    try {
-      parsedVariables = variables ? JSON.parse(variables) : {};
-      parsedHeaders = headers ? JSON.parse(headers) : {};
-    } catch (error) {
-      if (error instanceof SyntaxError) {
-        console.error(error);
-        return;
-      }
-      throw error;
-    }
+    const parsedVariables = JSONParser(variables);
+    const parsedHeaders = JSONParser(headers);
 
     fetch(endpoint, {
       method: 'POST',

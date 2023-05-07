@@ -20,5 +20,5 @@ export const useVerticalResize = (initialHeight: number) => {
     document.addEventListener('mouseup', handleMouseUp);
   }, [handleMouseMove, handleMouseUp]);
 
-  return { panelHeight, handleResize, isDragging };
+  return { panelHeight, setPanelHeight, handleResize, isDragging };
 };
