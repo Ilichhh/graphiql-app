@@ -38,7 +38,8 @@ const EditorTools = styled.section<{ isOpen: boolean; height: number }>`
   display: flex;
   background: ${theme.colors.bgBlack};
   flex-direction: column;
-  max-height: 100%;
+  min-height: 50px;
+  max-height: calc(100vh - 200px);
   ${({ isOpen, height }) => isOpen && `height: ${height}px`};
 `;
 
