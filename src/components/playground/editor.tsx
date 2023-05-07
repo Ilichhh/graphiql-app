@@ -85,7 +85,7 @@ export const Editor = ({ schema, query, setQuery, variables, setVariables }: Edi
   return (
     <Container>
       <EditorBox isDark={false}>
-        <RequestEditor value={query} onChange={setQuery} />
+        <RequestEditor value={query} onChange={setQuery} schema={schema} />
       </EditorBox>
       <EditorTools isOpen={isEditorToolsOpen}>
         <ToolsBar onClick={() => setIsEditorToolsOpen(!isEditorToolsOpen)}>

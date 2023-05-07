@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import CodeMirror, { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { graphql, updateSchema } from 'cm6-graphql';
+import { GraphQLSchema } from 'graphql/type';
 
 import theme from '../../theme';
-import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
 
 const requestEditorTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgDarkBlue, gutterBackground: '#0f202d' },
@@ -18,17 +18,21 @@ const responseTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgBlue },
 });
 
-type CodeMirrorProps = React.ComponentProps<typeof CodeMirror>;
+type SchemaProps = {
+  schema?: GraphQLSchema;
+};
+
+type CodeMirrorProps = React.ComponentProps<typeof CodeMirror> & SchemaProps;
 
 const RequestEditor = React.memo((props: CodeMirrorProps) => {
-  const schema = useGraphQLSchema('https://swapi-graphql.netlify.app/.netlify/functions/index');
-  const refs = React.useRef<ReactCodeMirrorRef>({});
-  React.useEffect(() => {
+  const refs = useRef<ReactCodeMirrorRef>({});
+
+  useEffect(() => {
     const view = refs.current.view;
     if (!view) return;
 
-    updateSchema(view, schema);
-  }, [refs, schema]);
+    updateSchema(view, props.schema);
+  }, [refs, props.schema]);
 
   return <CodeMirror ref={refs} extensions={[graphql()]} theme={requestEditorTheme} {...props} />;
 });
