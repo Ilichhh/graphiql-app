@@ -37,7 +37,7 @@ const Description = ({ type }: { type: GraphQLNamedType }) => {
 };
 
 const Implements = ({ type }: TypeProps) => {
-  if (!isObjectType(type)) {
+  if (!isObjectType(type) || !type.getInterfaces().length) {
     return null;
   }
 

@@ -10,6 +10,7 @@ interface FieldArgsProps {
 
 const Name = styled.span`
   color: ${theme.docs.args};
+  padding-bottom: 10px;
 `;
 export const Args = ({ args }: FieldArgsProps) => {
   if (!args.length) {
