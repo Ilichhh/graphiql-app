@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import CodeMirror, { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { graphql, updateSchema } from 'cm6-graphql';
-import { GraphQLSchema } from 'graphql/type';
 
 import theme from '../../theme';
+import { SchemaContext } from '../../contexts';
 
 const requestEditorTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgDarkBlue, gutterBackground: '#0f202d' },
@@ -18,27 +18,24 @@ const responseTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgBlue },
 });
 
-type SchemaProps = {
-  schema?: GraphQLSchema;
-};
-
-type CodeMirrorProps = React.ComponentProps<typeof CodeMirror> & SchemaProps;
+type CodeMirrorProps = React.ComponentProps<typeof CodeMirror>;
 
 const RequestEditor = React.memo((props: CodeMirrorProps) => {
   const refs = useRef<ReactCodeMirrorRef>({});
+  const schema = useContext(SchemaContext);
 
   useEffect(() => {
     const view = refs.current.view;
     if (!view) return;
 
-    updateSchema(view, props.schema);
-  }, [refs, props.schema]);
+    updateSchema(view, schema);
+  }, [refs, schema]);
 
   return <CodeMirror ref={refs} extensions={[graphql()]} theme={requestEditorTheme} {...props} />;
 });
 
 const MetadataEditor = React.memo((props: CodeMirrorProps) => {
-  return <CodeMirror extensions={[graphql()]} theme={variablesEditorTheme} {...props} />;
+  return <CodeMirror theme={variablesEditorTheme} {...props} />;
 });
 
 const ResponseWindow = React.memo((props: CodeMirrorProps) => {

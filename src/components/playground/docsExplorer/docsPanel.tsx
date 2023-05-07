@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { GraphQLSchema } from 'graphql/type';
 import styled from 'styled-components';
 import { DocsTab } from './docsTab';
 import { Explorer } from './explorer';
@@ -20,16 +19,12 @@ const DocsPanelWrapper = styled.div<ExplorerWrapperProps>`
   }
 `;
 
-interface DocsPanelProps {
-  schema?: GraphQLSchema;
-}
-
-export const DocsPanel = ({ schema }: DocsPanelProps) => {
+export const DocsPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <DocsPanelWrapper isOpen={isOpen}>
-      <Explorer schema={schema} />
+      <Explorer />
       <DocsTab
         isOpen={isOpen}
         onChange={() => {

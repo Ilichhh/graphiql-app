@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GraphQLSchema } from 'graphql/type';
 
 import { RequestEditor, MetadataEditor } from './codemirror';
 import { DocsPanel } from './docsExplorer/docsPanel';
-
 import styled from 'styled-components';
 import theme from '../../theme';
 
@@ -64,14 +62,13 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 `;
 
 interface EditorProps {
-  schema?: GraphQLSchema;
   query: string;
   setQuery: (query: string) => void;
   variables: string;
   setVariables: (variables: string) => void;
 }
 
-export const Editor = ({ schema, query, setQuery, variables, setVariables }: EditorProps) => {
+export const Editor = ({ query, setQuery, variables, setVariables }: EditorProps) => {
   const [activeToolsTab, setActiveToolsTab] = useState('variables');
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { t } = useTranslation();
@@ -85,7 +82,7 @@ export const Editor = ({ schema, query, setQuery, variables, setVariables }: Edi
   return (
     <Container>
       <EditorBox isDark={false}>
-        <RequestEditor value={query} onChange={setQuery} schema={schema} />
+        <RequestEditor value={query} onChange={setQuery} />
       </EditorBox>
       <EditorTools isOpen={isEditorToolsOpen}>
         <ToolsBar onClick={() => setIsEditorToolsOpen(!isEditorToolsOpen)}>
@@ -106,7 +103,7 @@ export const Editor = ({ schema, query, setQuery, variables, setVariables }: Edi
           {isEditorToolsOpen && <MetadataEditor value={variables} onChange={setVariables} />}
         </EditorBox>
       </EditorTools>
-      <DocsPanel schema={schema} />
+      <DocsPanel />
     </Container>
   );
 };
