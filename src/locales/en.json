@@ -20,7 +20,11 @@
     "passwordInput": "Enter password",
     "passwordInputConfirm": "Confirm password"
   },
-  "playgroundMsg": "Hit the Play Button to get a response here",
+  "playground": {
+    "responsePlaceholder": "Hit the Play Button to get a response here",
+    "variablesTabHeader": "Query Variables",
+    "headersTabHeader": "HTTP Headers"
+  },
   "landing": {
     "hero": {
       "title": "GraphQL IDE",

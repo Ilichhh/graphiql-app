@@ -1,9 +1,13 @@
 import React from 'react';
+import { usePlayground } from '../hooks/usePlayground';
+
+import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
+import { Header } from '../components';
+
 import styled from 'styled-components';
 import theme from '../theme';
-import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
-import { usePlayground } from '../hooks/usePlayground';
-import { Header } from '../components';
+
+import { INITIAL_ENDPOINT_URL, INITIAL_QUERY } from '../constants';
 
 const Wrapper = styled.main`
   position: relative;
@@ -23,15 +27,22 @@ const Playground = styled.div`
 `;
 
 export const PlaygroundPage = () => {
-  const { endpoint, setEndpoint, query, setQuery, response, sendRequest } = usePlayground();
+  const { endpoint, setEndpoint, query, setQuery, response, sendRequest, variables, setVariables } =
+    usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
 
   return (
     <>
       <Header currentPage="playground" />
       <Wrapper>
-        <PlaygroundHeader onChange={(url) => setEndpoint(url)} endpoint={endpoint} />
+        <PlaygroundHeader onChange={setEndpoint} endpoint={endpoint} />
         <Playground>
-          <Editor endpoint={endpoint} query={query} onChange={(q) => setQuery(q)} />
+          <Editor
+            endpoint={endpoint}
+            query={query}
+            setQuery={setQuery}
+            variables={variables}
+            setVariables={setVariables}
+          />
           <PlayButton onClick={sendRequest} />
           <ResponseBox response={response} />
         </Playground>
