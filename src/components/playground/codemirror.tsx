@@ -9,7 +9,7 @@ const requestEditorTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgDarkBlue, gutterBackground: '#0f202d' },
 });
 
-const variablesEditorTheme = vscodeDarkInit({
+const metadataEditorTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgBlack, gutterBackground: theme.colors.bgBlack },
 });
 
@@ -24,7 +24,7 @@ const RequestEditor = React.memo((props: CodeMirrorProps) => {
 });
 
 const MetadataEditor = React.memo((props: CodeMirrorProps) => {
-  return <CodeMirror extensions={[graphql()]} theme={variablesEditorTheme} {...props} />;
+  return <CodeMirror extensions={[graphql()]} theme={metadataEditorTheme} {...props} />;
 });
 
 const ResponseWindow = React.memo((props: CodeMirrorProps) => {

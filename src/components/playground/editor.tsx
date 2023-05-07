@@ -68,9 +68,19 @@ interface EditorProps {
   setQuery: (query: string) => void;
   variables: string;
   setVariables: (variables: string) => void;
+  headers: string;
+  setHeaders: (headers: string) => void;
 }
 
-export const Editor = ({ endpoint, query, setQuery, variables, setVariables }: EditorProps) => {
+export const Editor = ({
+  endpoint,
+  query,
+  setQuery,
+  variables,
+  setVariables,
+  headers,
+  setHeaders,
+}: EditorProps) => {
   const [activeToolsTab, setActiveToolsTab] = useState('variables');
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { t } = useTranslation();
@@ -102,7 +112,12 @@ export const Editor = ({ endpoint, query, setQuery, variables, setVariables }: E
           </ToolsTab>
         </ToolsBar>
         <EditorBox isDark>
-          {isEditorToolsOpen && <MetadataEditor value={variables} onChange={setVariables} />}
+          {isEditorToolsOpen && (
+            <MetadataEditor
+              value={activeToolsTab === 'variables' ? variables : headers}
+              onChange={activeToolsTab === 'variables' ? setVariables : setHeaders}
+            />
+          )}
         </EditorBox>
       </EditorTools>
       <DocsPanel endpoint={endpoint} />
