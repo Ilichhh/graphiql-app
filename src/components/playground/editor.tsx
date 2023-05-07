@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVerticalResize } from '../../hooks/useVerticalResize';
 
@@ -88,6 +88,7 @@ export const Editor = ({
   const [activeToolsTab, setActiveToolsTab] = useState('variables');
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { panelHeight, handleResize, isDragging } = useVerticalResize(300);
+  const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
 
   const handleToolsTabClick = (e: React.MouseEvent, tab: string) => {
@@ -111,6 +112,20 @@ export const Editor = ({
     }
   };
 
+  useEffect(() => {
+    try {
+      const parsedHeaders = JSON.parse(headers);
+      if (parsedHeaders && typeof parsedHeaders === 'object') {
+        setHeadersLength(Object.keys(parsedHeaders).length);
+      } else {
+        setHeadersLength(0);
+      }
+    } catch (error) {
+      setHeadersLength(0);
+    }
+    console.log(headersLength);
+  }, [headers, headersLength]);
+
   return (
     <Container>
       <EditorBox isDark={false}>
@@ -128,7 +143,7 @@ export const Editor = ({
             isActive={activeToolsTab === 'headers'}
             onClick={(e) => handleToolsTabClick(e, 'headers')}
           >
-            {t('playground.headersTabHeader')}
+            {t('playground.headersTabHeader')} {headersLength ? `(${headersLength})` : null}
           </ToolsTab>
         </ToolsBar>
         <EditorBox isDark>

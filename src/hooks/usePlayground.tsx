@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { JSONParser } from '../utils/JSONparser';
+import { JSONParser } from '../utils/JSONParser';
 
 export const usePlayground = (
   initialEndpoint: string,
