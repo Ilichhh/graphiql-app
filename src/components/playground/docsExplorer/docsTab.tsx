@@ -19,7 +19,7 @@ const Tab = styled.div<TabProps>`
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: white;
-  background: ${({ isOpen }) => (isOpen ? theme.colors.borderDocs : theme.colors.bgDocsTab)};
+  background: ${({ isOpen }) => (isOpen ? theme.docs.border : theme.docs.bgTab)};
   transform: rotate(-90deg);
   transform-origin: left bottom;
   cursor: pointer;
