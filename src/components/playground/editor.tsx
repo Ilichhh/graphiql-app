@@ -4,7 +4,6 @@ import { useVerticalResize } from '../../hooks/useVerticalResize';
 
 import { RequestEditor, MetadataEditor } from './codemirror';
 import { DocsPanel } from './docsExplorer/docsPanel';
-
 import styled from 'styled-components';
 import theme from '../../theme';
 
@@ -67,7 +66,6 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 `;
 
 interface EditorProps {
-  endpoint: string;
   query: string;
   setQuery: (query: string) => void;
   variables: string;
@@ -77,7 +75,6 @@ interface EditorProps {
 }
 
 export const Editor = ({
-  endpoint,
   query,
   setQuery,
   variables,
@@ -155,7 +152,7 @@ export const Editor = ({
           )}
         </EditorBox>
       </EditorTools>
-      <DocsPanel endpoint={endpoint} />
+      <DocsPanel />
     </Container>
   );
 };
