@@ -33,7 +33,7 @@ const ExplorerContent = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  padding: 0 10px 10px 15px;
+  margin: 0 10px 10px 15px;
 `;
 
 const ExplorerTitle = styled.h1`

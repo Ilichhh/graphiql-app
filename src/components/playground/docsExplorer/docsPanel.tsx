@@ -13,7 +13,6 @@ const DocsPanelWrapper = styled.div<ExplorerWrapperProps>`
   right: 0;
   z-index: 15;
   width: ${(props) => (props.isOpen ? '420px' : 0)};
-  min-width: 250px;
   height: 100%;
   @media (max-width: 600px) {
     width: ${(props) => (props.isOpen ? '250px' : 0)};
