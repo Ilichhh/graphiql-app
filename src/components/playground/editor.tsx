@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { RequestEditor, MetadataEditor } from './codemirror';
 import { DocsPanel } from './docsExplorer/docsPanel';
-
 import styled from 'styled-components';
 import theme from '../../theme';
 
@@ -63,14 +62,13 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 `;
 
 interface EditorProps {
-  endpoint: string;
   query: string;
   setQuery: (query: string) => void;
   variables: string;
   setVariables: (variables: string) => void;
 }
 
-export const Editor = ({ endpoint, query, setQuery, variables, setVariables }: EditorProps) => {
+export const Editor = ({ query, setQuery, variables, setVariables }: EditorProps) => {
   const [activeToolsTab, setActiveToolsTab] = useState('variables');
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { t } = useTranslation();
@@ -105,7 +103,7 @@ export const Editor = ({ endpoint, query, setQuery, variables, setVariables }: E
           {isEditorToolsOpen && <MetadataEditor value={variables} onChange={setVariables} />}
         </EditorBox>
       </EditorTools>
-      <DocsPanel endpoint={endpoint} />
+      <DocsPanel />
     </Container>
   );
 };

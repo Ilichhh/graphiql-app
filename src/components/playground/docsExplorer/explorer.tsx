@@ -1,11 +1,11 @@
-import { Divider } from '@mui/material';
 import React, { ReactNode, useContext } from 'react';
+import { Divider } from '@mui/material';
 import styled from 'styled-components';
-import theme from '../../../theme';
-import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
 import { SchemaDoc } from './schemaDoc';
 import { TypeDoc } from './typeDoc';
 import { FieldDoc } from './fieldDoc';
+import theme from '../../../theme';
+import { SchemaContext } from '../../../contexts';
 import { isInputType, isNamedType } from 'graphql/type';
 import { DocsNavContext } from './docsContext';
 import { ExplorerTitleBar } from './components/ExplorerTitleBar';
@@ -37,12 +37,8 @@ const ExplorerContent = styled.div`
   margin: 0 10px 10px 15px;
 `;
 
-interface ExplorerProps {
-  endpoint: string;
-}
-
-export const Explorer = ({ endpoint }: ExplorerProps) => {
-  const schema = useGraphQLSchema(endpoint);
+export const Explorer = () => {
+  const schema = useContext(SchemaContext);
   const { getCurrent, isSchemaDoc } = useContext(DocsNavContext);
 
   if (!schema) {
