@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import theme from '../theme';
 
 import { INITIAL_ENDPOINT_URL, INITIAL_QUERY } from '../constants';
+import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
 
 const Wrapper = styled.main`
   position: relative;
@@ -29,6 +30,7 @@ const Playground = styled.div`
 export const PlaygroundPage = () => {
   const { endpoint, setEndpoint, query, setQuery, response, sendRequest, variables, setVariables } =
     usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
+  const schema = useGraphQLSchema(endpoint);
 
   return (
     <>
@@ -37,11 +39,11 @@ export const PlaygroundPage = () => {
         <PlaygroundHeader onChange={setEndpoint} endpoint={endpoint} />
         <Playground>
           <Editor
-            endpoint={endpoint}
             query={query}
             setQuery={setQuery}
             variables={variables}
             setVariables={setVariables}
+            schema={schema}
           />
           <PlayButton onClick={sendRequest} />
           <ResponseBox response={response} />

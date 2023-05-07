@@ -1,11 +1,10 @@
 import React from 'react';
 import CodeMirror, { ReactCodeMirrorRef } from '@uiw/react-codemirror';
+import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { graphql, updateSchema } from 'cm6-graphql';
-import { EditorView } from '@codemirror/view';
+
 import theme from '../../theme';
 import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
-
-import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 
 const requestEditorTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgDarkBlue, gutterBackground: '#0f202d' },
@@ -30,6 +29,7 @@ const RequestEditor = React.memo((props: CodeMirrorProps) => {
 
     updateSchema(view, schema);
   }, [refs, schema]);
+
   return <CodeMirror ref={refs} extensions={[graphql()]} theme={requestEditorTheme} {...props} />;
 });
 

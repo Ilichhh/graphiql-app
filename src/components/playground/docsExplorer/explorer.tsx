@@ -1,12 +1,11 @@
-import { Divider } from '@mui/material';
 import React from 'react';
+import { Divider } from '@mui/material';
 import styled from 'styled-components';
-import theme from '../../../theme';
-import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
+import { GraphQLObjectType, GraphQLSchema } from 'graphql/type';
 import { SchemaDoc } from './schemaDoc';
 import { TypeDoc } from './typeDoc';
 import { FieldDoc } from './fieldDoc';
-import { GraphQLObjectType } from 'graphql/type';
+import theme from '../../../theme';
 
 const ExplorerWrapper = styled.div`
   position: absolute;
@@ -46,12 +45,10 @@ const ExplorerTitle = styled.h1`
 `;
 
 interface ExplorerProps {
-  endpoint: string;
+  schema?: GraphQLSchema;
 }
 
-export const Explorer = ({ endpoint }: ExplorerProps) => {
-  const schema = useGraphQLSchema(endpoint);
-
+export const Explorer = ({ schema }: ExplorerProps) => {
   // examples
   const objectType = schema?.getType('Film') as GraphQLObjectType | null;
   const fieldMap = objectType
