@@ -1,12 +1,12 @@
+import React, { useContext } from 'react';
 import { Divider } from '@mui/material';
-import React from 'react';
 import styled from 'styled-components';
-import theme from '../../../theme';
-import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
+import { GraphQLObjectType } from 'graphql/type';
 import { SchemaDoc } from './schemaDoc';
 import { TypeDoc } from './typeDoc';
 import { FieldDoc } from './fieldDoc';
-import { GraphQLObjectType } from 'graphql/type';
+import theme from '../../../theme';
+import { SchemaContext } from '../../../contexts';
 
 const ExplorerWrapper = styled.div`
   position: absolute;
@@ -45,12 +45,8 @@ const ExplorerTitle = styled.h1`
   letter-spacing: 0.3px;
 `;
 
-interface ExplorerProps {
-  endpoint: string;
-}
-
-export const Explorer = ({ endpoint }: ExplorerProps) => {
-  const schema = useGraphQLSchema(endpoint);
+export const Explorer = () => {
+  const schema = useContext(SchemaContext);
 
   // examples
   const objectType = schema?.getType('Film') as GraphQLObjectType | null;
