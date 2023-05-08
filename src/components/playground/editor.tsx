@@ -7,6 +7,8 @@ import { DocsPanel } from './docsExplorer/docsPanel';
 import styled from 'styled-components';
 import theme from '../../theme';
 import { Tab } from '../../types';
+import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
+import { set } from './querySlice';
 
 const Container = styled.section`
   display: flex;
@@ -67,27 +69,20 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 `;
 
 interface EditorProps {
-  query: string;
-  setQuery: (query: string) => void;
   variables: string;
   setVariables: (variables: string) => void;
   headers: string;
   setHeaders: (headers: string) => void;
 }
 
-export const Editor = ({
-  query,
-  setQuery,
-  variables,
-  setVariables,
-  headers,
-  setHeaders,
-}: EditorProps) => {
+export const Editor = ({ variables, setVariables, headers, setHeaders }: EditorProps) => {
+  const query = useAppSelector((state) => state.query);
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { panelHeight, handleResize, isDragging } = useVerticalResize(300);
   const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const handleToolsTabClick = useCallback(
     (e: React.MouseEvent, tab: Tab) => {
@@ -122,7 +117,7 @@ export const Editor = ({
   return (
     <Container>
       <EditorBox isDark={false}>
-        <RequestEditor value={query} onChange={setQuery} />
+        <RequestEditor value={query} onChange={(value) => dispatch(set(value))} />
       </EditorBox>
       <EditorTools height={panelHeight} isOpen={isEditorToolsOpen}>
         <ToolsBar onMouseDown={handleToolsTabResize} onMouseUp={handleToolsTabToggle}>

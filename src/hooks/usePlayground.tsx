@@ -1,12 +1,9 @@
 import { useCallback, useState } from 'react';
+import { useAppSelector } from './reduxTypedHooks';
 
-export const usePlayground = (
-  initialEndpoint: string,
-  initialQuery: string,
-  initialVariables: string
-) => {
-  const [endpoint, setEndpoint] = useState(initialEndpoint);
-  const [query, setQuery] = useState(initialQuery);
+export const usePlayground = (initialVariables: string) => {
+  const endpoint = useAppSelector((state) => state.endpoint);
+  const query = useAppSelector((state) => state.query);
   const [variables, setVariables] = useState(initialVariables);
   const [headers, setHeaders] = useState('');
   const [response, setResponse] = useState('');
@@ -41,10 +38,6 @@ export const usePlayground = (
   }, [endpoint, query, variables, headers]);
 
   return {
-    endpoint,
-    setEndpoint,
-    query,
-    setQuery,
     variables,
     setVariables,
     headers,
