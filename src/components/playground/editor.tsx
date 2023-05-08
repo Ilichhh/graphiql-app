@@ -2,13 +2,13 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { RequestEditor, MetadataEditor } from '../codemirror';
-import { DocsPanel } from '../docsExplorer/docsPanel';
-import { Tab } from '../../../types';
-import theme from '../../../theme';
-import { useVerticalResize } from '../../../hooks/useVerticalResize';
-import { useAppSelector, useAppDispatch } from '../../../hooks/reduxTypedHooks';
-import { setQuery, setVariables, setHeaders } from './editorSlice';
+import { RequestEditor, MetadataEditor } from './codemirror';
+import { DocsPanel } from './docsExplorer/docsPanel';
+import { Tab } from '../../types';
+import theme from '../../theme';
+import { useVerticalResize } from '../../hooks/useVerticalResize';
+import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
+import { setQuery, setVariables, setHeaders } from '../../store/editorSlice';
 
 const Container = styled.section`
   display: flex;

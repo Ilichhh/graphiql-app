@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../../hooks/reduxTypedHooks';
-import theme from '../../../theme';
-import { set } from './endpointSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
+import theme from '../../theme';
+import { set } from '../../store/endpointSlice';
 
 const Header = styled.header`
   display: flex;
