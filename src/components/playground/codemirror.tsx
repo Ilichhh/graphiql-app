@@ -11,7 +11,11 @@ const requestEditorTheme = vscodeDarkInit({
 });
 
 const metadataEditorTheme = vscodeDarkInit({
-  settings: { background: theme.colors.bgBlack, gutterBackground: theme.colors.bgBlack },
+  settings: {
+    background: theme.colors.bgBlack,
+    gutterBackground: theme.colors.bgBlack,
+    lineHighlight: theme.colors.bgBlack,
+  },
 });
 
 const responseTheme = vscodeDarkInit({
