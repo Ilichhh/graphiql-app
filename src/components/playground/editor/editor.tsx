@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useVerticalResize } from '../../../hooks/useVerticalResize';
+import styled from 'styled-components';
 
 import { RequestEditor, MetadataEditor } from '../codemirror';
 import { DocsPanel } from '../docsExplorer/docsPanel';
-import styled from 'styled-components';
 import { Tab } from '../../../types';
 import theme from '../../../theme';
+import { useVerticalResize } from '../../../hooks/useVerticalResize';
 import { useAppSelector, useAppDispatch } from '../../../hooks/reduxTypedHooks';
-import { set } from './querySlice';
+import { setQuery, setVariables, setHeaders } from './editorSlice';
 
 const Container = styled.section`
   display: flex;
@@ -75,8 +75,8 @@ interface EditorProps {
   setHeaders: (headers: string) => void;
 }
 
-export const Editor = ({ variables, setVariables, headers, setHeaders }: EditorProps) => {
-  const query = useAppSelector((state) => state.query);
+export const Editor = () => {
+  const { query, headers, variables } = useAppSelector((state) => state.editor);
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { panelHeight, handleResize, isDragging } = useVerticalResize(300);
@@ -117,7 +117,7 @@ export const Editor = ({ variables, setVariables, headers, setHeaders }: EditorP
   return (
     <Container>
       <EditorBox isDark={false}>
-        <RequestEditor value={query} onChange={(value) => dispatch(set(value))} />
+        <RequestEditor value={query} onChange={(value) => dispatch(setQuery(value))} />
       </EditorBox>
       <EditorTools height={panelHeight} isOpen={isEditorToolsOpen}>
         <ToolsBar onMouseDown={handleToolsTabResize} onMouseUp={handleToolsTabToggle}>
@@ -137,7 +137,11 @@ export const Editor = ({ variables, setVariables, headers, setHeaders }: EditorP
         <EditorBox isDark>
           <MetadataEditor
             value={activeToolsTab === 'variables' ? variables : headers}
-            onChange={activeToolsTab === 'variables' ? setVariables : setHeaders}
+            onChange={(value) =>
+              activeToolsTab === 'variables'
+                ? dispatch(setVariables(value))
+                : dispatch(setHeaders(value))
+            }
           />
         </EditorBox>
       </EditorTools>

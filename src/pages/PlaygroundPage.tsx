@@ -30,7 +30,7 @@ const Playground = styled.div`
 
 export const PlaygroundPage = () => {
   const endpoint = useAppSelector((store) => store.endpoint);
-  const { response, sendRequest, variables, setVariables, headers, setHeaders } = usePlayground('');
+  const { response, sendRequest } = usePlayground();
   const schema = useGraphQLSchema(endpoint);
 
   return (
@@ -40,12 +40,7 @@ export const PlaygroundPage = () => {
         <PlaygroundHeader />
         <SchemaContext.Provider value={schema}>
           <Playground>
-            <Editor
-              variables={variables}
-              setVariables={setVariables}
-              headers={headers}
-              setHeaders={setHeaders}
-            />
+            <Editor />
             <PlayButton onClick={sendRequest} />
             <ResponseBox response={response} />
           </Playground>

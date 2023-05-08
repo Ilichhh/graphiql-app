@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import endpointReducer from './components/playground/header/endpointSlice';
-import querySlice from './components/playground/editor/querySlice';
+import editorSlice from './components/playground/editor/editorSlice';
 
 export const store = configureStore({
   reducer: {
     endpoint: endpointReducer,
-    query: querySlice,
+    editor: editorSlice,
   },
 });
 
