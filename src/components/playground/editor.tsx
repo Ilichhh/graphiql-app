@@ -136,12 +136,10 @@ export const Editor = ({
           </ToolsTab>
         </ToolsBar>
         <EditorBox isDark>
-          {isEditorToolsOpen && (
-            <MetadataEditor
-              value={activeToolsTab === 'variables' ? variables : headers}
-              onChange={activeToolsTab === 'variables' ? setVariables : setHeaders}
-            />
-          )}
+          <MetadataEditor
+            value={activeToolsTab === 'variables' ? variables : headers}
+            onChange={activeToolsTab === 'variables' ? setVariables : setHeaders}
+          />
         </EditorBox>
       </EditorTools>
       <DocsPanel />

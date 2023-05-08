@@ -14,7 +14,7 @@ const metadataEditorTheme = vscodeDarkInit({
   settings: {
     background: theme.colors.bgBlack,
     gutterBackground: theme.colors.bgBlack,
-    lineHighlight: theme.colors.bgBlack,
+    lineHighlight: theme.colors.bgDarkBlue,
   },
 });
 
