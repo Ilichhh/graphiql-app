@@ -37,7 +37,7 @@ export const PlaygroundPage = () => {
     <>
       <Header currentPage="playground" />
       <Wrapper>
-        <PlaygroundHeader onChange={setEndpoint} endpoint={endpoint} />
+        <PlaygroundHeader setEndpoint={setEndpoint} endpoint={endpoint} />
         <SchemaContext.Provider value={schema}>
           <Playground>
             <Editor
