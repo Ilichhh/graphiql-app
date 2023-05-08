@@ -20,7 +20,7 @@ export const usePlayground = (
       parsedHeaders = headers ? JSON.parse(headers) : {};
     } catch (error) {
       if (error instanceof SyntaxError) {
-        console.log(error);
+        console.error(error);
         return;
       }
       throw error;
