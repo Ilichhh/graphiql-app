@@ -6,7 +6,7 @@ import React from 'react';
 const Title = styled.span`
   display: flex;
   align-items: center;
-  padding: 10px 0;
+  padding: 20px 0 10px 0;
   font-size: 1rem;
   font-weight: 500;
   color: ${theme.colors.textInactive};

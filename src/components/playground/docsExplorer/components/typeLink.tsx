@@ -1,7 +1,8 @@
 import { GraphQLType, isNamedType } from 'graphql/type';
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import theme from '../../../../theme';
+import { DocsNavContext } from '../docsContext';
 
 interface TypeLinkProps {
   type: GraphQLType;
@@ -15,9 +16,17 @@ const Link = styled.span`
   }
 `;
 export const TypeLink = ({ type }: TypeLinkProps) => {
+  const { push } = useContext(DocsNavContext);
+
   if (!isNamedType(type)) {
     return null;
   }
+  const pushItem = () => {
+    push({
+      name: type.name,
+      data: type,
+    });
+  };
 
-  return <Link>{type.name}</Link>;
+  return <Link onClick={pushItem}>{type.name}</Link>;
 };
