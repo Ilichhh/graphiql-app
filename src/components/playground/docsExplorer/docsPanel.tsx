@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { DocsTab } from './docsTab';
 import { Explorer } from './explorer';
+import { DocsNavProvider } from './docsContext';
 
 interface ExplorerWrapperProps {
   isOpen: boolean;
@@ -24,13 +25,15 @@ export const DocsPanel = () => {
 
   return (
     <DocsPanelWrapper isOpen={isOpen}>
-      <Explorer />
-      <DocsTab
-        isOpen={isOpen}
-        onChange={() => {
-          setIsOpen((prev) => !prev);
-        }}
-      />
+      <DocsNavProvider>
+        <Explorer />
+        <DocsTab
+          isOpen={isOpen}
+          onChange={() => {
+            setIsOpen((prev) => !prev);
+          }}
+        />
+      </DocsNavProvider>
     </DocsPanelWrapper>
   );
 };
