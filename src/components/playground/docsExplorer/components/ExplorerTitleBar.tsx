@@ -7,6 +7,7 @@ import theme from '../../../../theme';
 const Bar = styled.div<{ hasPreviousName: boolean }>`
   display: flex;
   align-items: center;
+  gap: 10px;
   text-align: ${({ hasPreviousName }) => (hasPreviousName ? 'left' : 'center')};
   padding: 10px 0;
   width: 100%;
@@ -30,6 +31,8 @@ const Title = styled.h1`
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.3px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const ExplorerTitleBar = () => {
