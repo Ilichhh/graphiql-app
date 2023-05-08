@@ -3,6 +3,9 @@ import { GraphQLArgument } from 'graphql/type';
 import { ReturnType } from './returnType';
 import theme from '../../../../theme';
 import styled from 'styled-components';
+import { DefaultValue } from './defaultValue';
+import { Deprecated } from './depricated';
+import { InlineDescription } from './inlineDescription';
 
 interface FieldArgsProps {
   args: readonly GraphQLArgument[];
@@ -18,12 +21,15 @@ export const Args = ({ args }: FieldArgsProps) => {
   }
 
   return (
-    <>
-      {args.map(({ name, type }) => (
-        <div key={name}>
-          <Name>{name}</Name>: <ReturnType type={type} />
+    <div>
+      {args.map((arg) => (
+        <div key={arg.name}>
+          <Deprecated reason={arg.deprecationReason} />
+          <Name>{arg.name}</Name>
+          <DefaultValue arg={arg} />: <ReturnType type={arg.type} />
+          <InlineDescription description={arg.description} />
         </div>
       ))}
-    </>
+    </div>
   );
 };

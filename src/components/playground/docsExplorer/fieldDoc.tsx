@@ -10,14 +10,14 @@ interface FieldProps<T, V> {
 }
 
 const Type = <T, V>({ field: { type } }: FieldProps<T, V>) => (
-  <>
+  <div>
     <TitleBar title="Type" />
     <ReturnType type={type} />
-  </>
+  </div>
 );
 
 const FieldArgs = <T, V>({ field: { args } }: FieldProps<T, V>) => {
-  if (!args.length) {
+  if (!args || !args.length) {
     return null;
   }
 
@@ -29,6 +29,19 @@ const FieldArgs = <T, V>({ field: { args } }: FieldProps<T, V>) => {
   );
 };
 
+const Description = <T, V>({ type }: { type: GraphQLField<T, V> }) => {
+  if (!type.description) {
+    return null;
+  }
+
+  return (
+    <div>
+      <TitleBar title="Description" />
+      {type.description}
+    </div>
+  );
+};
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,6 +50,7 @@ const Wrapper = styled.div`
 export const FieldDoc = <T, V>({ field }: FieldProps<T, V>) => {
   return (
     <Wrapper>
+      <Description type={field} />
       <Type field={field} />
       <FieldArgs field={field} />
     </Wrapper>
