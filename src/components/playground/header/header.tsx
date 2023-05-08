@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import theme from '../../theme';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxTypedHooks';
+import theme from '../../../theme';
 import { set } from './endpointSlice';
 
 const Header = styled.header`

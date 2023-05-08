@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { INITIAL_ENDPOINT_URL } from '../../constants';
+import { INITIAL_ENDPOINT_URL } from '../../../constants';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 const endpointSlice = createSlice({

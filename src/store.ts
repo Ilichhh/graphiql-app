@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import endpointReducer from './components/playground/endpointSlice';
-import querySlice from './components/playground/querySlice';
+import endpointReducer from './components/playground/header/endpointSlice';
+import querySlice from './components/playground/editor/querySlice';
 
 export const store = configureStore({
   reducer: {
