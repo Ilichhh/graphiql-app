@@ -29,8 +29,18 @@ const Playground = styled.div`
 `;
 
 export const PlaygroundPage = () => {
-  const { endpoint, setEndpoint, query, setQuery, response, sendRequest, variables, setVariables } =
-    usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
+  const {
+    endpoint,
+    setEndpoint,
+    query,
+    setQuery,
+    response,
+    sendRequest,
+    variables,
+    setVariables,
+    headers,
+    setHeaders,
+  } = usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
   const schema = useGraphQLSchema(endpoint);
 
   return (
@@ -45,6 +55,8 @@ export const PlaygroundPage = () => {
               setQuery={setQuery}
               variables={variables}
               setVariables={setVariables}
+              headers={headers}
+              setHeaders={setHeaders}
             />
             <PlayButton onClick={sendRequest} />
             <ResponseBox response={response} />
