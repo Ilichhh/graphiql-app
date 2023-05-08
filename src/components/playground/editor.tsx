@@ -6,6 +6,7 @@ import { RequestEditor, MetadataEditor } from './codemirror';
 import { DocsPanel } from './docsExplorer/docsPanel';
 import styled from 'styled-components';
 import theme from '../../theme';
+import { Tab } from '../../types';
 
 const Container = styled.section`
   display: flex;
@@ -82,13 +83,13 @@ export const Editor = ({
   headers,
   setHeaders,
 }: EditorProps) => {
-  const [activeToolsTab, setActiveToolsTab] = useState('variables');
+  const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { panelHeight, handleResize, isDragging } = useVerticalResize(300);
   const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
 
-  const handleToolsTabClick = (e: React.MouseEvent, tab: string) => {
+  const handleToolsTabClick = (e: React.MouseEvent, tab: Tab) => {
     setActiveToolsTab(tab);
     setIsEditorToolsOpen(true);
     e.stopPropagation();
@@ -124,13 +125,13 @@ export const Editor = ({
         <ToolsBar onMouseDown={handleToolsTabResize} onMouseUp={handleToolsTabToggle}>
           <ToolsTab
             isActive={activeToolsTab === 'variables'}
-            onClick={(e) => handleToolsTabClick(e, 'variables')}
+            onClick={(e) => handleToolsTabClick(e, Tab.Variables)}
           >
             {t('playground.variablesTabHeader')}
           </ToolsTab>
           <ToolsTab
             isActive={activeToolsTab === 'headers'}
-            onClick={(e) => handleToolsTabClick(e, 'headers')}
+            onClick={(e) => handleToolsTabClick(e, Tab.Headers)}
           >
             {t('playground.headersTabHeader')} {headersLength ? `(${headersLength})` : null}
           </ToolsTab>
