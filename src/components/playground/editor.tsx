@@ -37,8 +37,8 @@ const EditorTools = styled.section<{ isOpen: boolean; height: number }>`
   display: flex;
   background: ${theme.colors.bgBlack};
   flex-direction: column;
-  min-height: 50px;
-  max-height: calc(100vh - 200px);
+  min-height: 48px;
+  max-height: calc(100vh - ${theme.headerHeight} - 56px);
   ${({ isOpen, height }) => isOpen && `height: ${height}px`};
 `;
 
@@ -103,24 +103,16 @@ export const Editor = ({
   const handleToolsTabResize = () => {
     if (isEditorToolsOpen) {
       handleResize();
-    } else {
-      setIsEditorToolsOpen(true);
-      handleResize();
     }
   };
 
   useEffect(() => {
     try {
       const parsedHeaders = JSON.parse(headers);
-      if (parsedHeaders && typeof parsedHeaders === 'object') {
-        setHeadersLength(Object.keys(parsedHeaders).length);
-      } else {
-        setHeadersLength(0);
-      }
+      setHeadersLength(Object.keys(parsedHeaders).length);
     } catch (error) {
       setHeadersLength(0);
     }
-    console.log(headersLength);
   }, [headers, headersLength]);
 
   return (
