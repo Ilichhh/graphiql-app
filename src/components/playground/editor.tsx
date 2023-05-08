@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVerticalResize } from '../../hooks/useVerticalResize';
 
@@ -89,23 +89,26 @@ export const Editor = ({
   const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
 
-  const handleToolsTabClick = (e: React.MouseEvent, tab: Tab) => {
-    setActiveToolsTab(tab);
-    setIsEditorToolsOpen(true);
-    e.stopPropagation();
-  };
+  const handleToolsTabClick = useCallback(
+    (e: React.MouseEvent, tab: Tab) => {
+      setActiveToolsTab(tab);
+      setIsEditorToolsOpen(true);
+      e.stopPropagation();
+    },
+    [setActiveToolsTab, setIsEditorToolsOpen]
+  );
 
-  const handleToolsTabToggle = () => {
+  const handleToolsTabToggle = useCallback(() => {
     if (!isDragging) {
       setIsEditorToolsOpen(!isEditorToolsOpen);
     }
-  };
+  }, [isDragging, isEditorToolsOpen]);
 
-  const handleToolsTabResize = () => {
+  const handleToolsTabResize = useCallback(() => {
     if (isEditorToolsOpen) {
       handleResize();
     }
-  };
+  }, [handleResize, isEditorToolsOpen]);
 
   useEffect(() => {
     try {
