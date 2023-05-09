@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { usePlayground } from '../hooks/usePlayground';
 
 import styled from 'styled-components';
@@ -26,28 +25,37 @@ const ModalHeader = styled.h1`
 `;
 
 export const Modal = () => {
-  const { setEndpoint } = usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
+  const { endpoint, setEndpoint } = usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
   const { t } = useTranslation();
-  const { register, handleSubmit } = useForm();
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    localStorage.setItem('last-endpoint', data.endpoint);
-    setEndpoint(data.endpoint);
-  };
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEndpoint(e.target.value);
+      console.log(e.target.value);
+    },
+    [setEndpoint]
+  );
+
+  const handleSubmit = useCallback(() => {
+    localStorage.setItem('last-endpoint', endpoint);
+  }, [endpoint]);
 
   return (
-    <ModalWrapper onSubmit={handleSubmit(onSubmit)}>
+    <ModalWrapper onSubmit={handleSubmit}>
       <ModalHeader>GraphQL Playground</ModalHeader>
       <TextField
+        hiddenLabel
         id="endpoint"
         type="text"
-        label={t('playground.endpointPlaceholder')}
-        variant="outlined"
-        {...register('endpoint', { required: true })}
+        placeholder={t(`playground.endpointPlaceholder`) ?? ''}
+        variant="filled"
+        onChange={handleChange}
       />
-      <Button type="submit" variant="contained" size="large">
-        {t(`playground.endpointSubmit`)}
-      </Button>
+      {endpoint && (
+        <Button type="submit" variant="contained" size="large">
+          {t(`playground.endpointSubmit`)}
+        </Button>
+      )}
     </ModalWrapper>
   );
 };
