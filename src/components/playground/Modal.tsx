@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { useDebouncedInput } from '../../hooks/useDebouncedInput';
+import { useAppDispatch } from '../../hooks/reduxTypedHooks';
+import { useEndpointInput } from '../../hooks/useEndpointInput';
 import { set } from '../../store/endpointSlice';
 
 import TextField from '@mui/material/TextField';
@@ -53,18 +53,9 @@ const SubmitButton = styled(Button)`
 `;
 
 export const Modal = () => {
-  const endpoint = useAppSelector((state) => state.endpoint);
+  const { endpoint, inputValue, setInputValue, handleInputChange } = useEndpointInput();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
-  const handleChangeEndpoint = useCallback(
-    (value: string) => {
-      dispatch(set(value));
-    },
-    [dispatch]
-  );
-
-  const { handleInputChange } = useDebouncedInput(handleChangeEndpoint, 500);
 
   const handleSubmit = useCallback(() => {
     localStorage.setItem('last-endpoint', endpoint);
@@ -72,10 +63,11 @@ export const Modal = () => {
 
   const handleSelectEndpoint = useCallback(
     (value: string) => {
-      handleChangeEndpoint(value);
+      dispatch(set(value));
+      setInputValue(value);
       localStorage.setItem('last-endpoint', value);
     },
-    [handleChangeEndpoint]
+    [dispatch, setInputValue]
   );
 
   return (
@@ -86,6 +78,7 @@ export const Modal = () => {
           <TextField
             hiddenLabel
             fullWidth
+            value={inputValue}
             inputProps={{
               style: {
                 color: theme.colors.textGrey,

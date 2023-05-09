@@ -1,7 +1,5 @@
-import React, { useCallback } from 'react';
-import { useDebouncedInput } from '../../hooks/useDebouncedInput';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
-import { set } from '../../store/endpointSlice';
+import React, { useEffect } from 'react';
+import { useEndpointInput } from '../../hooks/useEndpointInput';
 
 import styled from 'styled-components';
 import theme from '../../theme';
@@ -45,18 +43,12 @@ const Input = styled.input.attrs(() => ({
   outline: none;
 `;
 
-export const PlaygroundHeader = () => {
-  const endpoint = useAppSelector((state) => state.endpoint);
-  const dispatch = useAppDispatch();
+export const PlaygroundHeader = React.memo(() => {
+  const { endpoint, handleInputChange } = useEndpointInput();
 
-  const handleChangeEndpoint = useCallback(
-    (value: string) => {
-      dispatch(set(value));
-    },
-    [dispatch]
-  );
-
-  const { handleInputChange } = useDebouncedInput(handleChangeEndpoint, 500);
+  useEffect(() => {
+    localStorage.setItem('last-endpoint', endpoint);
+  }, [endpoint]);
 
   return (
     <Header>
@@ -66,4 +58,4 @@ export const PlaygroundHeader = () => {
       </InputContainer>
     </Header>
   );
-};
+});

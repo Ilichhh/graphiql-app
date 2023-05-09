@@ -1,7 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 
-export const useDebouncedInput = (callback: (value: string) => void, delay: number) => {
-  const [inputValue, setInputValue] = useState('');
+export const useDebouncedInput = (
+  callback: (value: string) => void,
+  initialValue: string,
+  delay: number
+) => {
+  const [inputValue, setInputValue] = useState(initialValue);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -19,6 +23,7 @@ export const useDebouncedInput = (callback: (value: string) => void, delay: numb
 
   return {
     inputValue,
+    setInputValue,
     handleInputChange,
   };
 };

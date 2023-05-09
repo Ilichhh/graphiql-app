@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { usePlayground } from '../hooks/usePlayground';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
@@ -30,19 +30,20 @@ const Playground = styled.div`
   }
 `;
 
-export const PlaygroundPage = () => {
+export const PlaygroundPage = React.memo(() => {
   const endpoint = useAppSelector((store) => store.endpoint);
   const { response, sendRequest } = usePlayground();
   const schema = useGraphQLSchema(endpoint);
   const dispatch = useAppDispatch();
 
-  const lastEndpoint = localStorage.getItem('last-endpoint');
+  const lastEndpointRef = useRef(localStorage.getItem('last-endpoint'));
+  const lastEndpoint = lastEndpointRef.current;
 
   useEffect(() => {
-    if (lastEndpoint) {
+    if (lastEndpoint && !endpoint) {
       dispatch(set(lastEndpoint));
     }
-  }, [lastEndpoint, dispatch]);
+  }, [dispatch, endpoint, lastEndpoint]);
 
   if (!lastEndpoint) {
     return ReactDOM.createPortal(<Modal />, document.body);
@@ -63,4 +64,4 @@ export const PlaygroundPage = () => {
       </Wrapper>
     </>
   );
-};
+});
