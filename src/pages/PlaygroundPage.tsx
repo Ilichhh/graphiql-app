@@ -8,7 +8,7 @@ import { set } from '../store/endpointSlice';
 
 import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
 import { Header } from '../components';
-import { Modal } from '../components/Modal';
+import { Modal } from '../components/playground/Modal';
 
 import styled from 'styled-components';
 import theme from '../theme';
@@ -36,14 +36,15 @@ export const PlaygroundPage = () => {
   const schema = useGraphQLSchema(endpoint);
   const dispatch = useAppDispatch();
 
+  const lastEndpoint = localStorage.getItem('last-endpoint');
+
   useEffect(() => {
-    const lastEndpoint = localStorage.getItem('last-endpoint');
     if (lastEndpoint) {
       dispatch(set(lastEndpoint));
     }
-  }, [dispatch]);
+  }, [lastEndpoint, dispatch]);
 
-  if (!endpoint) {
+  if (!lastEndpoint) {
     return ReactDOM.createPortal(<Modal />, document.body);
   }
 

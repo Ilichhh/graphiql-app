@@ -1,12 +1,14 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
-import { useDebouncedInput } from '../hooks/useDebouncedInput';
-import { set } from '../store/endpointSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
+import { useDebouncedInput } from '../../hooks/useDebouncedInput';
+import { set } from '../../store/endpointSlice';
 
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+
+import defaultEndpoints from '../../data/defaultEndpoints.json';
 
 const ModalWrapper = styled.form`
   display: flex;
@@ -24,6 +26,13 @@ const ModalHeader = styled.h1`
   margin: 0 auto;
 `;
 
+const EndpointsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+`;
+
 export const Modal = () => {
   const endpoint = useAppSelector((state) => state.endpoint);
   const dispatch = useAppDispatch();
@@ -32,7 +41,6 @@ export const Modal = () => {
   const handleChangeEndpoint = useCallback(
     (value: string) => {
       dispatch(set(value));
-      console.log(value);
     },
     [dispatch]
   );
@@ -42,6 +50,14 @@ export const Modal = () => {
   const handleSubmit = useCallback(() => {
     localStorage.setItem('last-endpoint', endpoint);
   }, [endpoint]);
+
+  const handleSelectEndpoint = useCallback(
+    (value: string) => {
+      handleChangeEndpoint(value);
+      localStorage.setItem('last-endpoint', value);
+    },
+    [handleChangeEndpoint]
+  );
 
   return (
     <ModalWrapper onSubmit={handleSubmit}>
@@ -59,6 +75,13 @@ export const Modal = () => {
           {t(`playground.endpointSubmit`)}
         </Button>
       )}
+      <EndpointsList>
+        {defaultEndpoints.map((endpoint) => (
+          <Button key={endpoint} onClick={() => handleSelectEndpoint(endpoint)} size="small">
+            {endpoint}
+          </Button>
+        ))}
+      </EndpointsList>
     </ModalWrapper>
   );
 };
