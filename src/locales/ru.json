@@ -23,7 +23,9 @@
   "playground": {
     "responsePlaceholder": "Нажми на кнопку Play, чтоб получить ответ здесь",
     "variablesTabHeader": "Переменные запроса",
-    "headersTabHeader": "HTTP Заголовки"
+    "headersTabHeader": "HTTP Заголовки",
+    "endpointPlaceholder" : "Введите URL-адрес конечной точки...",
+    "endpointSubmit": "Используйте конечную точку"
   },
   "landing": {
     "hero": {

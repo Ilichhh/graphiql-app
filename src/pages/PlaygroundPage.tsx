@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { usePlayground } from '../hooks/usePlayground';
 
 import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
@@ -10,6 +11,7 @@ import theme from '../theme';
 import { INITIAL_ENDPOINT_URL, INITIAL_QUERY } from '../constants';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
 import { SchemaContext } from '../contexts';
+import { Modal } from '../components/Modal';
 
 const Wrapper = styled.main`
   position: relative;
@@ -32,6 +34,17 @@ export const PlaygroundPage = () => {
   const { endpoint, setEndpoint, query, setQuery, response, sendRequest, variables, setVariables } =
     usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
   const schema = useGraphQLSchema(endpoint);
+
+  useEffect(() => {
+    const lastEndpoint = localStorage.getItem('last-endpoint');
+    if (lastEndpoint) {
+      setEndpoint(lastEndpoint);
+    }
+  }, [setEndpoint]);
+
+  if (!endpoint) {
+    return ReactDOM.createPortal(<Modal />, document.body);
+  }
 
   return (
     <>

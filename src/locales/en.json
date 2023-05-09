@@ -23,7 +23,9 @@
   "playground": {
     "responsePlaceholder": "Hit the Play Button to get a response here",
     "variablesTabHeader": "Query Variables",
-    "headersTabHeader": "HTTP Headers"
+    "headersTabHeader": "HTTP Headers",
+    "endpointPlaceholder" : "Enter an endpoint url...",
+    "endpointSubmit": "Use endpoint"
   },
   "landing": {
     "hero": {
