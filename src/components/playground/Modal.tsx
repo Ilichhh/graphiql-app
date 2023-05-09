@@ -4,17 +4,24 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import { useDebouncedInput } from '../../hooks/useDebouncedInput';
 import { set } from '../../store/endpointSlice';
 
-import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import EastIcon from '@mui/icons-material/East';
 
 import defaultEndpoints from '../../data/defaultEndpoints.json';
+
+import styled from 'styled-components';
+import theme from '../../theme';
+
+const Container = styled.div`
+  background-color: ${theme.colors.bgBlue};
+`;
 
 const ModalWrapper = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 32px;
+  gap: 48px;
   padding: 48px 16px;
   margin: 0 auto;
   width: 90%;
@@ -24,6 +31,12 @@ const ModalWrapper = styled.form`
 
 const ModalHeader = styled.h1`
   margin: 0 auto;
+  color: ${theme.colors.textGrey};
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const EndpointsList = styled.div`
@@ -31,6 +44,12 @@ const EndpointsList = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 8px;
+`;
+
+const SubmitButton = styled(Button)`
+  width: 250px;
+  border-radius: 0 !important;
+  white-space: nowrap;
 `;
 
 export const Modal = () => {
@@ -60,28 +79,49 @@ export const Modal = () => {
   );
 
   return (
-    <ModalWrapper onSubmit={handleSubmit}>
-      <ModalHeader>GraphQL Playground</ModalHeader>
-      <TextField
-        hiddenLabel
-        id="endpoint"
-        type="text"
-        placeholder={t(`playground.endpointPlaceholder`) ?? ''}
-        variant="filled"
-        onChange={handleInputChange}
-      />
-      {endpoint && (
-        <Button type="submit" variant="contained" size="large">
-          {t(`playground.endpointSubmit`)}
-        </Button>
-      )}
-      <EndpointsList>
-        {defaultEndpoints.map((endpoint) => (
-          <Button key={endpoint} onClick={() => handleSelectEndpoint(endpoint)} size="small">
-            {endpoint}
-          </Button>
-        ))}
-      </EndpointsList>
-    </ModalWrapper>
+    <Container>
+      <ModalWrapper onSubmit={handleSubmit}>
+        <ModalHeader>GraphQL Playground</ModalHeader>
+        <InputWrapper>
+          <TextField
+            hiddenLabel
+            fullWidth
+            inputProps={{
+              style: {
+                color: theme.colors.textGrey,
+              },
+            }}
+            sx={{
+              '& input::placeholder': {
+                color: theme.colors.textGrey,
+              },
+            }}
+            id="endpoint"
+            type="text"
+            placeholder={t(`playground.endpointPlaceholder`) ?? ''}
+            variant="filled"
+            onChange={handleInputChange}
+          />
+          {endpoint && (
+            <SubmitButton type="submit" variant="contained" size="large">
+              {t(`playground.endpointSubmit`)}
+              <EastIcon />
+            </SubmitButton>
+          )}
+        </InputWrapper>
+        <EndpointsList>
+          {defaultEndpoints.map((endpoint) => (
+            <Button
+              key={endpoint}
+              disableElevation
+              onClick={() => handleSelectEndpoint(endpoint)}
+              size="small"
+            >
+              {endpoint}
+            </Button>
+          ))}
+        </EndpointsList>
+      </ModalWrapper>
+    </Container>
   );
 };
