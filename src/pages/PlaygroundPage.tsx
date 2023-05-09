@@ -7,8 +7,8 @@ import { Header } from '../components';
 import styled from 'styled-components';
 import theme from '../theme';
 
-import { INITIAL_ENDPOINT_URL, INITIAL_QUERY } from '../constants';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
+import { useAppSelector } from '../hooks/reduxTypedHooks';
 import { SchemaContext } from '../contexts';
 
 const Wrapper = styled.main`
@@ -29,35 +29,18 @@ const Playground = styled.div`
 `;
 
 export const PlaygroundPage = () => {
-  const {
-    endpoint,
-    setEndpoint,
-    query,
-    setQuery,
-    response,
-    sendRequest,
-    variables,
-    setVariables,
-    headers,
-    setHeaders,
-  } = usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
+  const endpoint = useAppSelector((store) => store.endpoint);
+  const { response, sendRequest } = usePlayground();
   const schema = useGraphQLSchema(endpoint);
 
   return (
     <>
       <Header currentPage="playground" />
       <Wrapper>
-        <PlaygroundHeader onChange={setEndpoint} endpoint={endpoint} />
+        <PlaygroundHeader />
         <SchemaContext.Provider value={schema}>
           <Playground>
-            <Editor
-              query={query}
-              setQuery={setQuery}
-              variables={variables}
-              setVariables={setVariables}
-              headers={headers}
-              setHeaders={setHeaders}
-            />
+            <Editor />
             <PlayButton onClick={sendRequest} />
             <ResponseBox response={response} />
           </Playground>

@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useVerticalResize } from '../../hooks/useVerticalResize';
+import styled from 'styled-components';
 
 import { RequestEditor, MetadataEditor } from './codemirror';
 import { DocsPanel } from './docsExplorer/docsPanel';
-import styled from 'styled-components';
-import theme from '../../theme';
 import { Tab } from '../../types';
+import theme from '../../theme';
+import { useVerticalResize } from '../../hooks/useVerticalResize';
+import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
+import { setQuery, setVariables, setHeaders } from '../../store/editorSlice';
 
 const Container = styled.section`
   display: flex;
@@ -67,27 +69,20 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 `;
 
 interface EditorProps {
-  query: string;
-  setQuery: (query: string) => void;
   variables: string;
   setVariables: (variables: string) => void;
   headers: string;
   setHeaders: (headers: string) => void;
 }
 
-export const Editor = ({
-  query,
-  setQuery,
-  variables,
-  setVariables,
-  headers,
-  setHeaders,
-}: EditorProps) => {
+export const Editor = () => {
+  const { query, headers, variables } = useAppSelector((state) => state.editor);
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { panelHeight, handleResize, isDragging } = useVerticalResize(300);
   const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const handleToolsTabClick = useCallback(
     (e: React.MouseEvent, tab: Tab) => {
@@ -122,7 +117,7 @@ export const Editor = ({
   return (
     <Container>
       <EditorBox isDark={false}>
-        <RequestEditor value={query} onChange={setQuery} />
+        <RequestEditor value={query} onChange={(value) => dispatch(setQuery(value))} />
       </EditorBox>
       <EditorTools height={panelHeight} isOpen={isEditorToolsOpen}>
         <ToolsBar onMouseDown={handleToolsTabResize} onMouseUp={handleToolsTabToggle}>
@@ -142,7 +137,11 @@ export const Editor = ({
         <EditorBox isDark>
           <MetadataEditor
             value={activeToolsTab === 'variables' ? variables : headers}
-            onChange={activeToolsTab === 'variables' ? setVariables : setHeaders}
+            onChange={(value) =>
+              activeToolsTab === 'variables'
+                ? dispatch(setVariables(value))
+                : dispatch(setHeaders(value))
+            }
           />
         </EditorBox>
       </EditorTools>
