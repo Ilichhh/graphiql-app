@@ -10,8 +10,12 @@ const requestEditorTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgDarkBlue, gutterBackground: '#0f202d' },
 });
 
-const variablesEditorTheme = vscodeDarkInit({
-  settings: { background: theme.colors.bgBlack, gutterBackground: theme.colors.bgBlack },
+const metadataEditorTheme = vscodeDarkInit({
+  settings: {
+    background: theme.colors.bgBlack,
+    gutterBackground: theme.colors.bgBlack,
+    lineHighlight: theme.colors.bgDarkBlue,
+  },
 });
 
 const responseTheme = vscodeDarkInit({
@@ -35,7 +39,7 @@ const RequestEditor = React.memo((props: CodeMirrorProps) => {
 });
 
 const MetadataEditor = React.memo((props: CodeMirrorProps) => {
-  return <CodeMirror theme={variablesEditorTheme} {...props} />;
+  return <CodeMirror theme={metadataEditorTheme} {...props} />;
 });
 
 const ResponseWindow = React.memo((props: CodeMirrorProps) => {

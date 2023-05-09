@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { usePlayground } from '../hooks/usePlayground';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
+import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
+import { SchemaContext } from '../contexts';
+import { set } from '../store/endpointSlice';
 
 import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
 import { Header } from '../components';
+import { Modal } from '../components/Modal';
 
 import styled from 'styled-components';
 import theme from '../theme';
-
-import { INITIAL_ENDPOINT_URL, INITIAL_QUERY } from '../constants';
-import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
-import { SchemaContext } from '../contexts';
-import { Modal } from '../components/Modal';
 
 const Wrapper = styled.main`
   position: relative;
@@ -31,16 +31,17 @@ const Playground = styled.div`
 `;
 
 export const PlaygroundPage = () => {
-  const { endpoint, setEndpoint, query, setQuery, response, sendRequest, variables, setVariables } =
-    usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
+  const endpoint = useAppSelector((store) => store.endpoint);
+  const { response, sendRequest } = usePlayground();
   const schema = useGraphQLSchema(endpoint);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const lastEndpoint = localStorage.getItem('last-endpoint');
     if (lastEndpoint) {
-      setEndpoint(lastEndpoint);
+      dispatch(set(lastEndpoint));
     }
-  }, [setEndpoint]);
+  }, [dispatch]);
 
   if (!endpoint) {
     return ReactDOM.createPortal(<Modal />, document.body);
@@ -50,15 +51,10 @@ export const PlaygroundPage = () => {
     <>
       <Header currentPage="playground" />
       <Wrapper>
-        <PlaygroundHeader setEndpoint={setEndpoint} endpoint={endpoint} />
+        <PlaygroundHeader />
         <SchemaContext.Provider value={schema}>
           <Playground>
-            <Editor
-              query={query}
-              setQuery={setQuery}
-              variables={variables}
-              setVariables={setVariables}
-            />
+            <Editor />
             <PlayButton onClick={sendRequest} />
             <ResponseBox response={response} />
           </Playground>

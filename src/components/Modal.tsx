@@ -1,13 +1,12 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePlayground } from '../hooks/usePlayground';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
 import { useDebouncedInput } from '../hooks/useDebouncedInput';
+import { set } from '../store/endpointSlice';
 
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
-import { INITIAL_ENDPOINT_URL, INITIAL_QUERY } from '../constants';
 
 const ModalWrapper = styled.form`
   display: flex;
@@ -26,15 +25,16 @@ const ModalHeader = styled.h1`
 `;
 
 export const Modal = () => {
-  const { endpoint, setEndpoint } = usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
+  const endpoint = useAppSelector((state) => state.endpoint);
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const handleChangeEndpoint = useCallback(
     (value: string) => {
-      setEndpoint(value);
+      dispatch(set(value));
       console.log(value);
     },
-    [setEndpoint]
+    [dispatch]
   );
 
   const { handleInputChange } = useDebouncedInput(handleChangeEndpoint, 500);

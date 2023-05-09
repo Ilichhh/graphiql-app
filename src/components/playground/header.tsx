@@ -1,7 +1,9 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import theme from '../../theme';
+import { set } from '../../store/endpointSlice';
 
 const Header = styled.header`
   display: flex;
@@ -42,17 +44,15 @@ const Input = styled.input.attrs(() => ({
   outline: none;
 `;
 
-interface PlaygroundHeaderProps {
-  endpoint: string;
-  setEndpoint: (url: string) => void;
-}
+export const PlaygroundHeader = () => {
+  const endpoint = useAppSelector((state) => state.endpoint);
+  const dispatch = useAppDispatch();
 
-export const PlaygroundHeader = ({ endpoint, setEndpoint }: PlaygroundHeaderProps) => {
   return (
     <Header>
       <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
       <InputContainer>
-        <Input autoFocus value={endpoint} onChange={(e) => setEndpoint(e.target.value)} />
+        <Input autoFocus value={endpoint} onChange={(e) => dispatch(set(e.target.value))} />
       </InputContainer>
     </Header>
   );

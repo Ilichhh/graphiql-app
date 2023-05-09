@@ -1,22 +1,21 @@
 import { useCallback, useState } from 'react';
+import { useAppSelector } from './reduxTypedHooks';
 
-export const usePlayground = (
-  initialEndpoint: string,
-  initialQuery: string,
-  initialVariables: string
-) => {
-  const [endpoint, setEndpoint] = useState(initialEndpoint);
-  const [query, setQuery] = useState(initialQuery);
-  const [variables, setVariables] = useState(initialVariables);
+export const usePlayground = () => {
+  const endpoint = useAppSelector((state) => state.endpoint);
+  const { query, variables, headers } = useAppSelector((state) => state.editor);
   const [response, setResponse] = useState('');
 
   const sendRequest = useCallback(() => {
     let parsedVariables: Record<string, unknown> = {};
+    let parsedHeaders: Record<string, unknown> = {};
+
     try {
       parsedVariables = variables ? JSON.parse(variables) : {};
+      parsedHeaders = headers ? JSON.parse(headers) : {};
     } catch (error) {
       if (error instanceof SyntaxError) {
-        console.log(error);
+        console.error(error);
         return;
       }
       throw error;
@@ -26,6 +25,7 @@ export const usePlayground = (
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
+        ...parsedHeaders,
       },
       body: JSON.stringify({ query, variables: parsedVariables }),
     })
@@ -33,7 +33,7 @@ export const usePlayground = (
       .then((json) => JSON.stringify(json, null, 2))
       .then((str) => setResponse(str))
       .catch((error) => setResponse(error.toString()));
-  }, [endpoint, query, variables]);
+  }, [endpoint, query, variables, headers]);
 
-  return { endpoint, setEndpoint, query, setQuery, variables, setVariables, response, sendRequest };
+  return { response, sendRequest };
 };
