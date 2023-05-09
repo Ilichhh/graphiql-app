@@ -16,6 +16,7 @@ import { TitleBar } from './components/titleBar';
 import styled from 'styled-components';
 import { Deprecated } from './components/depricated';
 import { InlineDescription } from './components/inlineDescription';
+import { Markdown } from './components/markdown';
 
 interface TypeProps {
   type: GraphQLType;
@@ -33,7 +34,7 @@ const Description = ({ type }: { type: GraphQLNamedType }) => {
   return (
     <div>
       <TitleBar title="Description" />
-      {type.description}
+      <Markdown content={type.description} />
     </div>
   );
 };

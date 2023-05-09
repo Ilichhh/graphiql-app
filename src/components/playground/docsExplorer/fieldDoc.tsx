@@ -4,6 +4,7 @@ import { ReturnType } from './components/returnType';
 import { TitleBar } from './components/titleBar';
 import { Args } from './components/args';
 import styled from 'styled-components';
+import { Markdown } from './components/markdown';
 
 interface FieldProps<T, V> {
   field: GraphQLField<T, V>;
@@ -37,7 +38,7 @@ const Description = <T, V>({ type }: { type: GraphQLField<T, V> }) => {
   return (
     <div>
       <TitleBar title="Description" />
-      {type.description}
+      <Markdown content={type.description} />
     </div>
   );
 };
