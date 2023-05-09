@@ -14,6 +14,8 @@ import { ReturnType } from './components/returnType';
 import { Field } from './components/field';
 import { TitleBar } from './components/titleBar';
 import styled from 'styled-components';
+import { Deprecated } from './components/depricated';
+import { InlineDescription } from './components/inlineDescription';
 
 interface TypeProps {
   type: GraphQLType;
@@ -45,7 +47,7 @@ const Implements = ({ type }: TypeProps) => {
     <div>
       <TitleBar title="Implements" />
       {type.getInterfaces().map((type) => (
-        <div key={type.name}>
+        <div key={type.name} style={{ marginBottom: '10px' }}>
           <ReturnType type={type} />
         </div>
       ))}
@@ -76,11 +78,11 @@ const EnumValues = ({ type }: TypeProps) => {
   return (
     <div>
       <TitleBar title="Values" />
-      {type.getValues().map(({ name, description }) => (
-        <div key={name} style={{ marginBottom: '5px' }}>
+      {type.getValues().map(({ name, description, deprecationReason }) => (
+        <div key={name} style={{ marginBottom: '10px' }}>
+          <Deprecated reason={deprecationReason} />
           {name}
-          <br />
-          {description}
+          <InlineDescription description={description} />
         </div>
       ))}
     </div>
@@ -96,7 +98,7 @@ const ImplementedBy = ({ schema, type }: TypeWithSchemaProps) => {
     <div>
       <TitleBar title="Implemented by" />
       {schema.getPossibleTypes(type).map((type) => (
-        <div key={type.name}>
+        <div key={type.name} style={{ marginBottom: '10px' }}>
           <ReturnType type={type} />
         </div>
       ))}
