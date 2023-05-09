@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDebouncedInput } from '../../hooks/useDebouncedInput';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
+import { set } from '../../store/endpointSlice';
 
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import theme from '../../theme';
-import { set } from '../../store/endpointSlice';
 
 const Header = styled.header`
   display: flex;
@@ -48,11 +49,20 @@ export const PlaygroundHeader = () => {
   const endpoint = useAppSelector((state) => state.endpoint);
   const dispatch = useAppDispatch();
 
+  const handleChangeEndpoint = useCallback(
+    (value: string) => {
+      dispatch(set(value));
+    },
+    [dispatch]
+  );
+
+  const { handleInputChange } = useDebouncedInput(handleChangeEndpoint, 500);
+
   return (
     <Header>
       <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
       <InputContainer>
-        <Input autoFocus value={endpoint} onChange={(e) => dispatch(set(e.target.value))} />
+        <Input autoFocus defaultValue={endpoint} onChange={handleInputChange} />
       </InputContainer>
     </Header>
   );
