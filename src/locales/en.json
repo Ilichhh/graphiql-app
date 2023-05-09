@@ -25,7 +25,8 @@
     "variablesTabHeader": "Query Variables",
     "headersTabHeader": "HTTP Headers",
     "endpointPlaceholder" : "Enter an endpoint url...",
-    "endpointSubmit": "Use endpoint"
+    "endpointSubmit": "Use endpoint",
+    "chooseEndpoint": "Or choose one of the following"
   },
   "landing": {
     "hero": {

@@ -2,11 +2,13 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { useEndpointInput } from '../../hooks/useEndpointInput';
+import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
 import { set } from '../../store/endpointSlice';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import EastIcon from '@mui/icons-material/East';
+import { GraphQLIcon } from '../Icons';
 
 import defaultEndpoints from '../../data/defaultEndpoints.json';
 
@@ -29,14 +31,25 @@ const ModalWrapper = styled.form`
   height: 100vh;
 `;
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
+
 const ModalHeader = styled.h1`
-  margin: 0 auto;
+  margin: 0;
   color: ${theme.colors.textGrey};
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   justify-content: center;
+`;
+
+const Endpoints = styled.div`
+  margin: 0 auto 16px;
+  color: ${theme.colors.textInactive};
 `;
 
 const EndpointsList = styled.div`
@@ -54,6 +67,7 @@ const SubmitButton = styled(Button)`
 
 export const Modal = () => {
   const { endpoint, inputValue, setInputValue, handleInputChange } = useEndpointInput();
+  const { isError } = useGraphQLSchema(endpoint);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -65,7 +79,6 @@ export const Modal = () => {
     (value: string) => {
       dispatch(set(value));
       setInputValue(value);
-      localStorage.setItem('last-endpoint', value);
     },
     [dispatch, setInputValue]
   );
@@ -73,7 +86,10 @@ export const Modal = () => {
   return (
     <Container>
       <ModalWrapper onSubmit={handleSubmit}>
-        <ModalHeader>GraphQL Playground</ModalHeader>
+        <HeaderWrapper>
+          <GraphQLIcon color={theme.colors.textWhite} />
+          <ModalHeader>GraphQL Playground</ModalHeader>
+        </HeaderWrapper>
         <InputWrapper>
           <TextField
             hiddenLabel
@@ -95,7 +111,7 @@ export const Modal = () => {
             variant="filled"
             onChange={handleInputChange}
           />
-          {endpoint && (
+          {endpoint && !isError && (
             <SubmitButton type="submit" variant="contained" size="large">
               {t(`playground.endpointSubmit`)}
               <EastIcon />
@@ -103,6 +119,7 @@ export const Modal = () => {
           )}
         </InputWrapper>
         <EndpointsList>
+          <Endpoints>{t(`playground.chooseEndpoint`)}</Endpoints>
           {defaultEndpoints.map((endpoint) => (
             <Button
               key={endpoint}
