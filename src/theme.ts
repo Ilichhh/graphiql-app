@@ -24,6 +24,7 @@ const theme = {
     default: '#3D8551',
     deprecated: '#c72323',
     comment: '#14182380',
+    inputBorder: 'rgba(0,0,0,0.3)',
   },
   contentWidth: '1600px',
   headerHeight: '68px',

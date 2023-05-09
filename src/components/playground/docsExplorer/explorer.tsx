@@ -8,7 +8,8 @@ import theme from '../../../theme';
 import { SchemaContext } from '../../../contexts';
 import { isInputType, isNamedType } from 'graphql/type';
 import { DocsNavContext } from './docsContext';
-import { ExplorerTitleBar } from './components/ExplorerTitleBar';
+import { ExplorerTitleBar } from './components/explorerTitleBar';
+import { SearchBar } from './components/searchBar';
 
 const ExplorerWrapper = styled.div`
   position: absolute;
@@ -61,6 +62,7 @@ export const Explorer = () => {
       <ExplorerContent>
         <ExplorerTitleBar />
         <Divider />
+        <SearchBar />
         {content}
       </ExplorerContent>
     </ExplorerWrapper>
