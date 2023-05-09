@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePlayground } from '../hooks/usePlayground';
+import { useDebouncedInput } from '../hooks/useDebouncedInput';
 
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
@@ -28,13 +29,15 @@ export const Modal = () => {
   const { endpoint, setEndpoint } = usePlayground(INITIAL_ENDPOINT_URL, INITIAL_QUERY, '');
   const { t } = useTranslation();
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setEndpoint(e.target.value);
-      console.log(e.target.value);
+  const handleChangeEndpoint = useCallback(
+    (value: string) => {
+      setEndpoint(value);
+      console.log(value);
     },
     [setEndpoint]
   );
+
+  const { handleInputChange } = useDebouncedInput(handleChangeEndpoint, 500);
 
   const handleSubmit = useCallback(() => {
     localStorage.setItem('last-endpoint', endpoint);
@@ -49,7 +52,7 @@ export const Modal = () => {
         type="text"
         placeholder={t(`playground.endpointPlaceholder`) ?? ''}
         variant="filled"
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
       {endpoint && (
         <Button type="submit" variant="contained" size="large">
