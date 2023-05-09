@@ -5,9 +5,10 @@ import { GraphQLField } from 'graphql/type';
 import styled from 'styled-components';
 import theme from '../../../../theme';
 import { DocsNavContext } from '../docsContext';
+import { Deprecated } from './depricated';
 
-const Content = styled.div`
-  margin-bottom: 10px;
+const Content = styled.div<{ hasArgs: boolean }>`
+  margin-bottom: ${({ hasArgs }) => (hasArgs ? '20px' : '3px')};
 `;
 
 const FieldLink = styled.span`
@@ -36,10 +37,13 @@ export const Field = ({ field, field: { name, type, args } }: FieldProps) => {
     });
   };
 
+  const hasArgs = args && !!args.length;
+
   return (
-    <Content>
+    <Content hasArgs={hasArgs}>
+      <Deprecated reason={field.deprecationReason} />
       <FieldLink onClick={pushItem}>{name}</FieldLink>
-      {!!args.length && (
+      {hasArgs && (
         <>
           <>(</>
           <ArgsWrapper>
