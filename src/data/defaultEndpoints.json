@@ -1,6 +1,5 @@
 [
   "https://swapi-graphql.netlify.app/.netlify/functions/index",
   "https://graphql.anilist.co/",
-  "https://spacex-production.up.railway.app/",
-  "http://api.catalysis-hub.org/graphql"
+  "https://spacex-production.up.railway.app/"
 ]
