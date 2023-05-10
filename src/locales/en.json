@@ -27,7 +27,7 @@
     "endpointPlaceholder" : "Enter an endpoint url...",
     "endpointSubmit": "Use endpoint",
     "chooseEndpoint": "Or choose one of the following",
-    "serverError": "Server cannot be reacted"
+    "serverError": "Server cannot be reached"
   },
   "landing": {
     "hero": {

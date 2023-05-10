@@ -25,7 +25,7 @@
     "variablesTabHeader": "Переменные запроса",
     "headersTabHeader": "HTTP Заголовки",
     "endpointPlaceholder" : "Введите URL-адрес конечной точки...",
-    "endpointSubmit": "Используйте конечную точку",
+    "endpointSubmit": "Начать",
     "chooseEndpoint": "Или выберите из предложенных",
     "serverError": "Сервер не отвечает"
   },

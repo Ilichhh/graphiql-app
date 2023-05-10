@@ -79,11 +79,12 @@ export const Modal = ({ setIsModal }: ModalProps) => {
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      if (isError) return;
       dispatch(set(endpoint));
       localStorage.setItem('last-endpoint', endpoint);
       setIsModal(false);
     },
-    [endpoint, dispatch, setIsModal]
+    [endpoint, dispatch, setIsModal, isError]
   );
 
   const handleSelectEndpoint = useCallback(
@@ -120,9 +121,8 @@ export const Modal = ({ setIsModal }: ModalProps) => {
             onChange={handleInputChange}
           />
           {endpoint && !isError && (
-            <SubmitButton type="submit" variant="contained" size="large">
+            <SubmitButton type="submit" variant="contained" size="large" endIcon={<EastIcon />}>
               {t(`playground.endpointSubmit`)}
-              <EastIcon />
             </SubmitButton>
           )}
         </InputWrapper>
