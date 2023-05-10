@@ -97,7 +97,7 @@ export const Modal = () => {
             value={inputValue}
             inputProps={{
               style: {
-                color: theme.colors.textGrey,
+                color: isError ? 'rgb(242, 92, 84)' : theme.colors.textGrey,
               },
             }}
             sx={{

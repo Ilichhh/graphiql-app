@@ -38,7 +38,7 @@ const ExplorerContent = styled.div`
 `;
 
 export const Explorer = () => {
-  const schema = useContext(SchemaContext);
+  const { schema } = useContext(SchemaContext);
   const { getCurrent, isSchemaDoc } = useContext(DocsNavContext);
 
   if (!schema) {

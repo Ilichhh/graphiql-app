@@ -26,7 +26,7 @@ type CodeMirrorProps = React.ComponentProps<typeof CodeMirror>;
 
 const RequestEditor = React.memo((props: CodeMirrorProps) => {
   const refs = useRef<ReactCodeMirrorRef>({});
-  const schema = useContext(SchemaContext);
+  const { schema } = useContext(SchemaContext);
 
   useEffect(() => {
     const view = refs.current.view;

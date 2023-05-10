@@ -33,7 +33,7 @@ const Playground = styled.div`
 export const PlaygroundPage = React.memo(() => {
   const endpoint = useAppSelector((store) => store.endpoint);
   const { response, sendRequest } = usePlayground();
-  const schema = useGraphQLSchema(endpoint);
+  const { schema, isError } = useGraphQLSchema(endpoint);
   const dispatch = useAppDispatch();
 
   const lastEndpointRef = useRef(localStorage.getItem('last-endpoint'));
@@ -54,7 +54,7 @@ export const PlaygroundPage = React.memo(() => {
       <Header currentPage="playground" />
       <Wrapper>
         <PlaygroundHeader />
-        <SchemaContext.Provider value={schema}>
+        <SchemaContext.Provider value={{ schema, isError }}>
           <Playground>
             <Editor />
             <PlayButton onClick={sendRequest} />
