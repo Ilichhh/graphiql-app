@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { usePlayground } from '../hooks/usePlayground';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
@@ -35,18 +35,17 @@ export const PlaygroundPage = React.memo(() => {
   const { response, sendRequest } = usePlayground();
   const { schema, isError } = useGraphQLSchema();
   const dispatch = useAppDispatch();
-
-  const lastEndpointRef = useRef(localStorage.getItem('last-endpoint'));
-  const lastEndpoint = lastEndpointRef.current;
+  const lastEndpoint = localStorage.getItem('last-endpoint');
+  const [isModal, setIsModal] = useState(!lastEndpoint);
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
       dispatch(set(lastEndpoint));
     }
-  }, [dispatch, endpoint, lastEndpoint]);
+  }, [dispatch, endpoint, lastEndpoint, isModal]);
 
-  if (!lastEndpoint) {
-    return ReactDOM.createPortal(<Modal />, document.body);
+  if (isModal) {
+    return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
   }
 
   return (

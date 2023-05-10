@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { useEndpointInput } from '../../hooks/useEndpointInput';
@@ -65,22 +65,31 @@ const SubmitButton = styled(Button)`
   white-space: nowrap;
 `;
 
-export const Modal = () => {
+interface ModalProps {
+  setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const Modal = ({ setIsModal }: ModalProps) => {
   const { endpoint, inputValue, setInputValue, handleInputChange } = useEndpointInput();
   const { isError } = useGraphQLSchema();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const handleSubmit = useCallback(() => {
-    localStorage.setItem('last-endpoint', endpoint);
-  }, [endpoint]);
+  const handleSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      dispatch(set(endpoint));
+      localStorage.setItem('last-endpoint', endpoint);
+      setIsModal(false);
+    },
+    [endpoint, dispatch, setIsModal]
+  );
 
   const handleSelectEndpoint = useCallback(
     (value: string) => {
-      dispatch(set(value));
       setInputValue(value);
     },
-    [dispatch, setInputValue]
+    [setInputValue]
   );
 
   return (
