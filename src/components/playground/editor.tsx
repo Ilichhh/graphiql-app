@@ -68,13 +68,6 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
   color: ${({ isActive }) => (isActive ? theme.colors.textGrey : theme.colors.textInactive)};
 `;
 
-interface EditorProps {
-  variables: string;
-  setVariables: (variables: string) => void;
-  headers: string;
-  setHeaders: (headers: string) => void;
-}
-
 export const Editor = () => {
   const { query, headers, variables } = useAppSelector((state) => state.editor);
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
