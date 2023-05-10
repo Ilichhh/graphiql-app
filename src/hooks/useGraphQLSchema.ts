@@ -6,7 +6,8 @@ import { useAppSelector } from './reduxTypedHooks';
 export const useGraphQLSchema = () => {
   const endpoint = useAppSelector((state) => state.endpoint);
   const [schema, setSchema] = useState<GraphQLSchema>();
-  const [isError, setIsError] = useState<boolean>();
+  const [isError, setIsError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
     const query = getIntrospectionQuery();
@@ -21,7 +22,7 @@ export const useGraphQLSchema = () => {
       })
         .then((res) => {
           if (!res.ok) {
-            throw new Error('Failed to fetch schema');
+            throw new Error('Failed to fetch schema. Please check your connection');
           }
           return res.json() as Promise<{ data: IntrospectionQuery }>;
         })
@@ -29,10 +30,14 @@ export const useGraphQLSchema = () => {
         .then((schema) => {
           setSchema(schema);
           setIsError(false);
+          setErrorMessage('');
         })
-        .catch(() => setIsError(true));
+        .catch((error) => {
+          setIsError(true);
+          setErrorMessage(error.message);
+        });
     }
   }, [endpoint]);
 
-  return { schema, isError };
+  return { schema, isError, errorMessage };
 };

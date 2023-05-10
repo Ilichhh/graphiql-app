@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEndpointInput } from '../../hooks/useEndpointInput';
-import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
 
 import styled from 'styled-components';
 import theme from '../../theme';
@@ -52,9 +51,12 @@ const ErrorBadge = styled.span`
   color: ${theme.colors.error};
 `;
 
-export const PlaygroundHeader = React.memo(() => {
+interface PlaygroundHeaderProps {
+  isError: boolean;
+}
+
+export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) => {
   const { endpoint, handleInputChange } = useEndpointInput();
-  const { isError } = useGraphQLSchema();
   const { t } = useTranslation();
 
   useEffect(() => {
