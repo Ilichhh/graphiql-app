@@ -8,7 +8,6 @@ import { set } from '../../store/endpointSlice';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import EastIcon from '@mui/icons-material/East';
-import { GraphQLIcon } from '../Icons';
 
 import defaultEndpoints from '../../data/defaultEndpoints.json';
 
@@ -27,18 +26,19 @@ const ModalWrapper = styled.form`
   padding: 48px 16px;
   margin: 0 auto;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   height: 100vh;
 `;
 
 const HeaderWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 `;
 
 const ModalHeader = styled.h1`
   margin: 0;
+  margin-left: 30px;
   color: ${theme.colors.textGrey};
 `;
 
@@ -96,7 +96,7 @@ export const Modal = ({ setIsModal }: ModalProps) => {
     <Container>
       <ModalWrapper onSubmit={handleSubmit}>
         <HeaderWrapper>
-          <GraphQLIcon color={theme.colors.textWhite} />
+          <img src="/logo.png" alt="Profile picture" width="78" height="78" />
           <ModalHeader>GraphQL Playground</ModalHeader>
         </HeaderWrapper>
         <InputWrapper>
