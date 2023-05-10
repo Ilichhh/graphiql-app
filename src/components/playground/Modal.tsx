@@ -67,7 +67,7 @@ const SubmitButton = styled(Button)`
 
 export const Modal = () => {
   const { endpoint, inputValue, setInputValue, handleInputChange } = useEndpointInput();
-  const { isError } = useGraphQLSchema(endpoint);
+  const { isError } = useGraphQLSchema();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -97,7 +97,7 @@ export const Modal = () => {
             value={inputValue}
             inputProps={{
               style: {
-                color: isError ? 'rgb(242, 92, 84)' : theme.colors.textGrey,
+                color: isError ? theme.colors.error : theme.colors.textGrey,
               },
             }}
             sx={{

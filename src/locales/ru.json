@@ -26,7 +26,8 @@
     "headersTabHeader": "HTTP Заголовки",
     "endpointPlaceholder" : "Введите URL-адрес конечной точки...",
     "endpointSubmit": "Используйте конечную точку",
-    "chooseEndpoint": "Или выберите из предложенных"
+    "chooseEndpoint": "Или выберите из предложенных",
+    "serverError": "Сервер не отвечает"
   },
   "landing": {
     "hero": {

@@ -33,7 +33,7 @@ const Playground = styled.div`
 export const PlaygroundPage = React.memo(() => {
   const endpoint = useAppSelector((store) => store.endpoint);
   const { response, sendRequest } = usePlayground();
-  const { schema, isError } = useGraphQLSchema(endpoint);
+  const { schema, isError } = useGraphQLSchema();
   const dispatch = useAppDispatch();
 
   const lastEndpointRef = useRef(localStorage.getItem('last-endpoint'));

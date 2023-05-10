@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useEndpointInput } from '../../hooks/useEndpointInput';
+import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
 
 import styled from 'styled-components';
 import theme from '../../theme';
@@ -24,6 +26,7 @@ const HeaderEndpoint = styled.span`
 `;
 
 const InputContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   flex: 1 1 0;
@@ -43,8 +46,16 @@ const Input = styled.input.attrs(() => ({
   outline: none;
 `;
 
+const ErrorBadge = styled.span`
+  position: absolute;
+  right: 15px;
+  color: ${theme.colors.error};
+`;
+
 export const PlaygroundHeader = React.memo(() => {
   const { endpoint, handleInputChange } = useEndpointInput();
+  const { isError } = useGraphQLSchema();
+  const { t } = useTranslation();
 
   useEffect(() => {
     localStorage.setItem('last-endpoint', endpoint);
@@ -55,6 +66,7 @@ export const PlaygroundHeader = React.memo(() => {
       <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
       <InputContainer>
         <Input autoFocus defaultValue={endpoint} onChange={handleInputChange} />
+        {isError && <ErrorBadge>{t(`playground.serverError`)}</ErrorBadge>}
       </InputContainer>
     </Header>
   );
