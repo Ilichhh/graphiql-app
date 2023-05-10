@@ -13,6 +13,8 @@ import { Modal } from '../components/playground/Modal';
 import styled from 'styled-components';
 import theme from '../theme';
 
+import { useGetSchemaQuery } from '../store/apiSlice';
+
 const Wrapper = styled.main`
   position: relative;
   display: flex;
@@ -33,7 +35,8 @@ const Playground = styled.div`
 export const PlaygroundPage = React.memo(() => {
   const endpoint = useAppSelector((store) => store.endpoint);
   const { response, sendRequest } = usePlayground();
-  const { schema, isError, errorMessage } = useGraphQLSchema();
+  // const { schema, isError, errorMessage } = useGraphQLSchema();
+  const { data: schema, isError, error } = useGetSchemaQuery(endpoint);
   const dispatch = useAppDispatch();
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
@@ -53,11 +56,11 @@ export const PlaygroundPage = React.memo(() => {
       <Header currentPage="playground" />
       <Wrapper>
         <PlaygroundHeader isError={isError} />
-        <SchemaContext.Provider value={{ schema, isError, errorMessage }}>
+        <SchemaContext.Provider value={{ schema, isError, errorMessage: error }}>
           <Playground>
             <Editor />
             <PlayButton onClick={sendRequest} />
-            <ResponseBox response={isError ? errorMessage : response} />
+            <ResponseBox response={isError ? error : response} />
           </Playground>
         </SchemaContext.Provider>
       </Wrapper>
