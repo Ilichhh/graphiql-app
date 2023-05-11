@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { buildClientSchema, getIntrospectionQuery, IntrospectionQuery } from 'graphql/utilities';
+import { getIntrospectionQuery } from 'graphql/utilities';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -11,8 +11,6 @@ export const apiSlice = createApi({
         method: 'POST',
         body: { query: getIntrospectionQuery() },
       }),
-      transformResponse: (response: { data: IntrospectionQuery }) =>
-        buildClientSchema(response.data),
       transformErrorResponse: () => 'Failed to fetch schema. Please check your connection',
     }),
   }),
