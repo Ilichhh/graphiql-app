@@ -6,7 +6,7 @@ import { FormPage } from './pages/FormPage';
 import { PlaygroundPage } from './pages/PlaygroundPage';
 import { ErrorPage } from './pages/ErrorPage';
 import { PrivateRoutes } from './utils/PrivateRoutes';
-import { withTokenExpirationWrapper } from './tokenExpirationWrapper';
+import { withTokenExpirationWrapper } from './utils/tokenExpirationWrapper';
 
 const App = () => (
   <Routes>
