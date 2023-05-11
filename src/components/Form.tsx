@@ -68,12 +68,11 @@ export const Form = ({ mode }: FormProps) => {
           error={!!errors.newPassword}
           helperText={errors.newPassword?.message?.toString()}
           {...register('newPassword', {
-            required: 'Please enter password',
+            required: t('form.emptyPassword') as string,
             pattern: {
               value:
                 /^(?=.*[A-Za-zА-Яа-я])(?=.*\d)(?=.*[@#$%^&*()_+\-=[\]{};':"\\|,.<>/?`~!])(?!.*\s).{8,}$/,
-              message:
-                'Password must be a minimum of 8 characters and include at least one letter, one digit, and one special character.',
+              message: t('form.simplePassword'),
             },
           })}
         />
@@ -86,8 +85,9 @@ export const Form = ({ mode }: FormProps) => {
           error={!!errors.passwordConfirm}
           helperText={errors.passwordConfirm?.message?.toString()}
           {...register('passwordConfirm', {
-            required: 'Please confirm password',
-            validate: (value) => value === newPassword || 'Passwords do not match.',
+            required: t('form.emptyPasswordConfirm') as string,
+            validate: (value) =>
+              value === newPassword || (t('form.wrongPasswordConfirm') as string),
           })}
         />
       </>
@@ -103,7 +103,7 @@ export const Form = ({ mode }: FormProps) => {
         error={!!errors.currentPassword}
         helperText={errors.currentPassword?.message?.toString()}
         {...register('currentPassword', {
-          required: 'Please enter password',
+          required: t('form.emptyPassword') as string,
         })}
       />
     );
@@ -120,10 +120,10 @@ export const Form = ({ mode }: FormProps) => {
         error={!!errors.email}
         helperText={errors.email?.message?.toString()}
         {...register('email', {
-          required: 'Please enter email',
+          required: t('form.emptyEmail') as string,
           pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-            message: 'Invalid email address.',
+            message: t('form.invalidEmail'),
           },
         })}
       />

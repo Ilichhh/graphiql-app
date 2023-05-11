@@ -6,6 +6,7 @@ import {
   signOut,
 } from 'firebase/auth';
 import { UseFormSetError, FieldValues } from 'react-hook-form';
+import i18n from './i18n';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -39,13 +40,12 @@ export const signIn = async (
     if (signInError.code === 'auth/wrong-password') {
       setError('currentPassword', {
         type: 'custom',
-        message: 'Incorrect password',
+        message: i18n.t('form.wrongPassword') as string,
       });
     } else if (signInError.code === 'auth/user-not-found') {
       setError('email', {
         type: 'custom',
-        message:
-          'User with this email is not found. Please check your email or sign up for a new account.',
+        message: i18n.t('form.userNotFound') as string,
       });
     } else {
       console.error(error);
