@@ -13,7 +13,17 @@ export const apiSlice = createApi({
       }),
       transformErrorResponse: () => 'Failed to fetch schema. Please check your connection',
     }),
+    getResponse: builder.query({
+      query: ({ url, query, variables, headers }) => ({
+        url,
+        method: 'POST',
+        headers: {
+          ...headers,
+        },
+        body: { query, variables },
+      }),
+    }),
   }),
 });
 
-export const { useGetSchemaQuery } = apiSlice;
+export const { useGetSchemaQuery, useLazyGetResponseQuery } = apiSlice;
