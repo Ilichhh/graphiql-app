@@ -72,3 +72,24 @@ export const logOut = async () => {
     console.error(error);
   }
 };
+
+export const checkTokenExpiration = async () => {
+  const user = auth.currentUser;
+  if (!user) {
+    return false;
+  }
+
+  try {
+    const tokenResult = await user.getIdTokenResult();
+    const now = new Date().getTime();
+    const expirationTime = new Date(tokenResult.expirationTime).getTime();
+
+    if (expirationTime - now < 0) {
+      await auth.signOut();
+      return true;
+    }
+  } catch (error) {
+    console.error('Error getting token:', error);
+    return false;
+  }
+};
