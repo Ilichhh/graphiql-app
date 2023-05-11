@@ -6,8 +6,9 @@ import { FormPage } from './pages/FormPage';
 import { PlaygroundPage } from './pages/PlaygroundPage';
 import { ErrorPage } from './pages/ErrorPage';
 import { PrivateRoutes } from './utils/PrivateRoutes';
+import { withTokenExpirationWrapper } from './utils/tokenExpirationWrapper';
 
-export const App = () => (
+const App = () => (
   <Routes>
     <Route path="/" element={<WelcomePage />} />
     <Route element={<PrivateRoutes forLoggedInUser={false} />}>
@@ -20,3 +21,5 @@ export const App = () => (
     <Route path="*" element={<ErrorPage />} />
   </Routes>
 );
+
+export default withTokenExpirationWrapper(App);
