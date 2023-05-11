@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 import { auth, signUp, signIn } from '../firebase';
+import { FormMode } from '../types';
 
 const FormWrapper = styled.form`
   display: flex;
@@ -25,7 +26,7 @@ const FormHeader = styled.h1`
 `;
 
 interface FormProps {
-  mode: 'login' | 'register';
+  mode: FormMode;
 }
 
 export const Form = ({ mode }: FormProps) => {
@@ -34,13 +35,13 @@ export const Form = ({ mode }: FormProps) => {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    reset();
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (mode === 'register') {
-      signUp(data.email, data.password);
+      await signUp(data.email, data.password);
     } else {
-      signIn(data.email, data.password);
+      await signIn(data.email, data.password);
     }
+    reset();
   };
 
   useEffect(() => {
