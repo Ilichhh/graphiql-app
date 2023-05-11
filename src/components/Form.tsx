@@ -31,9 +31,16 @@ interface FormProps {
 
 export const Form = ({ mode }: FormProps) => {
   const { t } = useTranslation();
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    watch,
+  } = useForm();
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
+  const newPassword = watch('newPassword');
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (mode === 'register') {
@@ -48,24 +55,61 @@ export const Form = ({ mode }: FormProps) => {
     if (user) navigate('/playground');
   }, [user, navigate]);
 
+  const newPasswordInput = (
+    <TextField
+      id="new-password"
+      type="password"
+      label={t('form.passwordInput')}
+      variant="outlined"
+      autoComplete="new-password"
+      error={!!errors.newPassword}
+      helperText={errors.newPassword?.message?.toString()}
+      {...register('newPassword', {
+        required: 'Please enter password',
+        pattern: {
+          value:
+            /^(?=.*[A-Za-zА-Яа-я])(?=.*\d)(?=.*[@#$%^&*()_+\-=[\]{};':"\\|,.<>/?`~!])(?!.*\s).{8,}$/,
+          message:
+            'Password must be a minimum of 8 characters and include at least one letter, one digit, and one special character.',
+        },
+      })}
+    />
+  );
+
+  const currentPasswordInput = (
+    <TextField
+      id="current-password"
+      type="password"
+      label={t('form.passwordInput')}
+      variant="outlined"
+      autoComplete="current-password"
+      error={!!errors.currentPassword}
+      helperText={errors.currentPassword?.message?.toString()}
+      {...register('currentPassword', {
+        required: 'Please enter password',
+      })}
+    />
+  );
+
   return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+    <FormWrapper onSubmit={handleSubmit(onSubmit)} noValidate>
       <FormHeader>{t(`form.${mode}.header`)}</FormHeader>
       <TextField
         id="email"
         type="email"
         label={t('form.emailInput')}
         variant="outlined"
-        {...register('email', { required: true })}
+        error={!!errors.email}
+        helperText={errors.email?.message?.toString()}
+        {...register('email', {
+          required: 'Please enter email',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: 'Invalid email address.',
+          },
+        })}
       />
-      <TextField
-        id={mode === 'login' ? 'current-password' : 'new-password'}
-        type="password"
-        label={t('form.passwordInput')}
-        variant="outlined"
-        autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-        {...register('password', { required: true })}
-      />
+      {mode === 'register' ? newPasswordInput : currentPasswordInput}
       {mode === 'register' && (
         <TextField
           id="password-confirm"
@@ -73,7 +117,12 @@ export const Form = ({ mode }: FormProps) => {
           label={t('form.passwordInputConfirm')}
           variant="outlined"
           autoComplete="new-password"
-          {...register('password-confirm', { required: true })}
+          error={!!errors['password-confirm']}
+          helperText={errors['password-confirm']?.message?.toString()}
+          {...register('password-confirm', {
+            required: 'Please confirm password',
+            validate: (value) => value === newPassword || 'Passwords do not match.',
+          })}
         />
       )}
       <Button type="submit" variant="contained" size="large">
