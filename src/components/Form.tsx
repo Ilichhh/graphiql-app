@@ -7,6 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import { auth, signUp, signIn } from '../firebase';
 import { FormMode } from '../types';
@@ -34,7 +35,7 @@ export const Form = ({ mode }: FormProps) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setError,
     watch,
   } = useForm();
@@ -128,9 +129,9 @@ export const Form = ({ mode }: FormProps) => {
         })}
       />
       {passwordInputs}
-      <Button type="submit" variant="contained" size="large">
+      <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
         {t(`form.${mode}.submit`)}
-      </Button>
+      </LoadingButton>
       <Button
         component={Link}
         to={mode === 'login' ? '/register' : '/login'}
