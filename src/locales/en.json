@@ -26,7 +26,8 @@
     "emptyPassword": "Please enter password",
     "simplePassword": "Password must be a minimum of 8 characters and include at least one letter, one digit, and one special character",
     "emptyPasswordConfirm": "Please confirm password",
-    "wrongPasswordConfirm": "Passwords do not match"
+    "wrongPasswordConfirm": "Passwords do not match",
+    "emailInUse": "The email provided is already registered. Please use a different email or proceed with the login"
   },
   "playground": {
     "responsePlaceholder": "Hit the Play Button to get a response here",

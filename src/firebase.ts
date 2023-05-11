@@ -20,11 +20,23 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
-export const signUp = async (email: string, password: string) => {
+export const signUp = async (
+  email: string,
+  password: string,
+  setError: UseFormSetError<FieldValues>
+) => {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    console.error(error);
+    const signInError = error as { code: string };
+    if (signInError.code === 'auth/email-already-in-use') {
+      setError('email', {
+        type: 'custom',
+        message: i18n.t('form.emailInUse') as string,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 

@@ -44,7 +44,7 @@ export const Form = ({ mode }: FormProps) => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (mode === 'register') {
-      await signUp(data.email, data.newPassword);
+      await signUp(data.email, data.newPassword, setError);
     } else {
       await signIn(data.email, data.currentPassword, setError);
     }
