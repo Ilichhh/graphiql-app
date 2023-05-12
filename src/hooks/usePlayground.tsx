@@ -3,7 +3,6 @@ import { useAppSelector } from './reduxTypedHooks';
 import { useLazyGetResponseQuery } from '../store/apiSlice';
 
 export const usePlayground = (endpoint: string) => {
-  // const endpoint = useAppSelector((state) => state.endpoint);
   const { query, variables, headers } = useAppSelector((state) => state.editor);
   const [parsedVariables, parsedHeaders] = useMemo(
     () => parseParams(variables, headers),
@@ -12,14 +11,16 @@ export const usePlayground = (endpoint: string) => {
 
   const [trigger, { data }] = useLazyGetResponseQuery();
 
+  const response = data ? JSON.stringify(data.data, null, 2) : '';
+
   return {
-    response: data,
+    response,
     sendRequest: () =>
       trigger({
         url: endpoint,
         query,
-        parsedVariables,
-        parsedHeaders,
+        variables: parsedVariables,
+        headers: parsedHeaders,
       }),
   };
 };

@@ -20,7 +20,7 @@ export const apiSlice = createApi({
         headers: {
           ...headers,
         },
-        body: { query, variables },
+        body: { query, variables: variables },
       }),
     }),
   }),
