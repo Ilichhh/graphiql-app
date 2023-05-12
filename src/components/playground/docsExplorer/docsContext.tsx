@@ -8,12 +8,12 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { GraphQLField, GraphQLNamedType } from 'graphql/type';
+import { GraphQLField, GraphQLInputField, GraphQLNamedType } from 'graphql/type';
 import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 
 export type StackItem = {
   name: string;
-  data?: GraphQLNamedType | GraphQLField<unknown, unknown>;
+  data?: GraphQLNamedType | GraphQLField<unknown, unknown> | GraphQLInputField;
 };
 
 interface DocsNavContext {

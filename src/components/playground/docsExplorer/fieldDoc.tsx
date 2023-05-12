@@ -1,5 +1,5 @@
 import React from 'react';
-import { GraphQLField } from 'graphql/type';
+import { GraphQLField, GraphQLInputField } from 'graphql/type';
 import { ReturnType } from './components/returnType';
 import { TitleBar } from './components/titleBar';
 import { Args } from './components/args';
@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { Markdown } from './components/markdown';
 
 interface FieldProps<T, V> {
-  field: GraphQLField<T, V>;
+  field: GraphQLField<T, V> | GraphQLInputField;
 }
 
 const Type = <T, V>({ field: { type } }: FieldProps<T, V>) => (
@@ -17,20 +17,20 @@ const Type = <T, V>({ field: { type } }: FieldProps<T, V>) => (
   </div>
 );
 
-const FieldArgs = <T, V>({ field: { args } }: FieldProps<T, V>) => {
-  if (!args || !args.length) {
+const FieldArgs = <T, V>({ field }: FieldProps<T, V>) => {
+  if (!('args' in field) || !field.args.length) {
     return null;
   }
 
   return (
     <>
       <TitleBar title="Arguments" />
-      <Args args={args} />
+      <Args args={field.args} />
     </>
   );
 };
 
-const Description = <T, V>({ type }: { type: GraphQLField<T, V> }) => {
+const Description = <T, V>({ type }: { type: GraphQLField<T, V> | GraphQLInputField }) => {
   if (!type.description) {
     return null;
   }

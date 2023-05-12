@@ -131,7 +131,7 @@ const getSearchResults = (schema: GraphQLSchema, stackItem: StackItem, searchVal
 
 export const SearchBar = () => {
   const { searchQuery, setSearchQuery, getCurrent } = useContext(DocsNavContext);
-  const schema = useContext(SchemaContext);
+  const { schema } = useContext(SchemaContext);
 
   const [searchResults, setSearchResults] = useState<SearchResults>({
     types: [],
