@@ -3,8 +3,10 @@ import { Header } from '../components/Header';
 import { Form } from '../components/Form';
 import { Container } from '../components';
 
+import { FormMode } from '../types';
+
 interface FormPageProps {
-  mode: 'login' | 'register';
+  mode: FormMode;
 }
 
 export const FormPage = ({ mode }: FormPageProps) => (

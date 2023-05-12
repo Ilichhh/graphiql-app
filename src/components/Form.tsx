@@ -7,8 +7,10 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import { auth, signUp, signIn } from '../firebase';
+import { FormMode } from '../types';
 
 const FormWrapper = styled.form`
   display: flex;
@@ -25,21 +27,27 @@ const FormHeader = styled.h1`
 `;
 
 interface FormProps {
-  mode: 'login' | 'register';
+  mode: FormMode;
 }
 
 export const Form = ({ mode }: FormProps) => {
   const { t } = useTranslation();
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+    watch,
+  } = useForm();
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
+  const newPassword = watch('newPassword');
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    reset();
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (mode === 'register') {
-      signUp(data.email, data.password);
+      await signUp(data.email, data.newPassword, setError);
     } else {
-      signIn(data.email, data.password);
+      await signIn(data.email, data.currentPassword, setError);
     }
   };
 
@@ -47,37 +55,83 @@ export const Form = ({ mode }: FormProps) => {
     if (user) navigate('/playground');
   }, [user, navigate]);
 
-  return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader>{t(`form.${mode}.header`)}</FormHeader>
-      <TextField
-        id="email"
-        type="email"
-        label={t('form.emailInput')}
-        variant="outlined"
-        {...register('email', { required: true })}
-      />
-      <TextField
-        id={mode === 'login' ? 'current-password' : 'new-password'}
-        type="password"
-        label={t('form.passwordInput')}
-        variant="outlined"
-        autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-        {...register('password', { required: true })}
-      />
-      {mode === 'register' && (
+  let passwordInputs;
+
+  if (mode === 'register') {
+    passwordInputs = (
+      <>
+        <TextField
+          id="new-password"
+          type="password"
+          label={t('form.passwordInput')}
+          variant="outlined"
+          autoComplete="new-password"
+          error={!!errors.newPassword}
+          helperText={errors.newPassword?.message?.toString()}
+          {...register('newPassword', {
+            required: t('form.emptyPassword') as string,
+            pattern: {
+              value:
+                /^(?=.*[A-Za-zА-Яа-я])(?=.*\d)(?=.*[@#$%^&*()_+\-=[\]{};':"\\|,.<>/?`~!])(?!.*\s).{8,}$/,
+              message: t('form.simplePassword'),
+            },
+          })}
+        />
         <TextField
           id="password-confirm"
           type="password"
           label={t('form.passwordInputConfirm')}
           variant="outlined"
           autoComplete="new-password"
-          {...register('password-confirm', { required: true })}
+          error={!!errors.passwordConfirm}
+          helperText={errors.passwordConfirm?.message?.toString()}
+          {...register('passwordConfirm', {
+            required: t('form.emptyPasswordConfirm') as string,
+            validate: (value) =>
+              value === newPassword || (t('form.wrongPasswordConfirm') as string),
+          })}
         />
-      )}
-      <Button type="submit" variant="contained" size="large">
+      </>
+    );
+  } else {
+    passwordInputs = (
+      <TextField
+        id="current-password"
+        type="password"
+        label={t('form.passwordInput')}
+        variant="outlined"
+        autoComplete="current-password"
+        error={!!errors.currentPassword}
+        helperText={errors.currentPassword?.message?.toString()}
+        {...register('currentPassword', {
+          required: t('form.emptyPassword') as string,
+        })}
+      />
+    );
+  }
+
+  return (
+    <FormWrapper onSubmit={handleSubmit(onSubmit)} noValidate>
+      <FormHeader>{t(`form.${mode}.header`)}</FormHeader>
+      <TextField
+        id="email"
+        type="email"
+        label={t('form.emailInput')}
+        variant="outlined"
+        error={!!errors.email}
+        helperText={errors.email?.message?.toString()}
+        {...register('email', {
+          required: t('form.emptyEmail') as string,
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: t('form.invalidEmail'),
+          },
+        })}
+      />
+      {passwordInputs}
+      <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
         {t(`form.${mode}.submit`)}
-      </Button>
+      </LoadingButton>
       <Button
         component={Link}
         to={mode === 'login' ? '/register' : '/login'}

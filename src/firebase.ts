@@ -5,6 +5,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
+import { UseFormSetError, FieldValues } from 'react-hook-form';
+import i18n from './i18n';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -18,19 +20,48 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
-export const signUp = async (email: string, password: string) => {
+export const signUp = async (
+  email: string,
+  password: string,
+  setError: UseFormSetError<FieldValues>
+) => {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    console.error(error);
+    const signInError = error as { code: string };
+    if (signInError.code === 'auth/email-already-in-use') {
+      setError('email', {
+        type: 'custom',
+        message: i18n.t('form.emailInUse') as string,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
-export const signIn = async (email: string, password: string) => {
+export const signIn = async (
+  email: string,
+  password: string,
+  setError: UseFormSetError<FieldValues>
+) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    console.error(error);
+    const signInError = error as { code: string };
+    if (signInError.code === 'auth/wrong-password') {
+      setError('currentPassword', {
+        type: 'custom',
+        message: i18n.t('form.wrongPassword') as string,
+      });
+    } else if (signInError.code === 'auth/user-not-found') {
+      setError('email', {
+        type: 'custom',
+        message: i18n.t('form.userNotFound') as string,
+      });
+    } else {
+      console.error(error);
+    }
   }
 };
 
