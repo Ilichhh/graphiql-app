@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { useAppSelector } from './reduxTypedHooks';
 import { useLazyGetResponseQuery } from '../store/apiSlice';
 
+type ResponseError = { data: { errors: [{ message: string }] } };
+
 export const usePlayground = (endpoint: string) => {
   const { query, variables, headers } = useAppSelector((state) => state.editor);
   const [parsedVariables, parsedHeaders] = useMemo(
@@ -9,12 +11,14 @@ export const usePlayground = (endpoint: string) => {
     [variables, headers]
   );
 
-  const [trigger, { data }] = useLazyGetResponseQuery();
-
-  const response = data ? JSON.stringify(data.data, null, 2) : '';
+  const [trigger, { currentData, error, isFetching }] = useLazyGetResponseQuery();
+  const response = currentData ? JSON.stringify(currentData.data, null, 2) : '';
+  const errorMessage = error ? (error as ResponseError).data.errors[0].message : '';
 
   return {
     response,
+    errorMessage,
+    isFetching,
     sendRequest: () =>
       trigger({
         url: endpoint,

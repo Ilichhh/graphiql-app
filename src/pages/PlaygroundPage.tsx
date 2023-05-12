@@ -31,12 +31,11 @@ const Playground = styled.div`
 
 export const PlaygroundPage = React.memo(() => {
   const endpoint = useAppSelector((store) => store.endpoint);
-  const { schema, isError, errorMessage } = useGraphQLSchema(endpoint);
-  const { response, sendRequest } = usePlayground(endpoint);
+  const { isSchemaError } = useGraphQLSchema(endpoint);
+  const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
       dispatch(set(lastEndpoint));
@@ -51,11 +50,11 @@ export const PlaygroundPage = React.memo(() => {
     <>
       <Header currentPage="playground" />
       <Wrapper>
-        <PlaygroundHeader isError={isError} />
+        <PlaygroundHeader isError={isSchemaError} />
         <Playground>
           <Editor />
           <PlayButton onClick={sendRequest} />
-          <ResponseBox response={isError ? errorMessage : response} />
+          <ResponseBox response={isFetching ? 'Loading...' : errorMessage || response} />
         </Playground>
       </Wrapper>
     </>
