@@ -72,7 +72,7 @@ interface ModalProps {
 
 export const Modal = ({ setIsModal }: ModalProps) => {
   const { endpoint, inputValue, setInputValue, handleInputChange } = useEndpointInput();
-  const { isError } = useGraphQLSchema();
+  const { isError } = useGraphQLSchema(endpoint);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
