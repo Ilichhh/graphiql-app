@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { usePlayground } from '../hooks/usePlayground';
+import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
+import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
+import { SchemaContext } from '../contexts';
+import { set } from '../store/endpointSlice';
 
 import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
 import { Header } from '../components';
+import { Modal } from '../components/playground/Modal';
 
 import styled from 'styled-components';
 import theme from '../theme';
-
-import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
-import { useAppSelector } from '../hooks/reduxTypedHooks';
-import { SchemaContext } from '../contexts';
 
 const Wrapper = styled.main`
   position: relative;
@@ -28,24 +30,37 @@ const Playground = styled.div`
   }
 `;
 
-export const PlaygroundPage = () => {
+export const PlaygroundPage = React.memo(() => {
   const endpoint = useAppSelector((store) => store.endpoint);
   const { response, sendRequest } = usePlayground();
-  const schema = useGraphQLSchema(endpoint);
+  const { schema, isError, errorMessage } = useGraphQLSchema();
+  const dispatch = useAppDispatch();
+  const lastEndpoint = localStorage.getItem('last-endpoint');
+  const [isModal, setIsModal] = useState(!lastEndpoint);
+
+  useEffect(() => {
+    if (lastEndpoint && !endpoint) {
+      dispatch(set(lastEndpoint));
+    }
+  }, [dispatch, endpoint, lastEndpoint, isModal]);
+
+  if (isModal) {
+    return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
+  }
 
   return (
     <>
       <Header currentPage="playground" />
       <Wrapper>
-        <PlaygroundHeader />
-        <SchemaContext.Provider value={schema}>
+        <PlaygroundHeader isError={isError} />
+        <SchemaContext.Provider value={{ schema, isError, errorMessage }}>
           <Playground>
             <Editor />
             <PlayButton onClick={sendRequest} />
-            <ResponseBox response={response} />
+            <ResponseBox response={isError ? errorMessage : response} />
           </Playground>
         </SchemaContext.Provider>
       </Wrapper>
     </>
   );
-};
+});

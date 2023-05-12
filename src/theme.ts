@@ -9,6 +9,8 @@ const theme = {
     textInactive: '#555e66',
     textWhite: '#ffffff',
     bgLight: '#F5F5F5',
+    error: '#F25C54',
+    accent: '#DA1B7F',
   },
   headings: {
     margin: '0',
