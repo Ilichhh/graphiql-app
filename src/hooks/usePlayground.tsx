@@ -11,8 +11,8 @@ export const usePlayground = (endpoint: string) => {
     [variables, headers]
   );
 
-  const [trigger, { currentData, error, isFetching }] = useLazyGetResponseQuery();
-  const response = currentData ? JSON.stringify(currentData.data, null, 2) : '';
+  const [trigger, { data, error, isFetching }] = useLazyGetResponseQuery();
+  const response = data ? JSON.stringify(data.data, null, 2) : '';
   const errorMessage = error ? (error as ResponseError).data.errors[0].message : '';
 
   return {
@@ -20,12 +20,15 @@ export const usePlayground = (endpoint: string) => {
     errorMessage,
     isFetching,
     sendRequest: () =>
-      trigger({
-        url: endpoint,
-        query,
-        variables: parsedVariables,
-        headers: parsedHeaders,
-      }),
+      trigger(
+        {
+          url: endpoint,
+          query,
+          variables: parsedVariables,
+          headers: parsedHeaders,
+        },
+        true
+      ),
   };
 };
 
