@@ -72,19 +72,19 @@ interface ModalProps {
 
 export const Modal = ({ setIsModal }: ModalProps) => {
   const { endpoint, inputValue, setInputValue, handleInputChange } = useEndpointInput();
-  const { isError } = useGraphQLSchema(endpoint);
+  const { isSchemaError } = useGraphQLSchema(endpoint);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (isError) return;
+      if (isSchemaError) return;
       dispatch(set(endpoint));
       localStorage.setItem('last-endpoint', endpoint);
       setIsModal(false);
     },
-    [endpoint, dispatch, setIsModal, isError]
+    [endpoint, dispatch, setIsModal, isSchemaError]
   );
 
   const handleSelectEndpoint = useCallback(
@@ -108,7 +108,7 @@ export const Modal = ({ setIsModal }: ModalProps) => {
             value={inputValue}
             sx={{
               '& input': {
-                color: isError ? theme.colors.error : theme.colors.textGrey,
+                color: isSchemaError ? theme.colors.error : theme.colors.textGrey,
               },
               '& input::placeholder': {
                 color: theme.colors.textGrey,
@@ -120,7 +120,7 @@ export const Modal = ({ setIsModal }: ModalProps) => {
             variant="filled"
             onChange={handleInputChange}
           />
-          {endpoint && !isError && (
+          {endpoint && !isSchemaError && (
             <SubmitButton type="submit" variant="contained" size="large" endIcon={<EastIcon />}>
               {t(`playground.endpointSubmit`)}
             </SubmitButton>
