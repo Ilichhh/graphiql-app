@@ -32,11 +32,7 @@ function parseParams(variables: string, headers: string) {
   try {
     parsedVariables = variables ? JSON.parse(variables) : {};
     parsedHeaders = headers ? JSON.parse(headers) : {};
-  } catch (error) {
-    if (error instanceof SyntaxError) {
-      console.error(error);
-    }
-  } finally {
-    return [parsedVariables, parsedHeaders];
-  }
+  } catch (error) {}
+
+  return [parsedVariables, parsedHeaders];
 }
