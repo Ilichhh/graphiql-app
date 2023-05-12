@@ -26,11 +26,11 @@ export const Arg = ({ arg, short = false }: FieldArgsProps) => {
   }
 
   return (
-    <>
+    <div>
       <Deprecated reason={arg.deprecationReason} />
       <Name>{arg.name}</Name>
       <DefaultValue arg={arg} />: <ReturnType type={arg.type} />
       <InlineDescription description={arg.description} />
-    </>
+    </div>
   );
 };
