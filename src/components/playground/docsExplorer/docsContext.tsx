@@ -1,9 +1,19 @@
-import React, { createContext, ReactNode, useCallback, useMemo, useState } from 'react';
-import { GraphQLField, GraphQLInputType, GraphQLNamedType } from 'graphql/type';
+import React, {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { GraphQLField, GraphQLNamedType } from 'graphql/type';
+import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 
-type StackItem = {
+export type StackItem = {
   name: string;
-  data?: GraphQLNamedType | GraphQLInputType | GraphQLField<unknown, unknown>;
+  data?: GraphQLNamedType | GraphQLField<unknown, unknown>;
 };
 
 interface DocsNavContext {
@@ -12,6 +22,8 @@ interface DocsNavContext {
   getCurrent: () => StackItem;
   getPreviousName: () => string;
   isSchemaDoc: boolean;
+  searchQuery: string;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
 }
 
 const initStackItems = [
@@ -29,10 +41,23 @@ export const DocsNavContext = createContext<DocsNavContext>({
   getPreviousName() {
     return initStackItems[0].name;
   },
+  searchQuery: '',
+  setSearchQuery: () => null,
 });
 
 export const DocsNavProvider = ({ children }: { children: ReactNode }) => {
   const [navStack, setNavStack] = useState<StackItem[]>(initStackItems);
+  const [searchQuery, setSearchQuery] = useState('');
+  const endpoint = useAppSelector((state) => state.endpoint);
+
+  useEffect(() => {
+    setNavStack(initStackItems);
+  }, [endpoint]);
+
+  useEffect(() => {
+    setSearchQuery('');
+  }, [navStack]);
+
   const push = useCallback((item: StackItem) => setNavStack((prev) => [...prev, item]), []);
   const pop = useCallback(
     () => setNavStack((prev) => (prev.length === 1 ? prev : prev.slice(0, -1))),
@@ -43,7 +68,17 @@ export const DocsNavProvider = ({ children }: { children: ReactNode }) => {
   const isSchemaDoc = useMemo(() => navStack.length === 1, [navStack]);
 
   return (
-    <DocsNavContext.Provider value={{ push, pop, getCurrent, getPreviousName, isSchemaDoc }}>
+    <DocsNavContext.Provider
+      value={{
+        push,
+        pop,
+        getCurrent,
+        getPreviousName,
+        isSchemaDoc,
+        searchQuery: searchQuery,
+        setSearchQuery: setSearchQuery,
+      }}
+    >
       {children}
     </DocsNavContext.Provider>
   );

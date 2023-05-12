@@ -1,34 +1,31 @@
 import React from 'react';
 import { GraphQLArgument } from 'graphql/type';
-import { ReturnType } from './returnType';
-import theme from '../../../../theme';
-import styled from 'styled-components';
-import { DefaultValue } from './defaultValue';
-import { Deprecated } from './depricated';
-import { InlineDescription } from './inlineDescription';
+import { Arg } from './arg';
 
 interface FieldArgsProps {
   args: readonly GraphQLArgument[];
+  short?: boolean;
 }
 
-const Name = styled.span`
-  color: ${theme.docs.args};
-  padding-bottom: 10px;
-`;
-export const Args = ({ args }: FieldArgsProps) => {
+export const Args = ({ args, short }: FieldArgsProps) => {
   if (!args.length) {
     return <></>;
+  }
+
+  if (short) {
+    return (
+      <>
+        {args
+          .map<React.ReactNode>((arg) => <Arg key={arg.name} arg={arg} short />)
+          .reduce((prev, curr) => [prev, ', ', curr])}
+      </>
+    );
   }
 
   return (
     <div>
       {args.map((arg) => (
-        <div key={arg.name}>
-          <Deprecated reason={arg.deprecationReason} />
-          <Name>{arg.name}</Name>
-          <DefaultValue arg={arg} />: <ReturnType type={arg.type} />
-          <InlineDescription description={arg.description} />
-        </div>
+        <Arg key={arg.name} arg={arg} />
       ))}
     </div>
   );

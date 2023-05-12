@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Divider } from '@mui/material';
 import styled from 'styled-components';
 import { SchemaDoc } from './schemaDoc';
@@ -38,24 +38,30 @@ const ExplorerContent = styled.div`
   margin: 0 10px 10px 15px;
 `;
 
-export const Explorer = () => {
+const useDocsContent = () => {
   const { schema } = useContext(SchemaContext);
-  const { getCurrent, isSchemaDoc } = useContext(DocsNavContext);
+  const { getCurrent, isSchemaDoc, searchQuery } = useContext(DocsNavContext);
+  const { data } = getCurrent();
 
-  if (!schema) {
+  if (!schema || searchQuery) {
     return <></>;
   }
 
-  let content: ReactNode = null;
-  const { data } = getCurrent();
-
   if (isSchemaDoc) {
-    content = <SchemaDoc schema={schema} />;
-  } else if (isNamedType(data) || isInputType(data)) {
-    content = <TypeDoc schema={schema} type={data} />;
-  } else if (data) {
-    content = <FieldDoc field={data} />;
+    return <SchemaDoc schema={schema} />;
   }
+
+  if (isNamedType(data) || isInputType(data)) {
+    return <TypeDoc schema={schema} type={data} />;
+  }
+
+  if (data) {
+    return <FieldDoc field={data} />;
+  }
+};
+
+export const Explorer = () => {
+  const content = useDocsContent();
 
   return (
     <ExplorerWrapper>
