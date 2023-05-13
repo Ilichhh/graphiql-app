@@ -23,7 +23,7 @@ const FormWrapper = styled.form`
   margin: 0 auto;
   width: 90%;
   max-width: 500px;
-  height: calc(100vh - ${theme.headerHeight} - 87px);
+  height: calc(100vh - ${theme.headerHeight});
 `;
 
 const FormHeader = styled.h1`
