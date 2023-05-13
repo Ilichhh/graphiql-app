@@ -23,13 +23,22 @@ const FormWrapper = styled.form`
   margin: 0 auto;
   width: 90%;
   max-width: 500px;
-  height: calc(100vh - ${theme.headerHeight});
+  height: calc(100vh - ${theme.headerHeight} - 87px);
 `;
 
 const FormHeader = styled.h1`
   margin: 0 auto 10px;
   text-align: center;
   color: ${theme.colors.textGrey};
+`;
+
+const CustomLoadingButton = styled(LoadingButton)`
+  & .MuiLoadingButton-loading {
+    background-color: ${theme.colors.accent};
+  }
+  & .MuiLoadingButton-loadingIndicator {
+    color: ${theme.colors.textGrey};
+  }
 `;
 
 interface FormProps {
@@ -154,10 +163,10 @@ export const Form = ({ mode }: FormProps) => {
         })}
       />
       {passwordInputs}
-      <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
+      <CustomLoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
         {t(`form.${mode}.submit`)}
-      </LoadingButton>
-      <Divider>or</Divider>
+      </CustomLoadingButton>
+      <Divider>{t('form.divider')}</Divider>
       <Button
         component={Link}
         to={mode === 'login' ? '/register' : '/login'}

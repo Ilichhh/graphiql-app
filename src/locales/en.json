@@ -27,7 +27,8 @@
     "simplePassword": "Password must be a minimum of 8 characters and include at least one letter, one digit, and one special character",
     "emptyPasswordConfirm": "Please confirm password",
     "wrongPasswordConfirm": "Passwords do not match",
-    "emailInUse": "The email provided is already registered. Please use a different email or proceed with the login"
+    "emailInUse": "The email provided is already registered. Please use a different email or proceed with the login",
+    "divider": "or"
   },
   "playground": {
     "responsePlaceholder": "Hit the Play Button to get a response here",
@@ -35,7 +36,7 @@
     "headersTabHeader": "HTTP Headers",
     "endpointPlaceholder" : "Enter an endpoint url...",
     "endpointSubmit": "Use endpoint",
-    "chooseEndpoint": "Or choose one of the following",
+    "chooseEndpoint": "or choose one of the following",
     "serverError": "Server cannot be reached"
   },
   "landing": {
