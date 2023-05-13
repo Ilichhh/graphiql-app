@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { usePlayground } from '../hooks/usePlayground';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
-import { SchemaContext } from '../contexts';
 import { set } from '../store/endpointSlice';
 
 import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
@@ -32,12 +31,11 @@ const Playground = styled.div`
 
 export const PlaygroundPage = React.memo(() => {
   const endpoint = useAppSelector((store) => store.endpoint);
-  const { response, sendRequest } = usePlayground();
-  const { schema, isError, errorMessage } = useGraphQLSchema();
-  const dispatch = useAppDispatch();
+  const { isSchemaError } = useGraphQLSchema(endpoint);
+  const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
       dispatch(set(lastEndpoint));
@@ -52,14 +50,12 @@ export const PlaygroundPage = React.memo(() => {
     <>
       <Header currentPage="playground" />
       <Wrapper>
-        <PlaygroundHeader isError={isError} />
-        <SchemaContext.Provider value={{ schema, isError, errorMessage }}>
-          <Playground>
-            <Editor />
-            <PlayButton onClick={sendRequest} />
-            <ResponseBox response={isError ? errorMessage : response} />
-          </Playground>
-        </SchemaContext.Provider>
+        <PlaygroundHeader isError={isSchemaError} />
+        <Playground>
+          <Editor />
+          <PlayButton onClick={sendRequest} />
+          <ResponseBox response={isFetching ? 'Loading...' : errorMessage || response} />
+        </Playground>
       </Wrapper>
     </>
   );

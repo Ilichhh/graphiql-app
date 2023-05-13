@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef } from 'react';
 import CodeMirror, { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { graphql, updateSchema } from 'cm6-graphql';
 
 import theme from '../../theme';
-import { SchemaContext } from '../../contexts';
+import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
+import { useAppSelector } from '../../hooks/reduxTypedHooks';
 
 const requestEditorTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgDarkBlue, gutterBackground: '#0f202d' },
@@ -26,11 +27,12 @@ type CodeMirrorProps = React.ComponentProps<typeof CodeMirror>;
 
 const RequestEditor = React.memo((props: CodeMirrorProps) => {
   const refs = useRef<ReactCodeMirrorRef>({});
-  const { schema } = useContext(SchemaContext);
+  const endpoint = useAppSelector((store) => store.endpoint);
+  const { schema } = useGraphQLSchema(endpoint);
 
   useEffect(() => {
     const view = refs.current.view;
-    if (!view) return;
+    if (!view || !schema) return;
 
     updateSchema(view, schema);
   }, [refs, schema]);

@@ -5,11 +5,12 @@ import { SchemaDoc } from './schemaDoc';
 import { TypeDoc } from './typeDoc';
 import { FieldDoc } from './fieldDoc';
 import theme from '../../../theme';
-import { SchemaContext } from '../../../contexts';
 import { isInputType, isNamedType } from 'graphql/type';
 import { DocsNavContext } from './docsContext';
 import { ExplorerTitleBar } from './components/explorerTitleBar';
 import { SearchBar } from './components/searchBar';
+import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
+import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 
 const ExplorerWrapper = styled.div`
   position: absolute;
@@ -39,9 +40,10 @@ const ExplorerContent = styled.div`
 `;
 
 const useDocsContent = () => {
-  const { schema } = useContext(SchemaContext);
   const { getCurrent, isSchemaDoc, searchQuery } = useContext(DocsNavContext);
   const { data } = getCurrent();
+  const endpoint = useAppSelector((store) => store.endpoint);
+  const { schema } = useGraphQLSchema(endpoint);
 
   if (!schema || searchQuery) {
     return <></>;
