@@ -12,8 +12,15 @@ export const usePlayground = (endpoint: string) => {
   );
 
   const [trigger, { data, error, isFetching }] = useLazyGetResponseQuery();
-  const response = data ? JSON.stringify(data.data, null, 2) : '';
-  const errorMessage = error ? (error as ResponseError).data.errors[0].message : '';
+  let response = '';
+  let errorMessage = '';
+
+  try {
+    response = JSON.stringify(data.data, null, 2);
+    errorMessage = (error as ResponseError).data.errors[0].message;
+  } catch (error) {
+    errorMessage = String(error);
+  }
 
   return {
     response,
