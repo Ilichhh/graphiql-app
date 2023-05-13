@@ -4,13 +4,15 @@ import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import { auth, signUp, signIn } from '../firebase';
 import { FormMode } from '../types';
+
+import styled from 'styled-components';
+import theme from '../theme';
 
 const FormWrapper = styled.form`
   display: flex;
@@ -24,6 +26,7 @@ const FormWrapper = styled.form`
 
 const FormHeader = styled.h1`
   margin: 0 auto;
+  color: ${theme.colors.textGrey};
 `;
 
 interface FormProps {
@@ -64,7 +67,7 @@ export const Form = ({ mode }: FormProps) => {
           id="new-password"
           type="password"
           label={t('form.passwordInput')}
-          variant="outlined"
+          variant="filled"
           autoComplete="new-password"
           error={!!errors.newPassword}
           helperText={errors.newPassword?.message?.toString()}
@@ -81,7 +84,7 @@ export const Form = ({ mode }: FormProps) => {
           id="password-confirm"
           type="password"
           label={t('form.passwordInputConfirm')}
-          variant="outlined"
+          variant="filled"
           autoComplete="new-password"
           error={!!errors.passwordConfirm}
           helperText={errors.passwordConfirm?.message?.toString()}
@@ -99,7 +102,7 @@ export const Form = ({ mode }: FormProps) => {
         id="current-password"
         type="password"
         label={t('form.passwordInput')}
-        variant="outlined"
+        variant="filled"
         autoComplete="current-password"
         error={!!errors.currentPassword}
         helperText={errors.currentPassword?.message?.toString()}
@@ -117,7 +120,7 @@ export const Form = ({ mode }: FormProps) => {
         id="email"
         type="email"
         label={t('form.emailInput')}
-        variant="outlined"
+        variant="filled"
         error={!!errors.email}
         helperText={errors.email?.message?.toString()}
         {...register('email', {

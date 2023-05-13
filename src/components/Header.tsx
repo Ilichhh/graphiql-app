@@ -55,9 +55,9 @@ export const Header = ({ currentPage }: HeaderProps) => {
   const [user] = useAuthState(auth);
   const isAtTop = useIsAtTop();
 
-  const bgColor = currentPage === 'playground' ? theme.colors.bgDarkBlue : theme.colors.bgLight;
-  const textColor = currentPage === 'playground' ? theme.colors.textGrey : theme.colors.bgBlue;
-  const btnTextColor = currentPage === 'playground' ? theme.colors.textGrey : theme.colors.bgLight;
+  const bgColor = currentPage !== 'welcome' ? theme.colors.bgDarkBlue : theme.colors.bgLight;
+  const textColor = currentPage !== 'welcome' ? theme.colors.textGrey : theme.colors.bgBlue;
+  const btnTextColor = currentPage !== 'welcome' ? theme.colors.textGrey : theme.colors.bgLight;
   const btnStyles = { backgroundColor: theme.colors.bgBlue, color: btnTextColor };
 
   const handleLanguageChange = (event: SelectChangeEvent) => {
