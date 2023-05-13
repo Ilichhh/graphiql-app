@@ -7,7 +7,6 @@ import theme from '../../../../theme';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import { TitleBar } from './titleBar';
 import { DocsNavContext, StackItem } from '../docsContext';
-import { SchemaContext } from '../../../../contexts';
 import {
   GraphQLArgument,
   GraphQLField,
@@ -23,6 +22,8 @@ import { Spacer } from './spacer';
 import { TypeLink } from './typeLink';
 import { Field } from './field';
 import { Args } from './args';
+import { useAppSelector } from '../../../../hooks/reduxTypedHooks';
+import { useGraphQLSchema } from '../../../../hooks/useGraphQLSchema';
 
 const SearchBarWrapper = styled.div`
   display: flex;
@@ -131,7 +132,8 @@ const getSearchResults = (schema: GraphQLSchema, stackItem: StackItem, searchVal
 
 export const SearchBar = () => {
   const { searchQuery, setSearchQuery, getCurrent } = useContext(DocsNavContext);
-  const { schema } = useContext(SchemaContext);
+  const endpoint = useAppSelector((store) => store.endpoint);
+  const { schema } = useGraphQLSchema(endpoint);
 
   const [searchResults, setSearchResults] = useState<SearchResults>({
     types: [],
