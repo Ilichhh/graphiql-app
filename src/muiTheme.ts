@@ -46,6 +46,13 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          fill: theme.colors.textGrey,
+        },
+      },
+    },
   },
 });
 

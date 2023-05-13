@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Divider, Button, TextField } from '@mui/material';
+import { Divider, Button, TextField, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import { auth, signUp, signIn } from '../firebase';
 import { FormMode } from '../types';
@@ -26,7 +27,7 @@ const FormWrapper = styled.form`
 `;
 
 const FormHeader = styled.h1`
-  margin: 0 auto;
+  margin: 0 auto 10px;
   text-align: center;
   color: ${theme.colors.textGrey};
 `;
@@ -47,6 +48,7 @@ export const Form = ({ mode }: FormProps) => {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const newPassword = watch('newPassword');
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (mode === 'register') {
@@ -67,10 +69,19 @@ export const Form = ({ mode }: FormProps) => {
       <>
         <TextField
           id="new-password"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           label={t('form.passwordInput')}
           variant="filled"
           autoComplete="new-password"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
           error={!!errors.newPassword}
           helperText={errors.newPassword?.message?.toString()}
           {...register('newPassword', {
@@ -84,7 +95,7 @@ export const Form = ({ mode }: FormProps) => {
         />
         <TextField
           id="password-confirm"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           label={t('form.passwordInputConfirm')}
           variant="filled"
           autoComplete="new-password"
@@ -102,10 +113,19 @@ export const Form = ({ mode }: FormProps) => {
     passwordInputs = (
       <TextField
         id="current-password"
-        type="password"
+        type={showPassword ? 'text' : 'password'}
         label={t('form.passwordInput')}
         variant="filled"
         autoComplete="current-password"
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
         error={!!errors.currentPassword}
         helperText={errors.currentPassword?.message?.toString()}
         {...register('currentPassword', {
