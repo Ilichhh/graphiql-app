@@ -5,9 +5,8 @@ import { useEndpointInput } from '../../hooks/useEndpointInput';
 import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
 import { set } from '../../store/endpointSlice';
 
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import EastIcon from '@mui/icons-material/East';
+import { Divider, Button, TextField } from '@mui/material';
 
 import defaultEndpoints from '../../data/defaultEndpoints.json';
 
@@ -34,12 +33,21 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 500px) {
+    flex-direction: column;
+    gap: 30px;
+  }
 `;
 
 const ModalHeader = styled.h1`
   margin: 0;
   margin-left: 30px;
+  text-align: center;
   color: ${theme.colors.textGrey};
+  @media (max-width: 500px) {
+    margin: 0;
+    font-size: 26px;
+  }
 `;
 
 const InputWrapper = styled.div`
@@ -47,9 +55,8 @@ const InputWrapper = styled.div`
   justify-content: center;
 `;
 
-const Endpoints = styled.div`
-  margin: 0 auto 16px;
-  color: ${theme.colors.textInactive};
+const Endpoints = styled(Divider)`
+  padding-bottom: 22px;
 `;
 
 const EndpointsList = styled.div`
@@ -57,6 +64,14 @@ const EndpointsList = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 8px;
+`;
+
+const DefaultEndpoint = styled(Button)`
+  @media (max-width: 500px) {
+    && {
+      font-size: 12px;
+    }
+  }
 `;
 
 const SubmitButton = styled(Button)`
@@ -125,14 +140,14 @@ export const Modal = ({ setIsModal }: ModalProps) => {
         <EndpointsList>
           <Endpoints>{t(`playground.chooseEndpoint`)}</Endpoints>
           {defaultEndpoints.map((endpoint) => (
-            <Button
+            <DefaultEndpoint
               key={endpoint}
               disableElevation
               onClick={() => handleSelectEndpoint(endpoint)}
               size="small"
             >
               {endpoint}
-            </Button>
+            </DefaultEndpoint>
           ))}
         </EndpointsList>
       </ModalWrapper>
