@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../../../theme';
+import { Markdown } from './markdown';
 
 const Description = styled.div`
   color: ${theme.docs.comment};
@@ -16,5 +17,9 @@ export const InlineDescription = ({ description }: InlineDescriptionProps) => {
     return null;
   }
 
-  return <Description># {description}</Description>;
+  return (
+    <Description>
+      # <Markdown content={description} />
+    </Description>
+  );
 };

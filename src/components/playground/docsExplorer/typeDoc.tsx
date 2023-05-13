@@ -16,6 +16,9 @@ import { TitleBar } from './components/titleBar';
 import styled from 'styled-components';
 import { Deprecated } from './components/depricated';
 import { InlineDescription } from './components/inlineDescription';
+import { Markdown } from './components/markdown';
+import { Spacer } from './components/spacer';
+import theme from '../../../theme';
 
 interface TypeProps {
   type: GraphQLType;
@@ -33,7 +36,7 @@ const Description = ({ type }: { type: GraphQLNamedType }) => {
   return (
     <div>
       <TitleBar title="Description" />
-      {type.description}
+      <Markdown content={type.description} />
     </div>
   );
 };
@@ -47,9 +50,9 @@ const Implements = ({ type }: TypeProps) => {
     <div>
       <TitleBar title="Implements" />
       {type.getInterfaces().map((type) => (
-        <div key={type.name} style={{ marginBottom: '10px' }}>
+        <Spacer key={type.name}>
           <ReturnType type={type} />
-        </div>
+        </Spacer>
       ))}
     </div>
   );
@@ -70,6 +73,9 @@ const Fields = ({ type }: TypeProps) => {
   );
 };
 
+const Enum = styled.span`
+  color: ${theme.docs.enum};
+`;
 const EnumValues = ({ type }: TypeProps) => {
   if (!isEnumType(type)) {
     return null;
@@ -79,11 +85,11 @@ const EnumValues = ({ type }: TypeProps) => {
     <div>
       <TitleBar title="Values" />
       {type.getValues().map(({ name, description, deprecationReason }) => (
-        <div key={name} style={{ marginBottom: '10px' }}>
+        <Spacer key={type.name}>
           <Deprecated reason={deprecationReason} />
-          {name}
+          <Enum>{name}</Enum>
           <InlineDescription description={description} />
-        </div>
+        </Spacer>
       ))}
     </div>
   );
@@ -98,9 +104,9 @@ const ImplementedBy = ({ schema, type }: TypeWithSchemaProps) => {
     <div>
       <TitleBar title="Implemented by" />
       {schema.getPossibleTypes(type).map((type) => (
-        <div key={type.name} style={{ marginBottom: '10px' }}>
+        <Spacer key={type.name}>
           <ReturnType type={type} />
-        </div>
+        </Spacer>
       ))}
     </div>
   );

@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { Args } from './args';
 import { ReturnType } from './returnType';
-import { GraphQLField } from 'graphql/type';
+import { GraphQLField, GraphQLInputField } from 'graphql/type';
 import styled from 'styled-components';
 import theme from '../../../../theme';
 import { DocsNavContext } from '../docsContext';
 import { Deprecated } from './depricated';
 
-const Content = styled.div<{ hasArgs: boolean }>`
+const Content = styled.div<{ short: boolean; hasArgs: boolean }>`
+  display: ${({ short }) => (short ? 'inline-block' : 'block')};
   margin-bottom: ${({ hasArgs }) => (hasArgs ? '20px' : '3px')};
 `;
 
@@ -24,10 +25,11 @@ const ArgsWrapper = styled.div`
   padding: 2px 0;
 `;
 interface FieldProps {
-  field: GraphQLField<unknown, unknown>;
+  field: GraphQLField<unknown, unknown> | GraphQLInputField;
+  short?: boolean;
 }
 
-export const Field = ({ field, field: { name, type, args } }: FieldProps) => {
+export const Field = ({ field, field: { name, type }, short = false }: FieldProps) => {
   const { push } = useContext(DocsNavContext);
 
   const pushItem = () => {
@@ -37,10 +39,19 @@ export const Field = ({ field, field: { name, type, args } }: FieldProps) => {
     });
   };
 
-  const hasArgs = args && !!args.length;
+  if (short) {
+    return (
+      <Content short={short} hasArgs={false}>
+        <FieldLink onClick={pushItem}>{name}</FieldLink>
+      </Content>
+    );
+  }
+
+  const args = 'args' in field ? field.args : [];
+  const hasArgs = !!args.length;
 
   return (
-    <Content hasArgs={hasArgs}>
+    <Content short={false} hasArgs={hasArgs}>
       <Deprecated reason={field.deprecationReason} />
       <FieldLink onClick={pushItem}>{name}</FieldLink>
       {hasArgs && (

@@ -21,11 +21,13 @@
     "@uiw/codemirror-theme-vscode": "^4.19.16",
     "@uiw/react-codemirror": "^4.19.16",
     "cm6-graphql": "^0.0.5",
+    "dompurify": "^3.0.3",
     "firebase": "^9.21.0",
     "graphql": "^16.6.0",
     "i18next": "^22.4.15",
     "i18next-browser-languagedetector": "^7.0.1",
     "localforage": "^1.10.0",
+    "markdown-it": "^13.0.1",
     "match-sorter": "^6.3.1",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
@@ -39,6 +41,8 @@
     "styled-normalize": "^8.0.7"
   },
   "devDependencies": {
+    "@types/dompurify": "^3.0.2",
+    "@types/markdown-it": "^12.2.3",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/styled-components": "^5.1.26",
