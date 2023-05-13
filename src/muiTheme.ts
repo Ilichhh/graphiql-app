@@ -26,6 +26,27 @@ const darkTheme = createTheme({
       secondary: theme.colors.textInactive,
     },
   },
+  components: {
+    MuiFilledInput: {
+      styleOverrides: {
+        underline: {
+          '&:before': {
+            borderBottomColor: theme.colors.textInactive,
+          },
+        },
+      },
+    },
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          color: theme.colors.textGrey,
+          '&:before, &:after': {
+            borderColor: theme.colors.textInactive,
+          },
+        },
+      },
+    },
+  },
 });
 
 export default darkTheme;

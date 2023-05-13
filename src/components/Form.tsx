@@ -4,9 +4,8 @@ import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { Divider, Button, TextField } from '@mui/material';
 
 import { auth, signUp, signIn } from '../firebase';
 import { FormMode } from '../types';
@@ -17,15 +16,18 @@ import theme from '../theme';
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 32px;
   padding: 48px 16px;
   margin: 0 auto;
   width: 90%;
   max-width: 500px;
+  height: calc(100vh - ${theme.headerHeight});
 `;
 
 const FormHeader = styled.h1`
   margin: 0 auto;
+  text-align: center;
   color: ${theme.colors.textGrey};
 `;
 
@@ -135,6 +137,7 @@ export const Form = ({ mode }: FormProps) => {
       <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
         {t(`form.${mode}.submit`)}
       </LoadingButton>
+      <Divider>or</Divider>
       <Button
         component={Link}
         to={mode === 'login' ? '/register' : '/login'}

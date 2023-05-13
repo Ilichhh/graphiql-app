@@ -63,7 +63,6 @@ const SubmitButton = styled(Button)`
   width: 250px;
   border-radius: 0 !important;
   white-space: nowrap;
-  background-color: ${theme.colors.accent} !important;
 `;
 
 interface ModalProps {
@@ -109,9 +108,6 @@ export const Modal = ({ setIsModal }: ModalProps) => {
             sx={{
               '& input': {
                 color: isError ? theme.colors.error : theme.colors.textGrey,
-              },
-              '& input::placeholder': {
-                color: theme.colors.textGrey,
               },
             }}
             id="endpoint"
