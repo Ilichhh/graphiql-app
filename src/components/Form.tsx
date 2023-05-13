@@ -1,29 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import styled from 'styled-components';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { Divider, Button, TextField, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import { auth, signUp, signIn } from '../firebase';
 import { FormMode } from '../types';
 
+import styled from 'styled-components';
+import theme from '../theme';
+
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 32px;
   padding: 48px 16px;
   margin: 0 auto;
   width: 90%;
   max-width: 500px;
+  height: calc(100vh - ${theme.headerHeight});
 `;
 
 const FormHeader = styled.h1`
-  margin: 0 auto;
+  margin: 0 auto 10px;
+  text-align: center;
+  color: ${theme.colors.textGrey};
+`;
+
+const CustomLoadingButton = styled(LoadingButton)`
+  & .MuiLoadingButton-loading {
+    background-color: ${theme.colors.accent};
+  }
+  & .MuiLoadingButton-loadingIndicator {
+    color: ${theme.colors.textGrey};
+  }
 `;
 
 interface FormProps {
@@ -42,6 +57,7 @@ export const Form = ({ mode }: FormProps) => {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const newPassword = watch('newPassword');
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (mode === 'register') {
@@ -62,10 +78,19 @@ export const Form = ({ mode }: FormProps) => {
       <>
         <TextField
           id="new-password"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           label={t('form.passwordInput')}
-          variant="outlined"
+          variant="filled"
           autoComplete="new-password"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
           error={!!errors.newPassword}
           helperText={errors.newPassword?.message?.toString()}
           {...register('newPassword', {
@@ -79,9 +104,9 @@ export const Form = ({ mode }: FormProps) => {
         />
         <TextField
           id="password-confirm"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           label={t('form.passwordInputConfirm')}
-          variant="outlined"
+          variant="filled"
           autoComplete="new-password"
           error={!!errors.passwordConfirm}
           helperText={errors.passwordConfirm?.message?.toString()}
@@ -97,10 +122,19 @@ export const Form = ({ mode }: FormProps) => {
     passwordInputs = (
       <TextField
         id="current-password"
-        type="password"
+        type={showPassword ? 'text' : 'password'}
         label={t('form.passwordInput')}
-        variant="outlined"
+        variant="filled"
         autoComplete="current-password"
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
         error={!!errors.currentPassword}
         helperText={errors.currentPassword?.message?.toString()}
         {...register('currentPassword', {
@@ -117,7 +151,7 @@ export const Form = ({ mode }: FormProps) => {
         id="email"
         type="email"
         label={t('form.emailInput')}
-        variant="outlined"
+        variant="filled"
         error={!!errors.email}
         helperText={errors.email?.message?.toString()}
         {...register('email', {
@@ -129,9 +163,10 @@ export const Form = ({ mode }: FormProps) => {
         })}
       />
       {passwordInputs}
-      <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
+      <CustomLoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
         {t(`form.${mode}.submit`)}
-      </LoadingButton>
+      </CustomLoadingButton>
+      <Divider>{t('form.divider')}</Divider>
       <Button
         component={Link}
         to={mode === 'login' ? '/register' : '/login'}

@@ -5,7 +5,10 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 import { store } from './store/store';
+
+import { ThemeProvider } from '@mui/material/styles';
 import GlobalStyles from './globalStyles';
+import darkTheme from './muiTheme';
 
 import './i18n';
 
@@ -13,7 +16,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter>
     <GlobalStyles />
     <Provider store={store}>
-      <App />
+      <ThemeProvider theme={darkTheme}>
+        <App />
+      </ThemeProvider>
     </Provider>
   </BrowserRouter>
 );
