@@ -1,5 +1,6 @@
 import React from 'react';
 import MarkdownIt from 'markdown-it';
+import DOMPurify from 'dompurify';
 import styled from 'styled-components';
 
 export const markdown = new MarkdownIt({
@@ -26,6 +27,8 @@ const Content = styled.div`
   }
 `;
 
-export const Markdown = ({ content }: MarkdownProps) => (
-  <Content dangerouslySetInnerHTML={{ __html: markdown.render(content) }} />
-);
+export const Markdown = ({ content }: MarkdownProps) => {
+  const html = markdown.render(content);
+  const sanitizedHtml = DOMPurify.sanitize(html);
+  return <Content dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />;
+};
