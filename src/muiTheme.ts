@@ -7,7 +7,7 @@ const darkTheme = createTheme({
       main: theme.colors.accent,
     },
     secondary: {
-      main: theme.colors.bgDarkBlue,
+      main: theme.colors.bgBlue,
     },
     error: {
       main: theme.colors.error,

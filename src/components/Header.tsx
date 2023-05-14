@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useIsAtTop } from '../hooks/useIsAtTop';
 
-import styled, { css } from 'styled-components';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
+import { logOut, auth } from '../firebase';
+
+import { MenuItem, Button } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { GraphQLIcon } from './Icons';
 
+import styled, { css } from 'styled-components';
 import theme from '../theme';
-import { logOut, auth } from '../firebase';
 
 const HeaderContainer = styled.header<{ sticky: boolean }>`
   position: sticky;
@@ -67,7 +67,7 @@ export const Header = ({ currentPage }: HeaderProps) => {
   return (
     <HeaderContainer color={bgColor} sticky={!isAtTop}>
       <Logo to="/" color={textColor}>
-        <GraphQLIcon color={textColor} />
+        <GraphQLIcon sx={{ fontSize: 40 }} />
         GraphiQL
       </Logo>
       <Nav>
