@@ -16,7 +16,7 @@ export const usePlayground = (endpoint: string) => {
   let errorMessage = '';
 
   try {
-    response = JSON.stringify(data?.data, null, 2);
+    response = JSON.stringify(data, null, 2);
     if (error) {
       response = '';
       errorMessage = JSON.stringify(error as ResponseError, null, 2);
