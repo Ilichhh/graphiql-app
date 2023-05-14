@@ -34,7 +34,7 @@ const Playground = styled.div`
 
 export const PlaygroundPage = React.memo(() => {
   const endpoint = useAppSelector((store) => store.endpoint);
-  const { isSchemaError } = useGraphQLSchema(endpoint);
+  const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
@@ -58,7 +58,10 @@ export const PlaygroundPage = React.memo(() => {
         <PlaygroundHeader isError={isSchemaError} />
         <Playground>
           <Editor isFetching={isFetching} sendRequest={sendRequest} />
-          <ResponseBox isFetching={isFetching} response={response || errorMessage} />
+          <ResponseBox
+            isFetching={isFetching}
+            response={response || schemaErrorMessage || errorMessage}
+          />
         </Playground>
       </Wrapper>
       <Footer />
