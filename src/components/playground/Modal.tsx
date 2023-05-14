@@ -8,10 +8,11 @@ import { set } from '../../store/endpointSlice';
 import EastIcon from '@mui/icons-material/East';
 import { Divider, Button, TextField } from '@mui/material';
 
-import defaultEndpoints from '../../data/defaultEndpoints.json';
-
 import styled from 'styled-components';
 import theme from '../../theme';
+import { ENDPOINTS } from '../../constants';
+import { setQuery } from '../../store/editorSlice';
+import { getDefaultQuery } from '../../utils/defaultQuery';
 
 const Container = styled.div`
   background-color: ${theme.colors.bgBlue};
@@ -95,6 +96,7 @@ export const Modal = ({ setIsModal }: ModalProps) => {
       e.preventDefault();
       if (isSchemaError) return;
       dispatch(set(endpoint));
+      dispatch(setQuery(getDefaultQuery(endpoint)));
       localStorage.setItem('last-endpoint', endpoint);
       setIsModal(false);
     },
@@ -139,7 +141,7 @@ export const Modal = ({ setIsModal }: ModalProps) => {
         </InputWrapper>
         <EndpointsList>
           <Endpoints>{t(`playground.chooseEndpoint`)}</Endpoints>
-          {defaultEndpoints.map((endpoint) => (
+          {ENDPOINTS.map((endpoint) => (
             <DefaultEndpoint
               key={endpoint}
               disableElevation
