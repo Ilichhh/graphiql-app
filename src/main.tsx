@@ -8,7 +8,7 @@ import { store } from './store/store';
 
 import { ThemeProvider } from '@mui/material/styles';
 import GlobalStyles from './globalStyles';
-import darkTheme from './muiTheme';
+import { darkTheme } from './muiTheme';
 
 import './i18n';
 

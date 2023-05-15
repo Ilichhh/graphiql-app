@@ -3,10 +3,15 @@ import React from 'react';
 import { Header, Footer, Container } from '../components';
 import { Hero, Explore, Team } from '../components/landing';
 
+import { ThemeProvider } from '@mui/material/styles';
+import { lightTheme } from '../muiTheme';
+
 export const WelcomePage = () => {
   return (
     <Container>
-      <Header currentPage="welcome" />
+      <ThemeProvider theme={lightTheme}>
+        <Header currentPage="welcome" />
+      </ThemeProvider>
       <main>
         <Hero />
         <Explore />

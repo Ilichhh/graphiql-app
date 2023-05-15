@@ -3,7 +3,7 @@ const theme = {
     bgBlack: '#141823',
     bgBlue: '#172b3a',
     bgDarkBlue: '#0f202d',
-    textGrey: '#ffffff99',
+    textGrey: '#c4c4c4',
     bgPlayBtn: '#b9bfc4',
     bgPlayBtnHover: '#c3c9ce',
     textInactive: '#555e66',
