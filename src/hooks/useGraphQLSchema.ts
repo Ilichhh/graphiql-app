@@ -6,7 +6,7 @@ export const useGraphQLSchema = (endpoint: string) => {
   let errorMessage = '';
   const { data, isError, error } = useGetSchemaQuery(endpoint, { skip: !endpoint });
 
-  if (data) {
+  if (data && !isError && data.data) {
     schema = buildClientSchema(data.data);
   }
 
