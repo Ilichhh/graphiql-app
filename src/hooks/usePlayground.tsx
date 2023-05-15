@@ -23,7 +23,7 @@ export const usePlayground = (endpoint: string) => {
       let systemError = '';
 
       try {
-        setResponse(JSON.stringify(data, null, 2));
+        setResponse(JSON.stringify(dataa, null, 2));
       } catch (e) {
         if (typeof e === 'string') {
           systemError = e;
