@@ -36,6 +36,7 @@ export const PlaygroundPage = React.memo(() => {
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
       dispatch(set(lastEndpoint));
@@ -54,7 +55,7 @@ export const PlaygroundPage = React.memo(() => {
         <Playground>
           <Editor />
           <PlayButton onClick={sendRequest} />
-          <ResponseBox response={isFetching ? 'Loading...' : errorMessage || response} />
+          <ResponseBox isFetching={isFetching} response={response || errorMessage} />
         </Playground>
       </Wrapper>
     </>
