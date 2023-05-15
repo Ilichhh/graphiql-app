@@ -7,7 +7,12 @@ const darkTheme = createTheme({
       main: theme.colors.accent,
     },
     secondary: {
-      main: theme.colors.bgDarkBlue,
+      main: theme.colors.bgBlue,
+      dark: '#122633',
+    },
+    background: {
+      default: theme.colors.bgDarkBlue,
+      paper: theme.colors.bgBlue,
     },
     error: {
       main: theme.colors.error,
@@ -53,7 +58,44 @@ const darkTheme = createTheme({
         },
       },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: theme.colors.bgDarkBlue,
+        },
+      },
+    },
   },
 });
 
-export default darkTheme;
+const lightTheme = createTheme({
+  palette: {
+    primary: {
+      main: theme.colors.accent,
+    },
+    secondary: {
+      main: theme.colors.bgBlue,
+      dark: '#122633',
+    },
+    background: {
+      default: theme.colors.bgLight,
+    },
+    error: {
+      main: theme.colors.error,
+    },
+    warning: {
+      main: theme.colors.warning,
+    },
+    info: {
+      main: theme.colors.info,
+    },
+    success: {
+      main: theme.colors.success,
+    },
+    text: {
+      primary: theme.colors.bgDarkBlue,
+    },
+  },
+});
+
+export { darkTheme, lightTheme };

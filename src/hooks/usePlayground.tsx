@@ -16,10 +16,13 @@ export const usePlayground = (endpoint: string) => {
   let errorMessage = '';
 
   try {
-    response = JSON.stringify(data.data, null, 2);
-    errorMessage = (error as ResponseError).data.errors[0].message;
+    response = JSON.stringify(data, null, 2);
+    if (error) {
+      response = '';
+      errorMessage = JSON.stringify(error as ResponseError, null, 2);
+    }
   } catch (error) {
-    errorMessage = String(error);
+    console.error(error);
   }
 
   return {
