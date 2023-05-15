@@ -9,7 +9,6 @@ import theme from '../../theme';
 import { useVerticalResize } from '../../hooks/useVerticalResize';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { setQuery, setVariables, setHeaders } from '../../store/editorSlice';
-import { defaultQuery } from '../../data/queries';
 
 const Container = styled.section`
   display: flex;
