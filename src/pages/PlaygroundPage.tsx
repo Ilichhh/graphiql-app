@@ -5,9 +5,8 @@ import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
 import { set } from '../store/endpointSlice';
 
-import { Editor, PlayButton, PlaygroundHeader, ResponseBox } from '../components/playground';
+import { Editor, PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
 import { Header } from '../components';
-import { Modal } from '../components/playground/Modal';
 
 import styled from 'styled-components';
 import theme from '../theme';
@@ -26,6 +25,8 @@ const Wrapper = styled.main`
 const Playground = styled.div`
   display: flex;
   flex: 1 1 0;
+  padding-left: 10px;
+  background: ${theme.colors.bgBlue};
   @media (max-width: 600px) {
     flex-direction: column;
   }
@@ -38,6 +39,7 @@ export const PlaygroundPage = React.memo(() => {
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
       dispatch(set(lastEndpoint));
@@ -55,9 +57,8 @@ export const PlaygroundPage = React.memo(() => {
       <Wrapper>
         <PlaygroundHeader isError={isSchemaError} />
         <Playground>
-          <Editor />
-          <PlayButton onClick={sendRequest} />
-          <ResponseBox response={isFetching ? 'Loading...' : errorMessage || response} />
+          <Editor isFetching={isFetching} sendRequest={sendRequest} />
+          <ResponseBox isFetching={isFetching} response={response || errorMessage} />
         </Playground>
       </Wrapper>
     </>
