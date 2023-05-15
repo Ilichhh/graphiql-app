@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useAppSelector } from './reduxTypedHooks';
 import { useLazyGetResponseQuery } from '../store/apiSlice';
 import { useAppDispatch } from './reduxTypedHooks';
@@ -14,29 +14,42 @@ export const usePlayground = (endpoint: string) => {
   );
 
   const [trigger, { data, error, isFetching }] = useLazyGetResponseQuery();
-  let response = '';
-  let errorMessage = '';
-  let systemError = '';
 
-  try {
-    response = JSON.stringify(data, null, 2);
-  } catch (e) {
-    if (typeof e === 'string') {
-      systemError = e;
-    } else if (e instanceof Error) {
-      systemError = e.message;
-    }
+  const [response, setResponse] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-    dispatch(setError(systemError));
-  }
+  useEffect(() => {
+    const processResponse = () => {
+      let systemError = '';
 
-  if (error) {
-    if ('status' in error) {
-      errorMessage = 'error' in error ? error.error : JSON.stringify(error.data, null, 2);
-    } else {
-      errorMessage = error.message || 'Unknown error';
-    }
-  }
+      try {
+        setResponse(JSON.stringify(data, null, 2));
+      } catch (e) {
+        if (typeof e === 'string') {
+          systemError = e;
+        } else if (e instanceof Error) {
+          systemError = e.message;
+        }
+
+        dispatch(setError(systemError));
+      }
+
+      if (error) {
+        if ('status' in error) {
+          setErrorMessage('error' in error ? error.error : JSON.stringify(error.data, null, 2));
+        } else {
+          setErrorMessage(error.message || 'Unknown error');
+        }
+      }
+    };
+
+    processResponse();
+
+    return () => {
+      setResponse('');
+      setErrorMessage('');
+    };
+  }, [data, error, dispatch]);
 
   return {
     response,

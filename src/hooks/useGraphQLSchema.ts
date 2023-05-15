@@ -51,7 +51,7 @@ export const useGraphQLSchema = (endpoint: string) => {
       setSchemaErrorMessage('');
       setSchema(null);
     };
-  }, [data, error, dispatch, setSchemaErrorMessage]);
+  }, [data, error, dispatch]);
 
   return { schema, isSchemaError: isError, schemaErrorMessage };
 };
