@@ -8,7 +8,7 @@ import theme from '../../theme';
 const Header = styled.header`
   display: flex;
   align-items: center;
-  padding: 15px 10px 10px 10px;
+  padding: 10px;
   background: ${theme.colors.bgBlue};
 `;
 

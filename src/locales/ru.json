@@ -37,7 +37,9 @@
     "endpointPlaceholder" : "Введите URL-адрес конечной точки...",
     "endpointSubmit": "Начать",
     "chooseEndpoint": "или выберите из предложенных",
-    "serverError": "Сервер не отвечает"
+    "serverError": "Сервер не отвечает",
+    "operation": "Запрос",
+    "playBtn": "Старт"
   },
   "landing": {
     "hero": {

@@ -1,19 +1,21 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-
-import { RequestEditor, MetadataEditor } from './codemirror';
-import { DocsPanel } from './docsExplorer/docsPanel';
-import { Tab } from '../../types';
-import theme from '../../theme';
 import { useVerticalResize } from '../../hooks/useVerticalResize';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { setQuery, setVariables, setHeaders } from '../../store/editorSlice';
 
+import { RequestEditor, MetadataEditor } from './codemirror';
+import { DocsPanel } from './docsExplorer/docsPanel';
+
+import { Tab } from '../../types';
+
+import theme from '../../theme';
+import styled from 'styled-components';
+import { PlayButton } from './PlayButton';
+
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  background: ${theme.colors.bgDarkBlue};
   flex: 1 1 0;
 `;
 
@@ -23,6 +25,7 @@ const EditorBox = styled.section<{ isDark: boolean }>`
   flex: 1 1 0;
   flex-flow: column;
   overflow-y: auto;
+  background-color: ${({ isDark }) => (isDark ? theme.colors.bgBlack : theme.colors.bgDarkBlue)};
   &::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -34,6 +37,16 @@ const EditorBox = styled.section<{ isDark: boolean }>`
   &::-webkit-scrollbar-corner {
     background-color: ${theme.colors.bgBlue};
   }
+`;
+
+const RequestEditorHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px 6px;
+  color: ${theme.colors.textGrey};
+  background: ${theme.colors.bgDarkBlue};
+  border-radius: 5px 5px 0 0;
 `;
 
 const EditorTools = styled.section<{ isOpen: boolean; height: number }>`
@@ -68,7 +81,12 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
   color: ${({ isActive }) => (isActive ? theme.colors.textGrey : theme.colors.textInactive)};
 `;
 
-export const Editor = () => {
+interface EditorProps {
+  isFetching: boolean;
+  sendRequest: () => void;
+}
+
+export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
   const { query, headers, variables } = useAppSelector((state) => state.editor);
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
@@ -110,6 +128,10 @@ export const Editor = () => {
   return (
     <Container>
       <EditorBox isDark={false}>
+        <RequestEditorHeader>
+          {t('playground.operation')}
+          <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
+        </RequestEditorHeader>
         <RequestEditor value={query} onChange={(value) => dispatch(setQuery(value))} />
       </EditorBox>
       <EditorTools height={panelHeight} isOpen={isEditorToolsOpen}>
