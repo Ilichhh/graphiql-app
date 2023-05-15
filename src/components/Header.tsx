@@ -33,7 +33,10 @@ const HeaderContainer = styled.header<{ sticky: boolean; color: string }>`
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
     `}
   @media (max-width: 600px) {
-    padding: 0 24px;
+    padding: 0 12px;
+  }
+  @media (max-width: 400px) {
+    padding: 0 6px;
   }
 `;
 
@@ -41,7 +44,7 @@ const Nav = styled.nav`
   display: flex;
   gap: 24px;
   @media (max-width: 600px) {
-    gap: 16px;
+    gap: 12px;
   }
 `;
 
