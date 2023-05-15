@@ -11,6 +11,8 @@ import { Modal } from '../components/playground/Modal';
 
 import styled from 'styled-components';
 import theme from '../theme';
+import { setQuery } from '../store/editorSlice';
+import { getDefaultQuery } from '../utils/defaultQuery';
 
 const Wrapper = styled.main`
   position: relative;
@@ -39,6 +41,7 @@ export const PlaygroundPage = React.memo(() => {
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
       dispatch(set(lastEndpoint));
+      dispatch(setQuery(getDefaultQuery(lastEndpoint)));
     }
   }, [dispatch, endpoint, lastEndpoint, isModal]);
 

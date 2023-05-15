@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { INITIAL_QUERY } from '../constants';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 const editorSlice = createSlice({
   name: 'editor',
   initialState: {
-    query: INITIAL_QUERY,
+    query: '',
     variables: '',
     headers: '',
   },
