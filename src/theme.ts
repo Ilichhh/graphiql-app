@@ -35,6 +35,7 @@ const theme = {
   },
   contentWidth: '1600px',
   headerHeight: '68px',
+  footerHeight: '58px',
 };
 
 export default theme;

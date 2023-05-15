@@ -1,6 +1,5 @@
 import React from 'react';
-import { Header } from '../components/Header';
-import { Form } from '../components/Form';
+import { Header, Footer, Form } from '../components';
 
 import { FormMode } from '../types';
 
@@ -20,5 +19,6 @@ export const FormPage = ({ mode }: FormPageProps) => (
   <Container>
     <Header currentPage="form" />
     <Form mode={mode} />
+    <Footer />
   </Container>
 );
