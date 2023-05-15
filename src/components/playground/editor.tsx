@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVerticalResize } from '../../hooks/useVerticalResize';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { setQuery, setVariables, setHeaders } from '../../store/editorSlice';
 
 import { RequestEditor, MetadataEditor } from './codemirror';
-import { DocsPanel } from './docsExplorer/docsPanel';
 
 import { Tab } from '../../types';
 
@@ -86,6 +85,8 @@ interface EditorProps {
   sendRequest: () => void;
 }
 
+const DocsPanel = React.lazy(() => import('./docsExplorer/docsPanel'));
+
 export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
   const { query, headers, variables } = useAppSelector((state) => state.editor);
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
@@ -160,7 +161,9 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
           />
         </EditorBox>
       </EditorTools>
-      <DocsPanel />
+      <Suspense>
+        <DocsPanel />
+      </Suspense>
     </Container>
   );
 };
