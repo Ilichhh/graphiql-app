@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { buildClientSchema } from 'graphql/utilities';
-// import { useTranslation } from 'react-i18next';
 import { useGetSchemaQuery } from '../store/apiSlice';
 import { useAppDispatch } from './reduxTypedHooks';
 import { setError } from '../store/errorSlice';
@@ -8,7 +7,6 @@ import { setError } from '../store/errorSlice';
 type Schema = ReturnType<typeof buildClientSchema> | null;
 
 export const useGraphQLSchema = (endpoint: string) => {
-  // const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { data, isError, error } = useGetSchemaQuery(endpoint, { skip: !endpoint });
   const [schema, setSchema] = useState<Schema>(null);
@@ -25,7 +23,7 @@ export const useGraphQLSchema = (endpoint: string) => {
           if (typeof e === 'string') {
             systemError = e;
           } else if (e instanceof Error) {
-            systemError = e.message;
+            systemError = `${e.name}: ${e.message}`;
           }
 
           dispatch(setError(systemError));
@@ -50,6 +48,7 @@ export const useGraphQLSchema = (endpoint: string) => {
     return () => {
       setSchemaErrorMessage('');
       setSchema(null);
+      dispatch(setError(''));
     };
   }, [data, error, dispatch]);
 

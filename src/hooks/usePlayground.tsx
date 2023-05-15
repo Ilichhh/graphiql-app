@@ -28,7 +28,7 @@ export const usePlayground = (endpoint: string) => {
         if (typeof e === 'string') {
           systemError = e;
         } else if (e instanceof Error) {
-          systemError = e.message;
+          systemError = `${e.name}: ${e.message}`;
         }
 
         dispatch(setError(systemError));
@@ -48,6 +48,7 @@ export const usePlayground = (endpoint: string) => {
     return () => {
       setResponse('');
       setErrorMessage('');
+      dispatch(setError(''));
     };
   }, [data, error, dispatch]);
 
