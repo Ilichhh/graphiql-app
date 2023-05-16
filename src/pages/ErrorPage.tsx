@@ -22,8 +22,9 @@ const Header = styled.h1`
 
 const BackgroundImage = styled.div`
   height: 400px;
-  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  background: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
   background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const Subheader = styled.h3`
