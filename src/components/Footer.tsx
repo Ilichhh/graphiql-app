@@ -18,6 +18,12 @@ const Container = styled.footer<{ color: string }>`
   margin: 0 auto;
   padding: 0 40px;
   background-color: ${({ color }) => color};
+  @media (max-width: 600px) {
+    padding: 0 12px;
+  }
+  @media (max-width: 400px) {
+    padding: 0 6px;
+  }
 `;
 
 const List = styled.ul`
@@ -25,16 +31,30 @@ const List = styled.ul`
   gap: 50px;
   padding: 0;
   list-style: none;
+  @media (max-width: 650px) {
+    gap: 20px;
+  }
 `;
 
-const ListItem = styled.li``;
+const ListItem = styled.li`
+  width: 90px;
+  @media (max-width: 650px) {
+    width: auto;
+  }
+`;
 
-const Link = styled.a<{ color: string }>`
+const Link = styled.a<{ color?: string }>`
   display: flex;
   align-items: center;
   gap: 10px;
   text-decoration: none;
   color: ${({ color }) => color};
+`;
+
+const Name = styled.span`
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
 
 const Year = styled.span<{ color: string }>`
@@ -52,7 +72,7 @@ export const Footer = React.memo(() => {
     <ListItem key={dev.id}>
       <Link href={dev.github} target="_blank" color={muiTheme.palette.text.secondary}>
         <GitHubIcon fontSize="large" />
-        <span>{t(`developers.${dev.name}.firstName`)}</span>
+        <Name>{t(`developers.${dev.name}.firstName`)}</Name>
       </Link>
     </ListItem>
   ));
@@ -61,7 +81,9 @@ export const Footer = React.memo(() => {
     <Container color={muiTheme.palette.background.default}>
       <List>{items}</List>
       <Year color={muiTheme.palette.text.secondary}>2023</Year>
-      <RSLogoIcon />
+      <Link href="https://rs.school" target="_blank" color={muiTheme.palette.text.primary}>
+        <RSLogoIcon />
+      </Link>
     </Container>
   );
 });

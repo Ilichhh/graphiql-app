@@ -53,8 +53,8 @@ const EditorTools = styled.section<{ isOpen: boolean; height: number }>`
   display: flex;
   background: ${theme.colors.bgBlack};
   flex-direction: column;
-  min-height: 48px;
-  max-height: calc(100vh - ${theme.headerHeight} - 56px);
+  min-height: 40px;
+  max-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight} - 106px);
   ${({ isOpen, height }) => isOpen && `height: ${height}px`};
 `;
 
