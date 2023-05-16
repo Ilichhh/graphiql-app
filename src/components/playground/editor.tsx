@@ -53,8 +53,8 @@ const EditorTools = styled.section<{ isOpen: boolean; height: number }>`
   display: flex;
   background: ${theme.colors.bgBlack};
   flex-direction: column;
-  min-height: 48px;
-  max-height: calc(100vh - ${theme.headerHeight} - 56px);
+  min-height: 40px;
+  max-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight} - 106px);
   ${({ isOpen, height }) => isOpen && `height: ${height}px`};
 `;
 
@@ -66,6 +66,7 @@ const ToolsBar = styled.div`
   letter-spacing: 0.5px;
   font-size: 0.9rem;
   user-select: none;
+  border-bottom: 1px solid ${theme.colors.bgDarkBlue};
   cursor: row-resize;
   @media (max-width: 600px) {
     padding: 8px;

@@ -11,13 +11,13 @@ export const WelcomePage = () => {
     <Container>
       <ThemeProvider theme={lightTheme}>
         <Header currentPage="welcome" />
+        <main>
+          <Hero />
+          <Explore />
+          <Team />
+        </main>
+        <Footer />
       </ThemeProvider>
-      <main>
-        <Hero />
-        <Explore />
-        <Team />
-      </main>
-      <Footer />
     </Container>
   );
 };

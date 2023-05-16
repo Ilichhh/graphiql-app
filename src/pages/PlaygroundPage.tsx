@@ -6,7 +6,7 @@ import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
 import { set } from '../store/endpointSlice';
 
 import { Editor, PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
-import { Header } from '../components';
+import { Header, Footer } from '../components';
 
 import styled from 'styled-components';
 import theme from '../theme';
@@ -17,7 +17,7 @@ const Wrapper = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - ${theme.headerHeight});
+  min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
   width: 100%;
   background: ${theme.colors.bgBlack};
 `;
@@ -61,6 +61,7 @@ export const PlaygroundPage = React.memo(() => {
           <ResponseBox isFetching={isFetching} response={response || errorMessage} />
         </Playground>
       </Wrapper>
+      <Footer />
     </>
   );
 });

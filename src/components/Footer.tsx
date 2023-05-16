@@ -1,71 +1,89 @@
 import React from 'react';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import { useTheme } from '@mui/material/styles';
+
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { RSLogoIcon } from './Icons';
+
 import devs from '../data/devs.json';
+
+import styled from 'styled-components';
 import theme from '../theme';
 
-const Container = styled.footer`
+const Container = styled.footer<{ color: string }>`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-
-  max-width: ${theme.contentWidth};
+  height: ${theme.footerHeight};
   margin: 0 auto;
-
-  padding: 10px;
+  padding: 0 40px;
+  background-color: ${({ color }) => color};
+  @media (max-width: 600px) {
+    padding: 0 12px;
+  }
+  @media (max-width: 400px) {
+    padding: 0 6px;
+  }
 `;
+
 const List = styled.ul`
   display: flex;
   gap: 50px;
-
+  padding: 0;
   list-style: none;
+  @media (max-width: 650px) {
+    gap: 20px;
+  }
 `;
 
-const ListItem = styled.li``;
+const ListItem = styled.li`
+  width: 90px;
+  @media (max-width: 650px) {
+    width: auto;
+  }
+`;
 
-const Link = styled.a`
+const Link = styled.a<{ color?: string }>`
   display: flex;
   align-items: center;
   gap: 10px;
-
   text-decoration: none;
-  color: ${theme.colors.bgDarkBlue};
+  color: ${({ color }) => color};
 `;
 
-const Copyright = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
+const Name = styled.span`
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
 
-const Year = styled.span`
+const Year = styled.span<{ color: string }>`
   font-weight: 500;
   font-size: 24px;
   line-height: 33px;
+  color: ${({ color }) => color};
 `;
 
 export const Footer = React.memo(() => {
+  const muiTheme = useTheme();
   const { t } = useTranslation();
 
   const items = devs.map((dev) => (
     <ListItem key={dev.id}>
-      <Link href={dev.github} target="_blank">
-        <GitHubIcon fontSize="large" />
-        <span>{t(`developers.${dev.name}.firstName`)}</span>
+      <Link href={dev.github} target="_blank" color={muiTheme.palette.text.secondary}>
+        <GitHubIcon fontSize="large" sx={{ fill: muiTheme.palette.text.secondary }} />
+        <Name>{t(`developers.${dev.name}.firstName`)}</Name>
       </Link>
     </ListItem>
   ));
 
   return (
-    <Container>
+    <Container color={muiTheme.palette.background.default}>
       <List>{items}</List>
-      <Copyright>
-        <Year>2023</Year>
-        <Link href="https://rs.school" target="_blank">
-          <img src="rss.svg" alt="RS School logo" width="122" height="45" />
-        </Link>
-      </Copyright>
+      <Year color={muiTheme.palette.text.secondary}>2023</Year>
+      <Link href="https://rs.school" target="_blank" color={muiTheme.palette.text.primary}>
+        <RSLogoIcon sx={{ width: '94px', height: '32px', fill: muiTheme.palette.text.secondary }} />
+      </Link>
     </Container>
   );
 });

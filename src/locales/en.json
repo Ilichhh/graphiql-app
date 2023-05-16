@@ -71,5 +71,9 @@
       "secondName": "Deviatova",
       "info": "Lorem ipsum dolor sit amet, ne sit soluta audire assentior. Id dicta eloquentiam eam. Natum probo aliquip usu ex. Quo audiam saperet an, per agam clita et. Prima porro praesent cu eos, in quod minim possim eam, no eius patrioque splendide eos."
     }
+  },
+  "404": {
+    "header": "Looks like you're lost",
+    "toHome": "Home"
   }
 }

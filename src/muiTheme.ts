@@ -11,7 +11,7 @@ const darkTheme = createTheme({
       dark: '#122633',
     },
     background: {
-      default: theme.colors.bgDarkBlue,
+      default: theme.colors.bgBlack,
       paper: theme.colors.bgBlue,
     },
     error: {
