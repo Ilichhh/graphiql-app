@@ -1,5 +1,5 @@
 import React, { ComponentType, useEffect } from 'react';
-import { checkTokenExpiration } from '../firebase';
+import { checkTokenExpiration } from '../api/firebaseApi';
 
 export const withTokenExpirationWrapper = <P extends object>(Component: ComponentType<P>) => {
   return (props: P) => {

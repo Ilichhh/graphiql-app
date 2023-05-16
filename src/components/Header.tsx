@@ -5,7 +5,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useIsAtTop } from '../hooks/useIsAtTop';
 import { useTheme } from '@mui/material/styles';
 
-import { logOut, auth } from '../firebase';
+import { auth } from '../firebase';
+import { logOut } from '../api/firebaseApi';
 
 import { MenuItem, Button } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
