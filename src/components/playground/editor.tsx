@@ -127,7 +127,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
     }
   }, [handleResize, isEditorToolsOpen]);
 
-  const handleSaveQuery = useCallback(() => {
+  const handleSaveQueryTemplate = useCallback(() => {
     saveQeryTemplate({ name: 'test name', query });
   }, [query]);
 
@@ -146,7 +146,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
         <RequestEditorHeader>
           {t('playground.operation')}
           <RequestEditorControls>
-            <IconButton aria-label="save" onClick={handleSaveQuery}>
+            <IconButton aria-label="save" onClick={handleSaveQueryTemplate}>
               <SaveOutlinedIcon />
             </IconButton>
             <PlayButton isFetching={isFetching} sendRequest={sendRequest} />

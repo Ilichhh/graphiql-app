@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEndpointInput } from '../../hooks/useEndpointInput';
+import { getAllQueryTemplates } from '../../api/firebaseApi';
+
+import { IconButton } from '@mui/material';
+import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined';
 
 import styled from 'styled-components';
 import theme from '../../theme';
@@ -59,12 +63,20 @@ export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) 
   const { endpoint, handleInputChange } = useEndpointInput();
   const { t } = useTranslation();
 
+  const handleGetAllQueryTemplates = useCallback(async () => {
+    const templates = await getAllQueryTemplates();
+    console.log(templates);
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('last-endpoint', endpoint);
   }, [endpoint]);
 
   return (
     <Header>
+      <IconButton onClick={handleGetAllQueryTemplates}>
+        <KeyboardDoubleArrowRightOutlinedIcon />
+      </IconButton>
       <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
       <InputContainer>
         <Input autoFocus defaultValue={endpoint} onChange={handleInputChange} />

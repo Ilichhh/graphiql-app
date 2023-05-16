@@ -1,7 +1,7 @@
 import { UseFormSetError, FieldValues } from 'react-hook-form';
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
+import { doc, setDoc, addDoc, getDocs, collection } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
 import { queryTemplateData } from '../types';
@@ -94,6 +94,21 @@ export const saveQeryTemplate = async (templateData: queryTemplateData) => {
 
     const templatesRef = collection(doc(db, 'users', userUid), 'queryTemplates');
     await addDoc(templatesRef, templateData);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAllQueryTemplates = async () => {
+  try {
+    const userUid = auth.currentUser?.uid;
+    if (!userUid) return;
+
+    const templatesRef = collection(doc(db, 'users', userUid), 'queryTemplates');
+    const querySnapshot = await getDocs(templatesRef);
+    const templates = querySnapshot.docs.map((doc) => doc.data());
+
+    return templates;
   } catch (error) {
     console.error(error);
   }
