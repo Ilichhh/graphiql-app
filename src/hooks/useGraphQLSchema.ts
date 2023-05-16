@@ -13,37 +13,29 @@ export const useGraphQLSchema = (endpoint: string) => {
   const [schemaErrorMessage, setSchemaErrorMessage] = useState('');
 
   useEffect(() => {
-    const buildSchema = () => {
-      let systemError = '';
-
-      if (data) {
-        try {
-          setSchema(buildClientSchema(data.data));
-        } catch (e) {
-          if (typeof e === 'string') {
-            systemError = e;
-          } else if (e instanceof Error) {
-            systemError = `${e.name}: ${e.message}`;
-          }
-
-          dispatch(setError(systemError));
+    if (data) {
+      try {
+        setSchema(buildClientSchema(data.data));
+      } catch (e) {
+        if (typeof e === 'string') {
+          dispatch(setError(e));
+        } else if (e instanceof Error) {
+          dispatch(setError(`${e.name}: ${e.message}`));
         }
       }
+    }
 
-      if (error) {
-        if ('status' in error) {
-          if (error.status === 'FETCH_ERROR') {
-            setSchemaErrorMessage('playground.schemaError');
-          } else {
-            setSchemaErrorMessage('error' in error ? error.error : JSON.stringify(error.data));
-          }
+    if (error) {
+      if ('status' in error) {
+        if (error.status === 'FETCH_ERROR') {
+          setSchemaErrorMessage('playground.schemaError');
         } else {
-          setSchemaErrorMessage(error.message || 'Unknown error');
+          setSchemaErrorMessage('error' in error ? error.error : JSON.stringify(error.data));
         }
+      } else {
+        setSchemaErrorMessage(error.message || 'Unknown error');
       }
-    };
-
-    buildSchema();
+    }
 
     return () => {
       setSchemaErrorMessage('');

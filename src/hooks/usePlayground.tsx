@@ -13,38 +13,29 @@ export const usePlayground = (endpoint: string) => {
     [variables, headers]
   );
 
-  const [trigger, { data, error, isFetching }] = useLazyGetResponseQuery();
+  const [trigger, { currentData: data, error, isFetching }] = useLazyGetResponseQuery();
 
   const [response, setResponse] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const processResponse = () => {
-      let systemError = '';
-
-      try {
-        setResponse(JSON.stringify(data, null, 2));
-        throw Error('Error!');
-      } catch (e) {
-        if (typeof e === 'string') {
-          systemError = e;
-        } else if (e instanceof Error) {
-          systemError = `${e.name}: ${e.message}`;
-        }
-
-        dispatch(setError(systemError));
+    try {
+      setResponse(JSON.stringify(data, null, 2));
+    } catch (e) {
+      if (typeof e === 'string') {
+        dispatch(setError(e));
+      } else if (e instanceof Error) {
+        dispatch(setError(`${e.name}: ${e.message}`));
       }
+    }
 
-      if (error) {
-        if ('status' in error) {
-          setErrorMessage('error' in error ? error.error : JSON.stringify(error.data, null, 2));
-        } else {
-          setErrorMessage(error.message || 'Unknown error');
-        }
+    if (error) {
+      if ('status' in error) {
+        setErrorMessage('error' in error ? error.error : JSON.stringify(error.data, null, 2));
+      } else {
+        setErrorMessage(error.message || 'Unknown error');
       }
-    };
-
-    processResponse();
+    }
 
     return () => {
       setResponse('');
