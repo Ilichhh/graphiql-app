@@ -1,6 +1,11 @@
-import { auth, db } from '../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { UseFormSetError, FieldValues } from 'react-hook-form';
+
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
+import { auth, db } from '../firebase';
+
+import { queryTemplateData } from '../types';
+
 import i18n from '../i18n';
 
 export const signUp = async (
@@ -9,7 +14,12 @@ export const signUp = async (
   setError: UseFormSetError<FieldValues>
 ) => {
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+    await setDoc(doc(db, 'users', user.uid), {
+      uid: user.uid,
+      email,
+    });
   } catch (error) {
     const signInError = error as { code: string };
     if (signInError.code === 'auth/email-already-in-use') {
@@ -74,5 +84,17 @@ export const checkTokenExpiration = async () => {
   } catch (error) {
     console.error('Error getting token:', error);
     return false;
+  }
+};
+
+export const saveQeryTemplate = async (templateData: queryTemplateData) => {
+  try {
+    const userUid = auth.currentUser?.uid;
+    if (!userUid) return;
+
+    const templatesRef = collection(doc(db, 'users', userUid), 'queryTemplates');
+    await addDoc(templatesRef, templateData);
+  } catch (error) {
+    console.error(error);
   }
 };

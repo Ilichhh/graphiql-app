@@ -3,15 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { useVerticalResize } from '../../hooks/useVerticalResize';
 import { useAppSelector, useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { setQuery, setVariables, setHeaders } from '../../store/editorSlice';
+import { saveQeryTemplate } from '../../api/firebaseApi';
 
 import { RequestEditor, MetadataEditor } from './codemirror';
 import { DocsPanel } from './docsExplorer/docsPanel';
+import { PlayButton } from './PlayButton';
+import { IconButton } from '@mui/material';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 import { Tab } from '../../types';
 
 import theme from '../../theme';
 import styled from 'styled-components';
-import { PlayButton } from './PlayButton';
 
 const Container = styled.section`
   display: flex;
@@ -47,6 +50,13 @@ const RequestEditorHeader = styled.div`
   color: ${theme.colors.textGrey};
   background: ${theme.colors.bgDarkBlue};
   border-radius: 5px 5px 0 0;
+`;
+
+const RequestEditorControls = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 `;
 
 const EditorTools = styled.section<{ isOpen: boolean; height: number }>`
@@ -117,6 +127,10 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
     }
   }, [handleResize, isEditorToolsOpen]);
 
+  const handleSaveQuery = useCallback(() => {
+    saveQeryTemplate({ name: 'test name', query });
+  }, [query]);
+
   useEffect(() => {
     try {
       const parsedHeaders = JSON.parse(headers);
@@ -131,7 +145,12 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
       <EditorBox isDark={false}>
         <RequestEditorHeader>
           {t('playground.operation')}
-          <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
+          <RequestEditorControls>
+            <IconButton aria-label="save" onClick={handleSaveQuery}>
+              <SaveOutlinedIcon />
+            </IconButton>
+            <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
+          </RequestEditorControls>
         </RequestEditorHeader>
         <RequestEditor value={query} onChange={(value) => dispatch(setQuery(value))} />
       </EditorBox>

@@ -1,8 +1,8 @@
 export default `query {
-    allFilms {
-        films {
-            id
-            title
-        }
-    }
+  allFilms {
+      films {
+          id
+          title
+      }
+  }
 }`;
