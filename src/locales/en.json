@@ -39,7 +39,8 @@
     "chooseEndpoint": "or choose one of the following",
     "serverError": "Server cannot be reached",
     "operation": "Operation",
-    "playBtn": "Run"
+    "playBtn": "Run",
+    "saveOperation": "Save operation"
 
   },
   "landing": {

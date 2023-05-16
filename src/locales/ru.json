@@ -39,7 +39,8 @@
     "chooseEndpoint": "или выберите из предложенных",
     "serverError": "Сервер не отвечает",
     "operation": "Запрос",
-    "playBtn": "Старт"
+    "playBtn": "Старт",
+    "saveOperation": "Сохранить запрос"
   },
   "landing": {
     "hero": {

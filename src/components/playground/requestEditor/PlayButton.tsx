@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, CircularProgress } from '@mui/material';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 
-import theme from '../../theme';
+import theme from '../../../theme';
 
 interface PlayButtonProps {
   isFetching: boolean;
