@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector, useAppDispatch } from '../../../hooks/reduxTypedHooks';
 import { setQuery } from '../../../store/editorSlice';
-import { saveQeryTemplate } from '../../../api/firebaseApi';
 
-import { EditorTools, PlayButton } from './';
+import { EditorTools, PlayButton, SaveQueryModal } from './';
 import { RequestEditor } from '../codemirror';
 import { DocsPanel } from '../docsExplorer/docsPanel';
 import { IconButton } from '@mui/material';
@@ -62,23 +61,10 @@ interface EditorProps {
 }
 
 export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
-  const { query, headers } = useAppSelector((state) => state.editor);
-  const [headersLength, setHeadersLength] = useState(0);
-  const { t } = useTranslation();
+  const { query } = useAppSelector((state) => state.editor);
+  const [isSaveQueryModalOpen, setIsSaveQueryModalOpen] = useState(false);
   const dispatch = useAppDispatch();
-
-  const handleSaveQueryTemplate = useCallback(() => {
-    saveQeryTemplate({ name: 'test name', query });
-  }, [query]);
-
-  useEffect(() => {
-    try {
-      const parsedHeaders = JSON.parse(headers);
-      setHeadersLength(Object.keys(parsedHeaders).length);
-    } catch (error) {
-      setHeadersLength(0);
-    }
-  }, [headers, headersLength]);
+  const { t } = useTranslation();
 
   return (
     <Container>
@@ -88,7 +74,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
           <RequestEditorControls>
             <IconButton
               title={t('playground.saveOperation') as string}
-              onClick={handleSaveQueryTemplate}
+              onClick={() => setIsSaveQueryModalOpen(true)}
             >
               <SaveOutlinedIcon />
             </IconButton>
@@ -99,6 +85,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
       </EditorBox>
       <EditorTools />
       <DocsPanel />
+      <SaveQueryModal isOpen={isSaveQueryModalOpen} setIsOpen={setIsSaveQueryModalOpen} />
     </Container>
   );
 };

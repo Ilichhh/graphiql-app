@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
 import { set } from '../store/endpointSlice';
 
-import { Editor, PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
+import { PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
+import { Editor } from '../components/playground/requestEditor';
 import { Header, Footer } from '../components';
 
 import styled from 'styled-components';
