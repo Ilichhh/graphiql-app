@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useTranslation } from 'react-i18next';
 
 import { usePlayground } from '../hooks/usePlayground';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
@@ -8,7 +7,7 @@ import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
 import { set } from '../store/endpointSlice';
 
 import { Editor, PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
-import { Header, Footer, Toast } from '../components';
+import { Header, Footer } from '../components';
 
 import styled from 'styled-components';
 import theme from '../theme';
@@ -35,7 +34,6 @@ const Playground = styled.div`
 `;
 
 export const PlaygroundPage = React.memo(() => {
-  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const endpoint = useAppSelector((store) => store.endpoint);
   const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
@@ -54,7 +52,7 @@ export const PlaygroundPage = React.memo(() => {
     return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
   }
 
-  const responseText = errorMessage || t(schemaErrorMessage) || response;
+  const responseText = errorMessage || schemaErrorMessage || response;
 
   return (
     <>
@@ -65,7 +63,6 @@ export const PlaygroundPage = React.memo(() => {
           <Editor isFetching={isFetching} sendRequest={sendRequest} />
           <ResponseBox isFetching={isFetching} response={responseText} />
         </Playground>
-        <Toast />
       </Wrapper>
       <Footer />
     </>

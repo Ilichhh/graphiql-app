@@ -75,5 +75,8 @@
   "404": {
     "header": "Looks like you're lost",
     "toHome": "Home"
+  },
+  "global": {
+    "sessionError": "Your session has expired. Please sign in again"
   }
 }

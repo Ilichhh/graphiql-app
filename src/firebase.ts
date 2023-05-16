@@ -78,16 +78,17 @@ export const checkTokenExpiration = async () => {
   if (!user) {
     return false;
   }
-
   try {
     const tokenResult = await user.getIdTokenResult();
     const now = new Date().getTime();
     const expirationTime = new Date(tokenResult.expirationTime).getTime();
 
-    if (expirationTime - now < 0) {
+    if (expirationTime - now < 360000) {
       await auth.signOut();
       return true;
     }
+
+    return false;
   } catch (error) {
     console.error('Error getting token:', error);
     return false;
