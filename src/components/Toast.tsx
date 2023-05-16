@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Snackbar, Alert } from '@mui/material';
 import { useAppSelector } from '../hooks/reduxTypedHooks';
 import Slide, { SlideProps } from '@mui/material/Slide';
@@ -7,17 +7,12 @@ function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="left" />;
 }
 
-export const Toast = (props: React.ComponentProps<typeof Snackbar>) => {
+export const Toast = () => {
   const message = useAppSelector((store) => store.error);
-  const [isOpen, setIsOpen] = useState(!!message);
+  const error = useAppSelector((state) => state.error);
+  const [isOpen, setIsOpen] = useState(!!error);
 
-  useEffect(() => {
-    setIsOpen(!!message);
-
-    return () => {
-      setIsOpen(false);
-    };
-  }, [message]);
+  console.log(message);
 
   return (
     <Snackbar
@@ -26,7 +21,6 @@ export const Toast = (props: React.ComponentProps<typeof Snackbar>) => {
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       TransitionComponent={SlideTransition}
       autoHideDuration={6000}
-      {...props}
     >
       <Alert severity="error" variant="filled">
         {message}

@@ -48,7 +48,6 @@ export const useGraphQLSchema = (endpoint: string) => {
     return () => {
       setSchemaErrorMessage('');
       setSchema(null);
-      dispatch(setError(''));
     };
   }, [data, error, dispatch]);
 

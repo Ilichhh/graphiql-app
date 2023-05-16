@@ -36,13 +36,12 @@ const Playground = styled.div`
 
 export const PlaygroundPage = React.memo(() => {
   const { t } = useTranslation();
-
+  const dispatch = useAppDispatch();
   const endpoint = useAppSelector((store) => store.endpoint);
   const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
