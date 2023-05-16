@@ -15,7 +15,7 @@ export const useGraphQLSchema = (endpoint: string) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (data) {
+    if (data && !isError) {
       try {
         setSchema(buildClientSchema(data.data));
       } catch (e) {
@@ -43,7 +43,7 @@ export const useGraphQLSchema = (endpoint: string) => {
       setSchemaErrorMessage('');
       setSchema(null);
     };
-  }, [data, error, dispatch, t]);
+  }, [data, error, dispatch, t, isError]);
 
   return { schema, isSchemaError: isError, schemaErrorMessage };
 };
