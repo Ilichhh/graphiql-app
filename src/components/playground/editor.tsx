@@ -66,6 +66,7 @@ const ToolsBar = styled.div`
   letter-spacing: 0.5px;
   font-size: 0.9rem;
   user-select: none;
+  border-bottom: 1px solid ${theme.colors.bgDarkBlue};
   cursor: row-resize;
   @media (max-width: 600px) {
     padding: 8px;

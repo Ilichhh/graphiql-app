@@ -71,7 +71,7 @@ export const Footer = React.memo(() => {
   const items = devs.map((dev) => (
     <ListItem key={dev.id}>
       <Link href={dev.github} target="_blank" color={muiTheme.palette.text.secondary}>
-        <GitHubIcon fontSize="large" />
+        <GitHubIcon fontSize="large" sx={{ fill: muiTheme.palette.text.secondary }} />
         <Name>{t(`developers.${dev.name}.firstName`)}</Name>
       </Link>
     </ListItem>
@@ -82,7 +82,7 @@ export const Footer = React.memo(() => {
       <List>{items}</List>
       <Year color={muiTheme.palette.text.secondary}>2023</Year>
       <Link href="https://rs.school" target="_blank" color={muiTheme.palette.text.primary}>
-        <RSLogoIcon />
+        <RSLogoIcon sx={{ width: '94px', height: '32px', fill: muiTheme.palette.text.secondary }} />
       </Link>
     </Container>
   );

@@ -11,7 +11,7 @@ export const GraphQLIcon = (props: SvgIconProps) => {
 
 export const RSLogoIcon = (props: SvgIconProps) => {
   return (
-    <SvgIcon {...props} viewBox="0 0 552.85 198.67" sx={{ width: '94px', height: '32px' }}>
+    <SvgIcon {...props} viewBox="0 0 552.85 198.67">
       <title>rs_school</title>
       <g data-name="Layer 2">
         <g data-name="Layer 1">

@@ -73,7 +73,7 @@
     }
   },
   "404": {
-    "header": "Look like you're lost",
-    "toHome": "Go to home"
+    "header": "Looks like you're lost",
+    "toHome": "Home"
   }
 }
