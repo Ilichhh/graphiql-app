@@ -6,16 +6,22 @@ import { setError } from '../store/errorSlice';
 import { useTranslation } from 'react-i18next';
 
 type Schema = ReturnType<typeof buildClientSchema> | null;
+type ErrorObject =
+  | {
+      message: string;
+      status: number | undefined;
+    }
+  | undefined;
 
 export const useGraphQLSchema = (endpoint: string) => {
   const dispatch = useAppDispatch();
-  const { data, isError, error } = useGetSchemaQuery(endpoint, { skip: !endpoint });
+  const { currentData: data, isError, error } = useGetSchemaQuery(endpoint, { skip: !endpoint });
   const [schema, setSchema] = useState<Schema>(null);
-  const [schemaErrorMessage, setSchemaErrorMessage] = useState('');
+  const [schemaErrorMessage, setSchemaErrorMessage] = useState<ErrorObject>();
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (data && !isError) {
+    if (data) {
       try {
         setSchema(buildClientSchema(data.data));
       } catch (e) {
@@ -29,18 +35,21 @@ export const useGraphQLSchema = (endpoint: string) => {
 
     if (error) {
       if ('status' in error) {
-        if (error.status === 'FETCH_ERROR') {
-          setSchemaErrorMessage(t(`playground.schemaError`) as string);
+        if (typeof error.status === 'number') {
+          setSchemaErrorMessage({
+            message: JSON.stringify(error.data, null, 2),
+            status: error.status,
+          });
         } else {
-          setSchemaErrorMessage('error' in error ? error.error : JSON.stringify(error.data));
+          dispatch(setError(error.error));
         }
       } else {
-        setSchemaErrorMessage(error.message || 'Unknown error');
+        dispatch(setError(error.message || 'Unknown error'));
       }
     }
 
     return () => {
-      setSchemaErrorMessage('');
+      setSchemaErrorMessage(undefined);
       setSchema(null);
     };
   }, [data, error, dispatch, t, isError]);

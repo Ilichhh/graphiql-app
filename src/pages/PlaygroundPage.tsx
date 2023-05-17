@@ -52,7 +52,7 @@ export const PlaygroundPage = React.memo(() => {
     return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
   }
 
-  const responseText = errorMessage?.message || schemaErrorMessage || response?.data;
+  const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
 
   return (
     <>
