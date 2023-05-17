@@ -44,13 +44,16 @@ export const usePlayground = (endpoint: string) => {
 
     if (error) {
       if ('status' in error) {
-        const errorObj = {
-          message: 'error' in error ? error.error : JSON.stringify(error.data, null, 2),
-          status: typeof error.status === 'number' ? error.status : undefined,
-        };
-        setErrorMessage(errorObj);
+        if (typeof error.status === 'number') {
+          setErrorMessage({
+            message: JSON.stringify(error.data, null, 2),
+            status: error.status,
+          });
+        } else {
+          dispatch(setError(error.error));
+        }
       } else {
-        setErrorMessage({ message: error.message || 'Unknown error', status: undefined });
+        dispatch(setError(error.message || 'Unknown error'));
       }
     }
 
