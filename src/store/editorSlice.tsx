@@ -1,22 +1,48 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
+type EditorState = {
+  queries: { [key: string]: string };
+  variables: { [key: string]: string };
+  headers: { [key: string]: string };
+};
+
+const initialState: EditorState = {
+  queries: {},
+  headers: {},
+  variables: {},
+};
+
 const editorSlice = createSlice({
   name: 'editor',
-  initialState: {
-    query: '',
-    variables: '',
-    headers: '',
-  },
+  initialState: initialState,
   reducers: {
-    setQuery: (state, action: PayloadAction<string>) => {
-      state.query = action.payload;
+    setQuery: (
+      state,
+      { payload: { tabId, query } }: PayloadAction<{ tabId: string; query: string }>
+    ) => {
+      return {
+        ...state,
+        queries: { ...state.queries, [tabId]: query },
+      };
     },
-    setVariables: (state, action: PayloadAction<string>) => {
-      state.variables = action.payload;
+    setVariables: (
+      state,
+      { payload: { tabId, variables } }: PayloadAction<{ tabId: string; variables: string }>
+    ) => {
+      return {
+        ...state,
+        variables: { ...state.variables, [tabId]: variables },
+      };
     },
-    setHeaders: (state, action: PayloadAction<string>) => {
-      state.headers = action.payload;
+    setHeaders: (
+      state,
+      { payload: { tabId, headers } }: PayloadAction<{ tabId: string; headers: string }>
+    ) => {
+      return {
+        ...state,
+        headers: { ...state.headers, [tabId]: headers },
+      };
     },
   },
 });

@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import endpointReducer from './endpointSlice';
 import editorSlice from './editorSlice';
 import { apiSlice } from './apiSlice';
-import errorSlice from './errorSlice';
+import errorSlice from './errorState';
 import tabsSlice from './tabsSlice';
 
 export const store = configureStore({
