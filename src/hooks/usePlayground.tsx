@@ -4,6 +4,13 @@ import { useLazyGetResponseQuery } from '../store/apiSlice';
 import { useAppDispatch } from './reduxTypedHooks';
 import { setError } from '../store/errorSlice';
 
+type ResponseData =
+  | {
+      data: string;
+      status: number | undefined;
+    }
+  | undefined;
+
 export const usePlayground = (endpoint: string) => {
   const dispatch = useAppDispatch();
 
@@ -14,13 +21,12 @@ export const usePlayground = (endpoint: string) => {
   );
 
   const [trigger, { currentData: data, error, isFetching }] = useLazyGetResponseQuery();
-
-  const [response, setResponse] = useState('');
+  const [response, setResponse] = useState<ResponseData>();
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     try {
-      setResponse(JSON.stringify(data, null, 2));
+      setResponse(data);
     } catch (e) {
       if (typeof e === 'string') {
         dispatch(setError(e));
@@ -38,7 +44,7 @@ export const usePlayground = (endpoint: string) => {
     }
 
     return () => {
-      setResponse('');
+      setResponse(undefined);
       setErrorMessage('');
     };
   }, [data, error, dispatch]);

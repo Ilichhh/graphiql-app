@@ -52,7 +52,7 @@ export const PlaygroundPage = React.memo(() => {
     return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
   }
 
-  const responseText = errorMessage || schemaErrorMessage || response;
+  const responseText = errorMessage || schemaErrorMessage || response?.data;
 
   return (
     <>
@@ -61,7 +61,7 @@ export const PlaygroundPage = React.memo(() => {
         <PlaygroundHeader isError={isSchemaError} />
         <Playground>
           <Editor isFetching={isFetching} sendRequest={sendRequest} />
-          <ResponseBox isFetching={isFetching} response={responseText} />
+          <ResponseBox isFetching={isFetching} response={responseText} status={response?.status} />
         </Playground>
       </Wrapper>
       <Footer />

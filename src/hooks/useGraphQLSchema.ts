@@ -31,11 +31,14 @@ export const useGraphQLSchema = (endpoint: string) => {
       if ('status' in error) {
         if (error.status === 'FETCH_ERROR') {
           setSchemaErrorMessage(t(`playground.schemaError`) as string);
+          console.log(error.status, error.data, error.error);
         } else {
           setSchemaErrorMessage('error' in error ? error.error : JSON.stringify(error.data));
+          console.log('error' in error ? error.error : JSON.stringify(error.data));
         }
       } else {
         setSchemaErrorMessage(error.message || 'Unknown error');
+        console.log(error.code, error.message, error.name);
       }
     }
 
