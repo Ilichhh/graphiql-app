@@ -9,13 +9,13 @@ type Schema = ReturnType<typeof buildClientSchema> | null;
 
 export const useGraphQLSchema = (endpoint: string) => {
   const dispatch = useAppDispatch();
-  const { data, isError, error } = useGetSchemaQuery(endpoint, { skip: !endpoint });
+  const { currentData: data, isError, error } = useGetSchemaQuery(endpoint, { skip: !endpoint });
   const [schema, setSchema] = useState<Schema>(null);
   const [schemaErrorMessage, setSchemaErrorMessage] = useState('');
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (data && !isError) {
+    if (data) {
       try {
         setSchema(buildClientSchema(data.data));
       } catch (e) {
