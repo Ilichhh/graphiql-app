@@ -61,7 +61,7 @@ interface EditorProps {
 
 export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
   const { query } = useAppSelector((state) => state.editor);
-  const [isSaveQueryModalOpen, setIsSaveQueryModalOpen] = useState(false);
+  const [saveQueryModalOpen, setSaveQueryModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -73,7 +73,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
           <RequestEditorControls>
             <IconButton
               title={t('playground.saveOperation') as string}
-              onClick={() => setIsSaveQueryModalOpen(true)}
+              onClick={() => setSaveQueryModalOpen(true)}
             >
               <SaveOutlinedIcon />
             </IconButton>
@@ -83,7 +83,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
         <RequestEditor value={query} onChange={(value) => dispatch(setQuery(value))} />
       </EditorBox>
       <EditorTools />
-      <SaveQueryModal isOpen={isSaveQueryModalOpen} setIsOpen={setIsSaveQueryModalOpen} />
+      <SaveQueryModal open={saveQueryModalOpen} setOpen={setSaveQueryModalOpen} />
     </Container>
   );
 };

@@ -1,57 +1,85 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback, ChangeEvent } from 'react';
 import { useAppSelector } from '../../../hooks/reduxTypedHooks';
+import { useTranslation } from 'react-i18next';
 import { saveQeryTemplate } from '../../../api/firebaseApi';
 
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import { Box, Button, Modal, TextField } from '@mui/material';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import { ThemeProvider } from '@mui/material/styles';
+import { lightTheme } from '../../../muiTheme';
+import theme from '../../../theme';
+import styled from 'styled-components';
+
+const Container = styled(Box)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  background-color: ${theme.colors.bgLight};
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+`;
+
+const Header = styled.h2`
+  margin: 0;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+`;
 
 interface SaveQueryModalProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const SaveQueryModal = ({ isOpen, setIsOpen }: SaveQueryModalProps) => {
+export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
   const { query } = useAppSelector((state) => state.editor);
+  const [name, setName] = useState('');
+  const { t } = useTranslation();
 
   const handleClose = useCallback(() => {
-    setIsOpen(false);
-  }, [setIsOpen]);
+    setOpen(false);
+    setName('');
+  }, [setOpen]);
+
+  const handleChenge = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  }, []);
 
   const handleSaveQueryTemplate = useCallback(() => {
     handleClose();
-    saveQeryTemplate({ name: 'test name', query });
-  }, [query, handleClose]);
+    saveQeryTemplate({ name, query });
+  }, [name, query, handleClose]);
 
   return (
-    <Modal
-      open={isOpen}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
-        <Button onClick={handleSaveQueryTemplate}>Save</Button>
-      </Box>
-    </Modal>
+    <ThemeProvider theme={lightTheme}>
+      <Modal open={open} onClose={handleClose}>
+        <Container>
+          <Header>{t('playground.saveQuery')}</Header>
+          <TextField
+            fullWidth
+            label={t('playground.queryName')}
+            variant="outlined"
+            value={name}
+            onChange={handleChenge}
+          />
+          <Buttons>
+            <Button variant="outlined" onClick={handleClose}>
+              {t('playground.cancel')}
+            </Button>
+            <Button variant="contained" disabled={!name} onClick={handleSaveQueryTemplate}>
+              {t('playground.save')}
+            </Button>
+          </Buttons>
+        </Container>
+      </Modal>
+    </ThemeProvider>
   );
 };

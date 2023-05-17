@@ -41,7 +41,11 @@
     "operation": "Operation",
     "playBtn": "Run",
     "saveOperation": "Save operation",
-    "schemaError": "Failed to fetch schema. Please check your connection"
+    "schemaError": "Failed to fetch schema. Please check your connection",
+    "saveQuery": "Save Query",
+    "queryName": "Query Name",
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "landing": {
     "hero": {
