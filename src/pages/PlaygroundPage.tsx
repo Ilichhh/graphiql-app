@@ -10,6 +10,7 @@ import { set } from '../store/endpointSlice';
 import { PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
 import { Editor } from '../components/playground/requestEditor';
 import { Header, Footer } from '../components';
+import { Sidebar } from '../components/playground/sidebar';
 
 import styled from 'styled-components';
 import theme from '../theme';
@@ -17,10 +18,16 @@ import theme from '../theme';
 const Wrapper = styled.main`
   position: relative;
   display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
   width: 100%;
+  min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
   background: ${theme.colors.bgBlack};
+`;
+
+const PlaygroundWrapper = styled.main`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 const Playground = styled.div`
@@ -40,6 +47,7 @@ export const PlaygroundPage = React.memo(() => {
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
@@ -59,14 +67,21 @@ export const PlaygroundPage = React.memo(() => {
     <>
       <Header currentPage="playground" />
       <Wrapper>
-        <PlaygroundHeader isError={isSchemaError} />
-        <Playground>
-          <Editor isFetching={isFetching} sendRequest={sendRequest} />
-          <ResponseBox isFetching={isFetching} response={responseText} />
-          <Suspense>
-            <DocsPanel />
-          </Suspense>
-        </Playground>
+        {isSidebarOpen && <Sidebar close={() => setIsSidebarOpen(false)} />}
+        <PlaygroundWrapper>
+          <PlaygroundHeader
+            isSidebarOpen={isSidebarOpen}
+            openSidebar={() => setIsSidebarOpen(true)}
+            isError={isSchemaError}
+          />
+          <Playground>
+            <Editor isFetching={isFetching} sendRequest={sendRequest} />
+            <ResponseBox isFetching={isFetching} response={responseText} />
+            <Suspense>
+              <DocsPanel />
+            </Suspense>
+          </Playground>
+        </PlaygroundWrapper>
       </Wrapper>
       <Footer />
     </>

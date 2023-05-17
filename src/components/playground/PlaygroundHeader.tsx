@@ -1,7 +1,6 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEndpointInput } from '../../hooks/useEndpointInput';
-import { getAllQueryTemplates } from '../../api/firebaseApi';
 
 import { IconButton } from '@mui/material';
 import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined';
@@ -12,6 +11,7 @@ import theme from '../../theme';
 const Header = styled.header`
   display: flex;
   align-items: center;
+  height: 52px;
   padding: 10px;
   background: ${theme.colors.bgBlue};
 `;
@@ -57,31 +57,32 @@ const ErrorBadge = styled.span`
 
 interface PlaygroundHeaderProps {
   isError: boolean;
+  isSidebarOpen: boolean;
+  openSidebar: () => void;
 }
 
-export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) => {
-  const { endpoint, handleInputChange } = useEndpointInput();
-  const { t } = useTranslation();
+export const PlaygroundHeader = React.memo(
+  ({ isError, isSidebarOpen, openSidebar }: PlaygroundHeaderProps) => {
+    const { endpoint, handleInputChange } = useEndpointInput();
+    const { t } = useTranslation();
 
-  const handleGetAllQueryTemplates = useCallback(async () => {
-    const templates = await getAllQueryTemplates();
-    console.log(templates);
-  }, []);
+    useEffect(() => {
+      localStorage.setItem('last-endpoint', endpoint);
+    }, [endpoint]);
 
-  useEffect(() => {
-    localStorage.setItem('last-endpoint', endpoint);
-  }, [endpoint]);
-
-  return (
-    <Header>
-      <IconButton onClick={handleGetAllQueryTemplates}>
-        <KeyboardDoubleArrowRightOutlinedIcon />
-      </IconButton>
-      <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
-      <InputContainer>
-        <Input autoFocus defaultValue={endpoint} onChange={handleInputChange} />
-        {isError && <ErrorBadge>{t(`playground.serverError`)}</ErrorBadge>}
-      </InputContainer>
-    </Header>
-  );
-});
+    return (
+      <Header>
+        {!isSidebarOpen && (
+          <IconButton onClick={openSidebar}>
+            <KeyboardDoubleArrowRightOutlinedIcon />
+          </IconButton>
+        )}
+        <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
+        <InputContainer>
+          <Input autoFocus defaultValue={endpoint} onChange={handleInputChange} />
+          {isError && <ErrorBadge>{t(`playground.serverError`)}</ErrorBadge>}
+        </InputContainer>
+      </Header>
+    );
+  }
+);
