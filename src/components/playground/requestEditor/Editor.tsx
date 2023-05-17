@@ -38,6 +38,7 @@ const EditorBox = styled.section`
 `;
 
 const RequestEditorHeader = styled.div`
+  min-height: 55px;
   display: flex;
   justify-content: space-between;
   align-items: center;

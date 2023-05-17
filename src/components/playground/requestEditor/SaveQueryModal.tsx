@@ -40,7 +40,7 @@ interface SaveQueryModalProps {
 }
 
 export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
-  const { query } = useAppSelector((state) => state.editor);
+  const { query, variables, headers } = useAppSelector((state) => state.editor);
   const [name, setName] = useState('');
   const { t } = useTranslation();
 
@@ -55,8 +55,8 @@ export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
 
   const handleSaveQueryTemplate = useCallback(() => {
     handleClose();
-    saveQeryTemplate({ name, query });
-  }, [name, query, handleClose]);
+    saveQeryTemplate({ name, query, variables, headers });
+  }, [name, query, variables, headers, handleClose]);
 
   return (
     <ThemeProvider theme={lightTheme}>

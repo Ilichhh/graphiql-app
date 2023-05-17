@@ -3,24 +3,39 @@ import { useAppSelector } from './reduxTypedHooks';
 import { useLazyGetResponseQuery } from '../store/apiSlice';
 import { useAppDispatch } from './reduxTypedHooks';
 import { setError } from '../store/errorSlice';
+import { useTranslation } from 'react-i18next';
+
+type ResponseData =
+  | {
+      data: string;
+      status: number | undefined;
+    }
+  | undefined;
+
+type ErrorObject =
+  | {
+      message: string;
+      status: number | undefined;
+    }
+  | undefined;
 
 export const usePlayground = (endpoint: string) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const { query, variables, headers } = useAppSelector((state) => state.editor);
-  const [parsedVariables, parsedHeaders] = useMemo(
+  const [parsedVariables, parsedHeaders, paramsError] = useMemo(
     () => parseParams(variables, headers),
     [variables, headers]
   );
 
   const [trigger, { currentData: data, error, isFetching }] = useLazyGetResponseQuery();
-
-  const [response, setResponse] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [response, setResponse] = useState<ResponseData>();
+  const [errorMessage, setErrorMessage] = useState<ErrorObject>();
 
   useEffect(() => {
     try {
-      setResponse(JSON.stringify(data, null, 2));
+      setResponse(data);
     } catch (e) {
       if (typeof e === 'string') {
         dispatch(setError(e));
@@ -31,15 +46,22 @@ export const usePlayground = (endpoint: string) => {
 
     if (error) {
       if ('status' in error) {
-        setErrorMessage('error' in error ? error.error : JSON.stringify(error.data, null, 2));
+        if (typeof error.status === 'number') {
+          setErrorMessage({
+            message: JSON.stringify(error.data, null, 2),
+            status: error.status,
+          });
+        } else {
+          dispatch(setError(error.error));
+        }
       } else {
-        setErrorMessage(error.message || 'Unknown error');
+        dispatch(setError(error.message || 'Unknown error'));
       }
     }
 
     return () => {
-      setResponse('');
-      setErrorMessage('');
+      setResponse(undefined);
+      setErrorMessage(undefined);
     };
   }, [data, error, dispatch]);
 
@@ -47,27 +69,35 @@ export const usePlayground = (endpoint: string) => {
     response,
     errorMessage,
     isFetching,
-    sendRequest: () =>
-      trigger(
-        {
-          url: endpoint,
-          query,
-          variables: parsedVariables,
-          headers: parsedHeaders,
-        },
-        true
-      ),
+    sendRequest: () => {
+      if (paramsError) {
+        dispatch(setError(t('playground.paramsError')));
+      } else {
+        trigger(
+          {
+            url: endpoint,
+            query,
+            variables: parsedVariables,
+            headers: parsedHeaders,
+          },
+          true
+        );
+      }
+    },
   };
 };
 
 function parseParams(variables: string, headers: string) {
   let parsedVariables: Record<string, unknown> = {};
   let parsedHeaders: Record<string, unknown> = {};
+  let paramsError = false;
 
   try {
     parsedVariables = variables ? JSON.parse(variables) : {};
     parsedHeaders = headers ? JSON.parse(headers) : {};
-  } catch (error) {}
+  } catch (error) {
+    paramsError = true;
+  }
 
-  return [parsedVariables, parsedHeaders];
+  return [parsedVariables, parsedHeaders, paramsError];
 }

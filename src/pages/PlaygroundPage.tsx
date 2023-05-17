@@ -60,7 +60,7 @@ export const PlaygroundPage = React.memo(() => {
     return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
   }
 
-  const responseText = errorMessage || schemaErrorMessage || response;
+  const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
   const DocsPanel = React.lazy(() => import('../components/playground/docsExplorer/docsPanel'));
 
   return (
@@ -76,7 +76,11 @@ export const PlaygroundPage = React.memo(() => {
           />
           <Playground>
             <Editor isFetching={isFetching} sendRequest={sendRequest} />
-            <ResponseBox isFetching={isFetching} response={responseText} />
+            <ResponseBox
+              isFetching={isFetching}
+              response={responseText}
+              status={response?.status || errorMessage?.status}
+            />
             <Suspense>
               <DocsPanel />
             </Suspense>
