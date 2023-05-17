@@ -39,6 +39,7 @@ const EditorBox = styled.section<{ isDark: boolean }>`
 `;
 
 const RequestEditorHeader = styled.div`
+  min-height: 55px;
   display: flex;
   justify-content: space-between;
   align-items: center;
