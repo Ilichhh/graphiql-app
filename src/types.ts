@@ -11,4 +11,6 @@ export enum FormMode {
 export interface queryTemplateData {
   name: string;
   query: string;
+  variables: string;
+  headers: string;
 }
