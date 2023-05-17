@@ -11,7 +11,6 @@ export const apiSlice = createApi({
         method: 'POST',
         body: { query: getIntrospectionQuery() },
       }),
-      transformErrorResponse: () => 'Failed to fetch schema. Please check your connection',
     }),
     getResponse: builder.query({
       query: ({ url, query, variables, headers }) => ({
