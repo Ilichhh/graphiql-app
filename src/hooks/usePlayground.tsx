@@ -11,6 +11,13 @@ type ResponseData =
     }
   | undefined;
 
+type ErrorObject =
+  | {
+      message: string;
+      status: number | undefined;
+    }
+  | undefined;
+
 export const usePlayground = (endpoint: string) => {
   const dispatch = useAppDispatch();
 
@@ -22,7 +29,7 @@ export const usePlayground = (endpoint: string) => {
 
   const [trigger, { currentData: data, error, isFetching }] = useLazyGetResponseQuery();
   const [response, setResponse] = useState<ResponseData>();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<ErrorObject>();
 
   useEffect(() => {
     try {
@@ -37,15 +44,19 @@ export const usePlayground = (endpoint: string) => {
 
     if (error) {
       if ('status' in error) {
-        setErrorMessage('error' in error ? error.error : JSON.stringify(error.data, null, 2));
+        const errorObj = {
+          message: 'error' in error ? error.error : JSON.stringify(error.data, null, 2),
+          status: typeof error.status === 'number' ? error.status : undefined,
+        };
+        setErrorMessage(errorObj);
       } else {
-        setErrorMessage(error.message || 'Unknown error');
+        setErrorMessage({ message: error.message || 'Unknown error', status: undefined });
       }
     }
 
     return () => {
       setResponse(undefined);
-      setErrorMessage('');
+      setErrorMessage(undefined);
     };
   }, [data, error, dispatch]);
 
