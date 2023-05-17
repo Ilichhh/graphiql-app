@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import ReactDOM from 'react-dom';
-
 import { usePlayground } from '../hooks/usePlayground';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
+import { setQuery } from '../store/editorSlice';
+import { getDefaultQuery } from '../utils/defaultQuery';
 import { set } from '../store/endpointSlice';
 
-import { Editor, PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
+import { PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
+import { Editor } from '../components/playground/requestEditor';
 import { Header, Footer } from '../components';
 
 import styled from 'styled-components';
 import theme from '../theme';
-import { setQuery } from '../store/editorSlice';
-import { getDefaultQuery } from '../utils/defaultQuery';
 
 const Wrapper = styled.main`
   position: relative;
@@ -53,6 +53,7 @@ export const PlaygroundPage = React.memo(() => {
   }
 
   const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
+  const DocsPanel = React.lazy(() => import('../components/playground/docsExplorer/docsPanel'));
 
   return (
     <>
@@ -66,6 +67,10 @@ export const PlaygroundPage = React.memo(() => {
             response={responseText}
             status={response?.status || errorMessage?.status}
           />
+
+          <Suspense>
+            <DocsPanel />
+          </Suspense>
         </Playground>
       </Wrapper>
       <Footer />

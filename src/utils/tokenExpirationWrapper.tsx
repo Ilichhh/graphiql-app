@@ -1,6 +1,6 @@
 import React, { ComponentType, useEffect } from 'react';
 import { t } from 'i18next';
-import { checkTokenExpiration } from '../firebase';
+import { checkTokenExpiration } from '../api/firebaseApi';
 import { useAppDispatch } from '../hooks/reduxTypedHooks';
 import { setError } from '../store/errorSlice';
 

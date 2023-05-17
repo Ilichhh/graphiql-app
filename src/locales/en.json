@@ -41,8 +41,13 @@
     "operation": "Operation",
     "response": "Response",
     "playBtn": "Run",
+    "paramsError": "Please provide valid parameters",
+    "saveOperation": "Save operation",
     "schemaError": "Failed to fetch schema. Please check your connection",
-    "paramsError": "Please provide valid parameters"
+    "saveQuery": "Save Query",
+    "queryName": "Query Name",
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "landing": {
     "hero": {
