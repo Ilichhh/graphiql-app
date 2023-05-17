@@ -1,17 +1,30 @@
 import React, { ComponentType, useEffect } from 'react';
+import { t } from 'i18next';
 import { checkTokenExpiration } from '../api/firebaseApi';
+import { useAppDispatch } from '../hooks/reduxTypedHooks';
+import { setError } from '../store/errorSlice';
 
 export const withTokenExpirationWrapper = <P extends object>(Component: ComponentType<P>) => {
-  return (props: P) => {
-    useEffect(() => {
-      checkTokenExpiration();
+  const message = t(`global.sessionError`);
 
-      const interval = setInterval(checkTokenExpiration, 30000);
+  return (props: P) => {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+      const checkToken = async () => {
+        const expired = await checkTokenExpiration();
+
+        if (expired) {
+          dispatch(setError(message));
+        }
+      };
+
+      const interval = setInterval(checkToken, 300000);
 
       return () => {
         interval.unref();
       };
-    }, []);
+    }, [dispatch]);
 
     return <Component {...props} />;
   };

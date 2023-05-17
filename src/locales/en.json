@@ -3,7 +3,7 @@
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signOut": "Sign Out",
-    "toMain" : "Go to Main Page"
+    "toMain": "Go to Main Page"
   },
   "form": {
     "register": {
@@ -34,14 +34,14 @@
     "responsePlaceholder": "Hit the Play Button to get a response here",
     "variablesTabHeader": "Query Variables",
     "headersTabHeader": "HTTP Headers",
-    "endpointPlaceholder" : "Enter an endpoint url...",
+    "endpointPlaceholder": "Enter an endpoint url...",
     "endpointSubmit": "Use endpoint",
     "chooseEndpoint": "or choose one of the following",
     "serverError": "Server cannot be reached",
     "operation": "Operation",
     "playBtn": "Run",
-    "saveOperation": "Save operation"
-
+    "saveOperation": "Save operation",
+    "schemaError": "Failed to fetch schema. Please check your connection"
   },
   "landing": {
     "hero": {
@@ -76,5 +76,8 @@
   "404": {
     "header": "Looks like you're lost",
     "toHome": "Home"
+  },
+  "global": {
+    "sessionError": "Your session has expired. Please sign in again"
   }
 }

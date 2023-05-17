@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { usePlayground } from '../hooks/usePlayground';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
+import { setQuery } from '../store/editorSlice';
+import { getDefaultQuery } from '../utils/defaultQuery';
 import { set } from '../store/endpointSlice';
 
 import { PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
 import { Editor } from '../components/playground/requestEditor';
 import { Header, Footer } from '../components';
+import DocsPanel from '../components/playground/docsExplorer/docsPanel';
 
 import styled from 'styled-components';
 import theme from '../theme';
-import { setQuery } from '../store/editorSlice';
-import { getDefaultQuery } from '../utils/defaultQuery';
 
 const Wrapper = styled.main`
   position: relative;
@@ -34,12 +35,12 @@ const Playground = styled.div`
 `;
 
 export const PlaygroundPage = React.memo(() => {
+  const dispatch = useAppDispatch();
   const endpoint = useAppSelector((store) => store.endpoint);
-  const { isSchemaError } = useGraphQLSchema(endpoint);
+  const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
@@ -52,6 +53,8 @@ export const PlaygroundPage = React.memo(() => {
     return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
   }
 
+  const responseText = errorMessage || schemaErrorMessage || response;
+
   return (
     <>
       <Header currentPage="playground" />
@@ -59,7 +62,10 @@ export const PlaygroundPage = React.memo(() => {
         <PlaygroundHeader isError={isSchemaError} />
         <Playground>
           <Editor isFetching={isFetching} sendRequest={sendRequest} />
-          <ResponseBox isFetching={isFetching} response={response || errorMessage} />
+          <ResponseBox isFetching={isFetching} response={responseText} />
+          <Suspense>
+            <DocsPanel />
+          </Suspense>
         </Playground>
       </Wrapper>
       <Footer />

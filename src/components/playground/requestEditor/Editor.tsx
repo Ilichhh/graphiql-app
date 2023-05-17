@@ -5,7 +5,6 @@ import { setQuery } from '../../../store/editorSlice';
 
 import { EditorTools, PlayButton, SaveQueryModal } from './';
 import { RequestEditor } from '../codemirror';
-import { DocsPanel } from '../docsExplorer/docsPanel';
 import { IconButton } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
@@ -84,7 +83,6 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
         <RequestEditor value={query} onChange={(value) => dispatch(setQuery(value))} />
       </EditorBox>
       <EditorTools />
-      <DocsPanel />
       <SaveQueryModal isOpen={isSaveQueryModalOpen} setIsOpen={setIsSaveQueryModalOpen} />
     </Container>
   );

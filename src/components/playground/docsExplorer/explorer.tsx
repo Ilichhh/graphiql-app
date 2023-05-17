@@ -11,6 +11,8 @@ import { ExplorerTitleBar } from './components/explorerTitleBar';
 import { SearchBar } from './components/searchBar';
 import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
 import { useAppSelector } from '../../../hooks/reduxTypedHooks';
+import { ThemeProvider } from '@mui/material/styles';
+import { lightTheme } from '../../../muiTheme';
 
 const ExplorerWrapper = styled.div`
   position: absolute;
@@ -36,7 +38,15 @@ const ExplorerContent = styled.div`
   flex-direction: column;
   width: 100%;
   overflow: auto;
-  margin: 0 10px 10px 15px;
+  margin-left: 15px;
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${theme.docs.border};
+    border-radius: 5px;
+  }
 `;
 
 const useDocsContent = () => {
@@ -66,13 +76,15 @@ export const Explorer = () => {
   const content = useDocsContent();
 
   return (
-    <ExplorerWrapper>
-      <ExplorerContent>
-        <ExplorerTitleBar />
-        <Divider />
-        <SearchBar />
-        {content}
-      </ExplorerContent>
-    </ExplorerWrapper>
+    <ThemeProvider theme={lightTheme}>
+      <ExplorerWrapper>
+        <ExplorerContent>
+          <ExplorerTitleBar />
+          <Divider />
+          <SearchBar />
+          {content}
+        </ExplorerContent>
+      </ExplorerWrapper>
+    </ThemeProvider>
   );
 };

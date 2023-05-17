@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { DocsNavProvider } from './docsContext';
 import styled from 'styled-components';
 import { DocsTab } from './docsTab';
 import { Explorer } from './explorer';
-import { DocsNavProvider } from './docsContext';
+import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
+import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 
 interface ExplorerWrapperProps {
   isOpen: boolean;
@@ -20,20 +22,34 @@ const DocsPanelWrapper = styled.div<ExplorerWrapperProps>`
   }
 `;
 
-export const DocsPanel = () => {
+const DocsPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const endpoint = useAppSelector((store) => store.endpoint);
+  const { schema } = useGraphQLSchema(endpoint);
+
+  useEffect(() => {
+    if (!schema) {
+      setIsOpen(false);
+    }
+  }, [schema]);
 
   return (
-    <DocsPanelWrapper isOpen={isOpen}>
-      <DocsNavProvider>
-        <Explorer />
-        <DocsTab
-          isOpen={isOpen}
-          onChange={() => {
-            setIsOpen((prev) => !prev);
-          }}
-        />
-      </DocsNavProvider>
-    </DocsPanelWrapper>
+    <>
+      {schema && (
+        <DocsPanelWrapper isOpen={isOpen}>
+          <DocsNavProvider>
+            <Explorer />
+            <DocsTab
+              isOpen={isOpen}
+              onChange={() => {
+                setIsOpen((prev) => !prev);
+              }}
+            />
+          </DocsNavProvider>
+        </DocsPanelWrapper>
+      )}
+    </>
   );
 };
+
+export default DocsPanel;
