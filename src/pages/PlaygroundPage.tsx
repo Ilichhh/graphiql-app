@@ -10,7 +10,6 @@ import { set } from '../store/endpointSlice';
 import { PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
 import { Editor } from '../components/playground/requestEditor';
 import { Header, Footer } from '../components';
-import DocsPanel from '../components/playground/docsExplorer/docsPanel';
 
 import styled from 'styled-components';
 import theme from '../theme';
@@ -54,6 +53,7 @@ export const PlaygroundPage = React.memo(() => {
   }
 
   const responseText = errorMessage || schemaErrorMessage || response;
+  const DocsPanel = React.lazy(() => import('../components/playground/docsExplorer/docsPanel'));
 
   return (
     <>
