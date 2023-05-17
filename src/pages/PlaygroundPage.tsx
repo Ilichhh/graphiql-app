@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import theme from '../theme';
 import { setQuery } from '../store/editorSlice';
 import { getDefaultQuery } from '../utils/defaultQuery';
+import { TabBar } from '../components/playground/tabs/TabBar';
 
 const Wrapper = styled.main`
   position: relative;
@@ -58,6 +59,7 @@ export const PlaygroundPage = React.memo(() => {
     <>
       <Header currentPage="playground" />
       <Wrapper>
+        <TabBar />
         <PlaygroundHeader isError={isSchemaError} />
         <Playground>
           <Editor isFetching={isFetching} sendRequest={sendRequest} />
