@@ -3,6 +3,7 @@ import { useAppSelector } from './reduxTypedHooks';
 import { useLazyGetResponseQuery } from '../store/apiSlice';
 import { useAppDispatch } from './reduxTypedHooks';
 import { setError } from '../store/errorSlice';
+import { useTranslation } from 'react-i18next';
 
 type ResponseData =
   | {
@@ -20,9 +21,10 @@ type ErrorObject =
 
 export const usePlayground = (endpoint: string) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const { query, variables, headers } = useAppSelector((state) => state.editor);
-  const [parsedVariables, parsedHeaders] = useMemo(
+  const [parsedVariables, parsedHeaders, paramsError] = useMemo(
     () => parseParams(variables, headers),
     [variables, headers]
   );
@@ -67,27 +69,35 @@ export const usePlayground = (endpoint: string) => {
     response,
     errorMessage,
     isFetching,
-    sendRequest: () =>
-      trigger(
-        {
-          url: endpoint,
-          query,
-          variables: parsedVariables,
-          headers: parsedHeaders,
-        },
-        true
-      ),
+    sendRequest: () => {
+      if (paramsError) {
+        dispatch(setError(t('playground.paramsError')));
+      } else {
+        trigger(
+          {
+            url: endpoint,
+            query,
+            variables: parsedVariables,
+            headers: parsedHeaders,
+          },
+          true
+        );
+      }
+    },
   };
 };
 
 function parseParams(variables: string, headers: string) {
   let parsedVariables: Record<string, unknown> = {};
   let parsedHeaders: Record<string, unknown> = {};
+  let paramsError = false;
 
   try {
     parsedVariables = variables ? JSON.parse(variables) : {};
     parsedHeaders = headers ? JSON.parse(headers) : {};
-  } catch (error) {}
+  } catch (error) {
+    paramsError = true;
+  }
 
-  return [parsedVariables, parsedHeaders];
+  return [parsedVariables, parsedHeaders, paramsError];
 }

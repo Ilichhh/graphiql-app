@@ -41,7 +41,8 @@
     "operation": "Operation",
     "response": "Response",
     "playBtn": "Run",
-    "schemaError": "Failed to fetch schema. Please check your connection"
+    "schemaError": "Failed to fetch schema. Please check your connection",
+    "paramsError": "Please provide valid parameters"
   },
   "landing": {
     "hero": {
