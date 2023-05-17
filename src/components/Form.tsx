@@ -8,7 +8,8 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { Divider, Button, TextField, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-import { auth, signUp, signIn } from '../firebase';
+import { auth } from '../firebase';
+import { signUp, signIn } from '../api/firebaseApi';
 import { FormMode } from '../types';
 
 import styled from 'styled-components';

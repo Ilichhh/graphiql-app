@@ -40,7 +40,12 @@
     "serverError": "Server cannot be reached",
     "operation": "Operation",
     "playBtn": "Run",
-    "schemaError": "Failed to fetch schema. Please check your connection"
+    "saveOperation": "Save operation",
+    "schemaError": "Failed to fetch schema. Please check your connection",
+    "saveQuery": "Save Query",
+    "queryName": "Query Name",
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "landing": {
     "hero": {
