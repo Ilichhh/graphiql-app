@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector, useAppDispatch } from '../../../hooks/reduxTypedHooks';
-import { setQuery } from '../../../store/editorSlice';
 
 import { EditorTools, PlayButton, SaveQueryModal } from './';
 import { RequestEditor } from '../codemirror';
@@ -10,6 +8,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
+import { useEditorState } from '../../../hooks/useEditorState';
 
 const Container = styled.section`
   display: flex;
@@ -61,9 +60,8 @@ interface EditorProps {
 }
 
 export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
-  const { query } = useAppSelector((state) => state.editor);
+  const { query, setQuery } = useEditorState();
   const [saveQueryModalOpen, setSaveQueryModalOpen] = useState(false);
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   return (
@@ -81,7 +79,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
             <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
           </RequestEditorControls>
         </RequestEditorHeader>
-        <RequestEditor value={query} onChange={(value) => dispatch(setQuery(value))} />
+        <RequestEditor value={query} onChange={(value) => setQuery(value)} />
       </EditorBox>
       <EditorTools />
       <SaveQueryModal open={saveQueryModalOpen} setOpen={setSaveQueryModalOpen} />

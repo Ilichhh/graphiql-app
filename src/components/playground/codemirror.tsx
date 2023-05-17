@@ -5,7 +5,7 @@ import { graphql, updateSchema } from 'cm6-graphql';
 
 import theme from '../../theme';
 import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
-import { useAppSelector } from '../../hooks/reduxTypedHooks';
+import { useEndpointState } from '../../hooks/useEndpointState';
 
 const requestEditorTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgDarkBlue, gutterBackground: '#0f202d' },
@@ -27,7 +27,7 @@ type CodeMirrorProps = React.ComponentProps<typeof CodeMirror>;
 
 const RequestEditor = React.memo((props: CodeMirrorProps) => {
   const refs = useRef<ReactCodeMirrorRef>({});
-  const endpoint = useAppSelector((store) => store.endpoint);
+  const { endpoint } = useEndpointState();
   const { schema } = useGraphQLSchema(endpoint);
 
   useEffect(() => {

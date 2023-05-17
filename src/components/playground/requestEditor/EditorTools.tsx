@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVerticalResize } from '../../../hooks/useVerticalResize';
-import { useAppSelector, useAppDispatch } from '../../../hooks/reduxTypedHooks';
-import { setVariables, setHeaders } from '../../../store/editorSlice';
 
 import { MetadataEditor } from '../codemirror';
 
@@ -10,6 +8,7 @@ import { Tab } from '../../../types';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
+import { useEditorState } from '../../../hooks/useEditorState';
 
 const EditorBox = styled.section`
   position: relative;
@@ -65,13 +64,12 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 `;
 
 export const EditorTools = () => {
-  const { headers, variables } = useAppSelector((state) => state.editor);
+  const { headers, variables, setVariables, setHeaders } = useEditorState();
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { panelHeight, handleResize, isDragging } = useVerticalResize(300);
   const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
 
   const handleToolsTabClick = useCallback(
     (e: React.MouseEvent, tab: Tab) => {
@@ -123,9 +121,7 @@ export const EditorTools = () => {
         <MetadataEditor
           value={activeToolsTab === 'variables' ? variables : headers}
           onChange={(value) =>
-            activeToolsTab === 'variables'
-              ? dispatch(setVariables(value))
-              : dispatch(setHeaders(value))
+            activeToolsTab === 'variables' ? setVariables(value) : setHeaders(value)
           }
         />
       </EditorBox>

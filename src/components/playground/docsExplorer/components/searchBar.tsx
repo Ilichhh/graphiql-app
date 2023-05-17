@@ -22,8 +22,8 @@ import { Spacer } from './spacer';
 import { TypeLink } from './typeLink';
 import { Field } from './field';
 import { Args } from './args';
-import { useAppSelector } from '../../../../hooks/reduxTypedHooks';
 import { useGraphQLSchema } from '../../../../hooks/useGraphQLSchema';
+import { useEndpointState } from '../../../../hooks/useEndpointState';
 
 const SearchBarWrapper = styled.div`
   display: flex;
@@ -132,7 +132,7 @@ const getSearchResults = (schema: GraphQLSchema, stackItem: StackItem, searchVal
 
 export const SearchBar = () => {
   const { searchQuery, setSearchQuery, getCurrent } = useContext(DocsNavContext);
-  const endpoint = useAppSelector((store) => store.endpoint);
+  const { endpoint } = useEndpointState();
   const { schema } = useGraphQLSchema(endpoint);
 
   const [searchResults, setSearchResults] = useState<SearchResults>({

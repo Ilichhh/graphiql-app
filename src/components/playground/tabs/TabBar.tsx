@@ -2,7 +2,6 @@ import React from 'react';
 import { Tab, TabPlus } from './Tab';
 import styled from 'styled-components';
 import theme from '../../../theme';
-import { store } from '../../../store/store';
 import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 
 const TabBarWrapper = styled.div`

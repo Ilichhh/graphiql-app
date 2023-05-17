@@ -1,5 +1,4 @@
-import React, { useState, useCallback, ChangeEvent } from 'react';
-import { useAppSelector } from '../../../hooks/reduxTypedHooks';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { saveQeryTemplate } from '../../../api/firebaseApi';
 
@@ -9,6 +8,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from '../../../muiTheme';
 import theme from '../../../theme';
 import styled from 'styled-components';
+import { useEditorState } from '../../../hooks/useEditorState';
 
 const Container = styled(Box)`
   position: absolute;
@@ -40,7 +40,7 @@ interface SaveQueryModalProps {
 }
 
 export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
-  const { query, variables, headers } = useAppSelector((state) => state.editor);
+  const { query, variables, headers } = useEditorState();
   const [name, setName] = useState('');
   const { t } = useTranslation();
 
@@ -49,7 +49,7 @@ export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
     setName('');
   }, [setOpen]);
 
-  const handleChenge = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   }, []);
 
@@ -68,7 +68,7 @@ export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
             label={t('playground.queryName')}
             variant="outlined"
             value={name}
-            onChange={handleChenge}
+            onChange={handleChange}
           />
           <Buttons>
             <Button variant="outlined" onClick={handleClose}>

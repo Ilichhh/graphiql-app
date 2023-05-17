@@ -10,9 +10,9 @@ import { DocsNavContext } from './docsContext';
 import { ExplorerTitleBar } from './components/explorerTitleBar';
 import { SearchBar } from './components/searchBar';
 import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
-import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from '../../../muiTheme';
+import { useEndpointState } from '../../../hooks/useEndpointState';
 
 const ExplorerWrapper = styled.div`
   position: absolute;
@@ -52,7 +52,7 @@ const ExplorerContent = styled.div`
 const useDocsContent = () => {
   const { getCurrent, isSchemaDoc, searchQuery } = useContext(DocsNavContext);
   const { data } = getCurrent();
-  const endpoint = useAppSelector((store) => store.endpoint);
+  const { endpoint } = useEndpointState();
   const { schema } = useGraphQLSchema(endpoint);
 
   if (!schema || searchQuery) {
