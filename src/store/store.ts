@@ -3,12 +3,14 @@ import endpointReducer from './endpointSlice';
 import editorSlice from './editorSlice';
 import { apiSlice } from './apiSlice';
 import errorSlice from './errorSlice';
+import tabsSlice from './tabsSlice';
 
 export const store = configureStore({
   reducer: {
     endpoint: endpointReducer,
     editor: editorSlice,
     error: errorSlice,
+    tabs: tabsSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),

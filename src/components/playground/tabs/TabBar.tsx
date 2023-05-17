@@ -2,6 +2,8 @@ import React from 'react';
 import { Tab, TabPlus } from './Tab';
 import styled from 'styled-components';
 import theme from '../../../theme';
+import { store } from '../../../store/store';
+import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 
 const TabBarWrapper = styled.div`
   height: 57px;
@@ -22,10 +24,13 @@ const TabBarContent = styled.div`
   }
 `;
 export const TabBar = () => {
+  const { tabs, selectedId } = useAppSelector(({ tabs }) => tabs);
   return (
     <TabBarWrapper>
       <TabBarContent>
-        <Tab />
+        {tabs.map(({ id, name }) => (
+          <Tab key={id} isActive={id === selectedId} name={name} />
+        ))}
         <TabPlus />
       </TabBarContent>
     </TabBarWrapper>

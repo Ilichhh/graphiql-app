@@ -50,18 +50,22 @@ const AddBtn = styled(AddIcon)`
   }
 `;
 
-export const Tab = () => {
+interface TabProps {
+  isActive: boolean;
+  name: string;
+}
+export const Tab = ({ name, isActive }: TabProps) => {
   return (
-    <TabWrapper isActive={false}>
-      <TabName isActive={false}>New Tab</TabName>
-      <CloseBtn isActive={false} fontSize="small" />
+    <TabWrapper isActive={isActive}>
+      <TabName isActive={isActive}>{name}</TabName>
+      <CloseBtn isActive={isActive} fontSize="small" />
     </TabWrapper>
   );
 };
 
 export const TabPlus = () => {
   return (
-    <TabWrapper isActive={false}>
+    <TabWrapper>
       <AddBtn fontSize="medium" />
     </TabWrapper>
   );
