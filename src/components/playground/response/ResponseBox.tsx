@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ResponseWindow } from './codemirror';
+import { ResponseWindow } from '../codemirror';
+import { ResponseHeader } from './ResponseHeader';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import styled from 'styled-components';
-import theme from '../../theme';
+import theme from '../../../theme';
 
 const Container = styled.section`
   display: flex;
@@ -61,23 +62,27 @@ const StartMessage = styled.div`
 
 interface ResponseBoxProps {
   isFetching: boolean;
-  response: string;
+  response?: string;
+  status?: number;
 }
 
-export const ResponseBox = ({ isFetching, response }: ResponseBoxProps) => {
+export const ResponseBox = ({ isFetching, response, status }: ResponseBoxProps) => {
   const { t } = useTranslation();
 
   return (
     <Container>
       <ResponseSection>
+        <ResponseHeader statusCode={status} />
         {isFetching ? (
           <ProgressWrapper>
             <CircularProgress />
           </ProgressWrapper>
         ) : (
-          <ResponseWindow value={response}>
-            {!response && <StartMessage>{t('playground.responsePlaceholder')}</StartMessage>}
-          </ResponseWindow>
+          <>
+            <ResponseWindow value={response}>
+              {!response && <StartMessage>{t('playground.responsePlaceholder')}</StartMessage>}
+            </ResponseWindow>
+          </>
         )}
       </ResponseSection>
     </Container>

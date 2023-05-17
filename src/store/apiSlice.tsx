@@ -21,6 +21,12 @@ export const apiSlice = createApi({
         },
         body: { query, variables: variables },
       }),
+      transformResponse: (response, meta) => {
+        return {
+          data: JSON.stringify(response, null, 2),
+          status: meta?.response?.status,
+        };
+      },
     }),
   }),
 });
