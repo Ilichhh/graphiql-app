@@ -1,17 +1,15 @@
 import { useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from './reduxTypedHooks';
 import { useDebouncedInput } from './useDebouncedInput';
-import { set } from '../store/endpointSlice';
+import { useEndpointState } from './useEndpointState';
 
 export const useEndpointInput = () => {
-  const endpoint = useAppSelector((state) => state.endpoint);
-  const dispatch = useAppDispatch();
+  const { endpoint, setEndpoint } = useEndpointState();
 
   const handleChangeEndpoint = useCallback(
     (value: string) => {
-      dispatch(set(value));
+      setEndpoint(value);
     },
-    [dispatch]
+    [setEndpoint]
   );
 
   const { inputValue, setInputValue, handleInputChange } = useDebouncedInput(
@@ -22,6 +20,7 @@ export const useEndpointInput = () => {
 
   return {
     endpoint,
+    setEndpoint,
     inputValue,
     setInputValue,
     handleInputChange,

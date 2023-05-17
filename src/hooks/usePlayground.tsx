@@ -1,9 +1,8 @@
-import { useMemo, useState, useEffect } from 'react';
-import { useAppSelector } from './reduxTypedHooks';
+import { useEffect, useMemo, useState } from 'react';
 import { useLazyGetResponseQuery } from '../store/apiSlice';
-import { useAppDispatch } from './reduxTypedHooks';
-import { setError } from '../store/errorSlice';
 import { useTranslation } from 'react-i18next';
+import { useEditorState } from './useEditorState';
+import { useErrorState } from './useErrorState';
 
 type ResponseData =
   | {
@@ -20,10 +19,10 @@ type ErrorObject =
   | undefined;
 
 export const usePlayground = (endpoint: string) => {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const { query, variables, headers } = useAppSelector((state) => state.editor);
+  const { query, variables, headers } = useEditorState();
+  const { setError } = useErrorState();
   const [parsedVariables, parsedHeaders, paramsError] = useMemo(
     () => parseParams(variables, headers),
     [variables, headers]
@@ -38,9 +37,9 @@ export const usePlayground = (endpoint: string) => {
       setResponse(data);
     } catch (e) {
       if (typeof e === 'string') {
-        dispatch(setError(e));
+        setError(e);
       } else if (e instanceof Error) {
-        dispatch(setError(`${e.name}: ${e.message}`));
+        setError(`${e.name}: ${e.message}`);
       }
     }
 
@@ -52,10 +51,10 @@ export const usePlayground = (endpoint: string) => {
             status: error.status,
           });
         } else {
-          dispatch(setError(error.error));
+          setError(error.error);
         }
       } else {
-        dispatch(setError(error.message || 'Unknown error'));
+        setError(error.message || 'Unknown error');
       }
     }
 
@@ -63,7 +62,7 @@ export const usePlayground = (endpoint: string) => {
       setResponse(undefined);
       setErrorMessage(undefined);
     };
-  }, [data, error, dispatch]);
+  }, [data, error, setError]);
 
   return {
     response,
@@ -71,7 +70,7 @@ export const usePlayground = (endpoint: string) => {
     isFetching,
     sendRequest: () => {
       if (paramsError) {
-        dispatch(setError(t('playground.paramsError')));
+        setError(t('playground.paramsError'));
       } else {
         trigger(
           {
