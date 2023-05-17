@@ -103,7 +103,7 @@ export const saveQeryTemplate = async (templateData: queryTemplateData) => {
 export const getAllQueryTemplates = async () => {
   try {
     const userUid = auth.currentUser?.uid;
-    if (!userUid) return;
+    if (!userUid) return [];
 
     const templatesRef = collection(doc(db, 'users', userUid), 'queryTemplates');
     const querySnapshot = await getDocs(templatesRef);
@@ -112,5 +112,6 @@ export const getAllQueryTemplates = async () => {
     return templates;
   } catch (error) {
     console.error(error);
+    return [];
   }
 };

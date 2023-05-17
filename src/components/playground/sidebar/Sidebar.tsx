@@ -1,6 +1,7 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react';
+import { getAllQueryTemplates } from '../../../api/firebaseApi';
 
+import { QueryPreview } from './QueryPreview';
 import { IconButton } from '@mui/material';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
@@ -33,6 +34,7 @@ const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
+  padding-right: 0;
   border-top: 1px solid ${theme.colors.bgDarkBlue};
 `;
 
@@ -41,7 +43,17 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ close }: SidebarProps) => {
-  const { t } = useTranslation();
+  const [queriesArray, setQueriesArray] = useState<React.ReactNode[]>([]);
+
+  const fetchData = async () => {
+    const data = await getAllQueryTemplates();
+    const qArr = data.map((template, i) => <QueryPreview key={i} data={template} />);
+    setQueriesArray(qArr);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <Container>
@@ -58,7 +70,7 @@ export const Sidebar = ({ close }: SidebarProps) => {
           <KeyboardDoubleArrowLeftIcon />
         </IconButton>
       </Header>
-      <ContentBox>content</ContentBox>
+      <ContentBox>{queriesArray}</ContentBox>
     </Container>
   );
 };
