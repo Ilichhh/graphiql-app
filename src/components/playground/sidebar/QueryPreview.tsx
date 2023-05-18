@@ -2,6 +2,7 @@ import React from 'react';
 import { deleteQueryTemplate } from '../../../api/firebaseApi';
 
 import { IconButton } from '@mui/material';
+import { ShowOptionsButton } from '../../../components/common/IconButtons';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import theme from '../../../theme';
@@ -20,11 +21,14 @@ const Container = styled.aside`
 
 const Name = styled.div`
   width: 100%;
+  height: 28px;
+  padding: 5px 10px;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background-color: ${theme.colors.bgDarkBlue};
+    background-color: ${theme.colors.hoverLight};
   }
 `;
 
@@ -39,6 +43,7 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
       <Name>{data.name}</Name>
       <IconButton onClick={() => deleteQueryTemplate(templateId)}>
         <DeleteOutlineOutlinedIcon />
+        <ShowOptionsButton size="small" />
       </IconButton>
     </Container>
   );

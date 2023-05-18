@@ -8,6 +8,7 @@ import {
   BookmarkBorderOutlined,
   HistoryOutlined,
   SaveOutlined,
+  MoreHoriz,
 } from '@mui/icons-material';
 
 import theme from '../../theme';
@@ -15,7 +16,7 @@ import theme from '../../theme';
 const IconButtonStyle = {
   borderRadius: 1,
   '&:hover': {
-    backgroundColor: theme.colors.hover,
+    backgroundColor: theme.colors.hoverLight,
   },
 };
 
@@ -53,8 +54,16 @@ export const RequestsHistoryTabButton = (props: IconButtonProps) => {
 
 export const SaveRequestButton = (props: IconButtonProps) => {
   return (
-    <IconButton {...props} sx={IconButtonStyle}>
+    <IconButton {...props} sx={{ ...IconButtonStyle, height: 37, width: 37 }}>
       <SaveOutlined />
+    </IconButton>
+  );
+};
+
+export const ShowOptionsButton = (props: IconButtonProps) => {
+  return (
+    <IconButton {...props} sx={IconButtonStyle}>
+      <MoreHoriz />
     </IconButton>
   );
 };

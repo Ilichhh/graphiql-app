@@ -9,12 +9,12 @@ const theme = {
     textInactive: '#555e66',
     textWhite: '#ffffff',
     bgLight: '#F5F5F5',
+    hoverLight: '#2e4c63',
     accent: '#DA1B7F',
     error: '#F25C54',
     warning: '#f57c00',
     info: '#0288d1',
     success: '#388e3c',
-    hover: '#2e4c63',
   },
   headings: {
     margin: '0',
