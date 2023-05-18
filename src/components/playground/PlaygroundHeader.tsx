@@ -2,11 +2,9 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEndpointInput } from '../../hooks/useEndpointInput';
 
-import { IconButton } from '@mui/material';
-import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined';
-
 import styled from 'styled-components';
 import theme from '../../theme';
+import { OpenSidebarButton } from '../../components/common/IconButtons';
 
 const Header = styled.header`
   display: flex;
@@ -72,11 +70,7 @@ export const PlaygroundHeader = React.memo(
 
     return (
       <Header>
-        {!isSidebarOpen && (
-          <IconButton onClick={openSidebar}>
-            <KeyboardDoubleArrowRightOutlinedIcon />
-          </IconButton>
-        )}
+        {!isSidebarOpen && <OpenSidebarButton size="small" onClick={openSidebar} />}
         <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
         <InputContainer>
           <Input autoFocus defaultValue={endpoint} onChange={handleInputChange} />

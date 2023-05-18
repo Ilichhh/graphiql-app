@@ -18,8 +18,10 @@ const Container = styled.aside`
   background-color: ${theme.colors.bgBlue};
 `;
 
-const Name = styled.aside`
+const Name = styled.div`
   width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
   &:hover {
     background-color: ${theme.colors.bgDarkBlue};

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { getAllQueryTemplates } from '../../../api/firebaseApi';
 
 import { QueryPreview } from './QueryPreview';
-import { IconButton } from '@mui/material';
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import {
+  CloseSidebarButton,
+  RequestsHistoryTabButton,
+  TemplatesTabButton,
+} from '../../../components/common/IconButtons';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -61,16 +62,10 @@ export const Sidebar = ({ close }: SidebarProps) => {
     <Container>
       <Header>
         <Tabs>
-          <IconButton>
-            <BookmarkBorderOutlinedIcon />
-          </IconButton>
-          <IconButton disabled>
-            <HistoryOutlinedIcon />
-          </IconButton>
+          <TemplatesTabButton size="small" />
+          <RequestsHistoryTabButton size="small" disabled />
         </Tabs>
-        <IconButton onClick={close}>
-          <KeyboardDoubleArrowLeftIcon />
-        </IconButton>
+        <CloseSidebarButton size="small" onClick={close} />
       </Header>
       <ContentBox>{queriesArray}</ContentBox>
     </Container>

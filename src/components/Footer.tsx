@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material/styles';
 
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { RSLogoIcon } from './Icons';
+import { RSLogoIcon } from './common/Icons';
 
 import devs from '../data/devs.json';
 

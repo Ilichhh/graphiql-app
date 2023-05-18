@@ -14,6 +14,7 @@ const theme = {
     warning: '#f57c00',
     info: '#0288d1',
     success: '#388e3c',
+    hover: '#2e4c63',
   },
   headings: {
     margin: '0',

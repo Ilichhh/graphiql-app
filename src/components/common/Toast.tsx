@@ -1,8 +1,8 @@
 import React from 'react';
 import { Snackbar, Alert } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxTypedHooks';
 import Slide, { SlideProps } from '@mui/material/Slide';
-import { setError } from '../store/errorSlice';
+import { setError } from '../../store/errorSlice';
 
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="left" />;

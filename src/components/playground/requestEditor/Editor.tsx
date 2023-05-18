@@ -5,8 +5,7 @@ import { setQuery } from '../../../store/editorSlice';
 
 import { EditorTools, PlayButton, SaveQueryModal } from './';
 import { RequestEditor } from '../codemirror';
-import { IconButton } from '@mui/material';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import { SaveRequestButton } from '../../../components/common/IconButtons';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -72,12 +71,10 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
         <RequestEditorHeader>
           {t('playground.operation')}
           <RequestEditorControls>
-            <IconButton
+            <SaveRequestButton
               title={t('playground.saveOperation') as string}
               onClick={() => setSaveQueryModalOpen(true)}
-            >
-              <SaveOutlinedIcon />
-            </IconButton>
+            />
             <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
           </RequestEditorControls>
         </RequestEditorHeader>
