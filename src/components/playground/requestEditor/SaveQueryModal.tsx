@@ -41,6 +41,7 @@ interface SaveQueryModalProps {
 
 export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
   const { query, variables, headers } = useAppSelector((state) => state.editor);
+  const endpoint = useAppSelector((state) => state.endpoint);
   const [name, setName] = useState('');
   const { t } = useTranslation();
 
@@ -55,8 +56,8 @@ export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
 
   const handleSaveQueryTemplate = useCallback(() => {
     handleClose();
-    saveQueryTemplate({ name, query, variables, headers });
-  }, [name, query, variables, headers, handleClose]);
+    saveQueryTemplate({ name, endpoint, query, variables, headers });
+  }, [name, endpoint, query, variables, headers, handleClose]);
 
   return (
     <ThemeProvider theme={lightTheme}>

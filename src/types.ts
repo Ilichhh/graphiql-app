@@ -8,7 +8,13 @@ export enum FormMode {
   Register = 'register',
 }
 
+export enum SidebarTabs {
+  Templates = 'templates',
+  History = 'history',
+}
+
 export interface queryTemplateData {
+  endpoint: string;
   name: string;
   query: string;
   variables: string;
