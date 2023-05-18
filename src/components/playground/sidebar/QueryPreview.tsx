@@ -1,4 +1,5 @@
 import React from 'react';
+import { deleteQueryTemplate } from '../../../api/firebaseApi';
 
 import { IconButton } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -26,14 +27,15 @@ const Name = styled.aside`
 `;
 
 interface QueryPreviewProps {
+  templateId: string;
   data: DocumentData;
 }
 
-export const QueryPreview = ({ data }: QueryPreviewProps) => {
+export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
   return (
     <Container>
       <Name>{data.name}</Name>
-      <IconButton>
+      <IconButton onClick={() => deleteQueryTemplate(templateId)}>
         <DeleteOutlineOutlinedIcon />
       </IconButton>
     </Container>

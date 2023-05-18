@@ -1,7 +1,7 @@
 import React, { useState, useCallback, ChangeEvent } from 'react';
 import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 import { useTranslation } from 'react-i18next';
-import { saveQeryTemplate } from '../../../api/firebaseApi';
+import { saveQueryTemplate } from '../../../api/firebaseApi';
 
 import { Box, Button, Modal, TextField } from '@mui/material';
 
@@ -55,7 +55,7 @@ export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
 
   const handleSaveQueryTemplate = useCallback(() => {
     handleClose();
-    saveQeryTemplate({ name, query, variables, headers });
+    saveQueryTemplate({ name, query, variables, headers });
   }, [name, query, variables, headers, handleClose]);
 
   return (

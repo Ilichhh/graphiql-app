@@ -1,7 +1,7 @@
 import { UseFormSetError, FieldValues } from 'react-hook-form';
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { doc, setDoc, addDoc, getDocs, collection } from 'firebase/firestore';
+import { doc, setDoc, addDoc, getDocs, deleteDoc, collection } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
 import { queryTemplateData } from '../types';
@@ -88,13 +88,15 @@ export const checkTokenExpiration = async () => {
   }
 };
 
-export const saveQeryTemplate = async (templateData: queryTemplateData) => {
+export const saveQueryTemplate = async (templateData: queryTemplateData) => {
   try {
     const userUid = auth.currentUser?.uid;
     if (!userUid) return;
 
     const templatesRef = collection(doc(db, 'users', userUid), 'queryTemplates');
-    await addDoc(templatesRef, templateData);
+    const docRef = await addDoc(templatesRef, templateData);
+
+    return docRef.id;
   } catch (error) {
     console.error(error);
   }
@@ -107,11 +109,26 @@ export const getAllQueryTemplates = async () => {
 
     const templatesRef = collection(doc(db, 'users', userUid), 'queryTemplates');
     const querySnapshot = await getDocs(templatesRef);
-    const templates = querySnapshot.docs.map((doc) => doc.data());
+    const templates = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      data: doc.data(),
+    }));
 
     return templates;
   } catch (error) {
     console.error(error);
     return [];
+  }
+};
+
+export const deleteQueryTemplate = async (templateId: string) => {
+  try {
+    const userUid = auth.currentUser?.uid;
+    if (!userUid) return;
+
+    const templateRef = doc(db, 'users', userUid, 'queryTemplates', templateId);
+    await deleteDoc(templateRef);
+  } catch (error) {
+    console.error(error);
   }
 };

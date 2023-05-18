@@ -47,7 +47,9 @@ export const Sidebar = ({ close }: SidebarProps) => {
 
   const fetchData = async () => {
     const data = await getAllQueryTemplates();
-    const qArr = data.map((template, i) => <QueryPreview key={i} data={template} />);
+    const qArr = data.map((template) => (
+      <QueryPreview key={template.id} templateId={template.id} data={template.data} />
+    ));
     setQueriesArray(qArr);
   };
 
