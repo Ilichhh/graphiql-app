@@ -63,8 +63,6 @@ export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) 
   const { inputValue, endpoint, handleInputChange } = useEndpointInput();
   const { t } = useTranslation();
 
-  console.log('PlaygroundPage');
-
   const handleGetAllQueryTemplates = useCallback(async () => {
     const templates = await getAllQueryTemplates();
     console.log(templates);
