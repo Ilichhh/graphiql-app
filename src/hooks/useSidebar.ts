@@ -1,9 +1,13 @@
 import { useCallback } from 'react';
 import { useAppSelector } from './reduxTypedHooks';
 import { useAppDispatch } from './reduxTypedHooks';
+
 import { setIsOpen } from '../store/sidebarSlice';
-import { getAllQueryTemplates } from '../api/firebaseApi';
 import { setQueryTemplates } from '../store/sidebarSlice';
+import { getAllQueryTemplates, deleteQueryTemplate } from '../api/firebaseApi';
+import { saveQueryTemplate } from '../api/firebaseApi';
+
+import { DocumentData } from '@firebase/firestore';
 
 export const useSidebar = () => {
   const dispatch = useAppDispatch();
@@ -18,9 +22,41 @@ export const useSidebar = () => {
   }, [dispatch]);
 
   const fetchQueryTemplatesData = useCallback(async () => {
-    const data = await getAllQueryTemplates();
-    dispatch(setQueryTemplates(data));
+    try {
+      const data = await getAllQueryTemplates();
+      dispatch(setQueryTemplates(data));
+    } catch (error) {
+      console.error(error);
+    }
   }, [dispatch]);
+
+  const deleteTemplate = useCallback(
+    async (templateId: string) => {
+      try {
+        await deleteQueryTemplate(templateId);
+        dispatch(
+          setQueryTemplates(queryTemplates.filter((template) => template.id !== templateId))
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [dispatch, queryTemplates]
+  );
+
+  const saveTemplate = useCallback(
+    async (templateData: DocumentData) => {
+      try {
+        const id = await saveQueryTemplate(templateData);
+        if (!id) return;
+
+        dispatch(setQueryTemplates([...queryTemplates, { id, data: templateData }]));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [dispatch, queryTemplates]
+  );
 
   return {
     isOpen,
@@ -29,5 +65,7 @@ export const useSidebar = () => {
     queryTemplates,
     fetchQueryTemplatesData,
     activeTab,
+    deleteTemplate,
+    saveTemplate,
   };
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { deleteQueryTemplate } from '../../../api/firebaseApi';
+import { useSidebar } from '../../../hooks/useSidebar';
 
 import { IconButton } from '@mui/material';
 import { ShowOptionsButton } from '../../../components/common/IconButtons';
@@ -38,10 +38,11 @@ interface QueryPreviewProps {
 }
 
 export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
+  const { deleteTemplate } = useSidebar();
   return (
     <Container>
       <Name>{data.name}</Name>
-      <IconButton onClick={() => deleteQueryTemplate(templateId)}>
+      <IconButton onClick={() => deleteTemplate(templateId)}>
         <DeleteOutlineOutlinedIcon />
       </IconButton>
       <ShowOptionsButton size="small" />
