@@ -38,9 +38,7 @@ const TabName = styled.span<{ isActive: boolean }>`
   letter-spacing: 0.53px;
 `;
 
-const CloseBtn = styled(CloseIcon)<{ isActive: boolean }>`
-  opacity: ${({ isActive }) => (isActive ? '1' : '0')};
-
+const CloseBtn = styled(CloseIcon)`
   &.MuiSvgIcon-root {
     fill: ${theme.colors.textInactive};
   }
@@ -69,7 +67,13 @@ export const Tab = ({ id, name, isActive, showCloseBtn }: TabProps) => {
     <>
       <TabWrapper isActive={isActive} onClick={() => dispatch(selectTab(id))}>
         <TabName isActive={isActive}>{name}</TabName>
-        {showCloseBtn && <CloseBtn isActive={isActive} fontSize="small" onClick={handleDelete} />}
+        {showCloseBtn && (
+          <CloseBtn
+            fontSize="small"
+            onClick={handleDelete}
+            sx={{ opacity: isActive ? '1' : '0' }}
+          />
+        )}
       </TabWrapper>
     </>
   );
