@@ -4,7 +4,7 @@ import theme from '../../../theme';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
-import { selectTab } from '../../../store/tabsSlice';
+import { addTab, deleteTab, selectTab } from '../../../store/tabsSlice';
 
 const TabWrapper = styled.div<{ isActive?: boolean }>`
   display: flex;
@@ -56,23 +56,30 @@ interface TabProps {
   id: string;
   name: string;
   isActive: boolean;
+  showCloseBtn: boolean;
 }
-export const Tab = ({ id, name, isActive }: TabProps) => {
+export const Tab = ({ id, name, isActive, showCloseBtn }: TabProps) => {
   const dispatch = useAppDispatch();
+  const handleDelete = (e: React.MouseEvent<SVGSVGElement>) => {
+    dispatch(deleteTab(id));
+    e.stopPropagation();
+  };
 
   return (
     <>
       <TabWrapper isActive={isActive} onClick={() => dispatch(selectTab(id))}>
         <TabName isActive={isActive}>{name}</TabName>
-        <CloseBtn isActive={isActive} fontSize="small" />
+        {showCloseBtn && <CloseBtn isActive={isActive} fontSize="small" onClick={handleDelete} />}
       </TabWrapper>
     </>
   );
 };
 
 export const TabPlus = () => {
+  const dispatch = useAppDispatch();
+
   return (
-    <TabWrapper>
+    <TabWrapper onClick={() => dispatch(addTab())}>
       <AddBtn fontSize="medium" />
     </TabWrapper>
   );

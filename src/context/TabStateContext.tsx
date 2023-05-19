@@ -47,8 +47,6 @@ export const TabStateProvider = ({ children }: { children: ReactNode }) => {
   const errors = useAppSelector((store) => store.error);
   const dispatch = useAppDispatch();
 
-  console.log('TabStateContext');
-
   const endpoint = endpoints[tabId];
   const query = stateQueries[tabId];
   const variables = stateVariables[tabId];

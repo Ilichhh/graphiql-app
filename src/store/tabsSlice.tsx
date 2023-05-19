@@ -18,10 +18,6 @@ const initialState: TabsState = {
       name: 'New Tab',
       id: '1',
     },
-    {
-      name: 'New Tab 2',
-      id: '2',
-    },
   ],
 };
 
@@ -33,6 +29,7 @@ const tabsSlice = createSlice({
       const id = new Date().getTime().toString();
       return {
         ...state,
+        selectedId: id,
         tabs: [
           ...state.tabs,
           {
@@ -43,8 +40,14 @@ const tabsSlice = createSlice({
       };
     },
     deleteTab: (state, { payload: id }: PayloadAction<string>) => {
+      const index = state.tabs.findIndex(({ id: tabId }) => tabId === id);
+      const nextIndex = index === state.tabs.length - 1 ? state.tabs.length - 2 : index + 1;
+      const { id: selectedId } = state.tabs[nextIndex];
+      const { selectedId: currentSelectedId } = state;
+
       return {
         ...state,
+        selectedId: currentSelectedId === id ? selectedId : currentSelectedId,
         tabs: [...state.tabs.filter(({ id: tabId }) => tabId !== id)],
       };
     },

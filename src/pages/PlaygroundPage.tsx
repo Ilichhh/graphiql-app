@@ -39,8 +39,6 @@ export const PlaygroundPage = React.memo(() => {
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
 
-  console.log('PlaygroundPage');
-
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
       setEndpoint(lastEndpoint);
