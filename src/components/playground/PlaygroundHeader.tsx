@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useEndpointInput } from '../../hooks/useEndpointInput';
 import { getAllQueryTemplates } from '../../api/firebaseApi';
 
 import { IconButton } from '@mui/material';
@@ -8,6 +7,7 @@ import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDo
 
 import styled from 'styled-components';
 import theme from '../../theme';
+import { useEndpointInput } from '../../hooks/useEndpointInput';
 
 const Header = styled.header`
   display: flex;
@@ -60,8 +60,10 @@ interface PlaygroundHeaderProps {
 }
 
 export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) => {
-  const { endpoint, handleInputChange } = useEndpointInput();
+  const { inputValue, endpoint, handleInputChange } = useEndpointInput();
   const { t } = useTranslation();
+
+  console.log('PlaygroundHeader');
 
   const handleGetAllQueryTemplates = useCallback(async () => {
     const templates = await getAllQueryTemplates();
@@ -79,7 +81,7 @@ export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) 
       </IconButton>
       <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
       <InputContainer>
-        <Input autoFocus defaultValue={endpoint} onChange={handleInputChange} />
+        <Input autoFocus value={inputValue} onChange={handleInputChange} />
         {isError && <ErrorBadge>{t(`playground.serverError`)}</ErrorBadge>}
       </InputContainer>
     </Header>

@@ -28,7 +28,7 @@ export const TabBar = () => {
     <TabBarWrapper>
       <TabBarContent>
         {tabs.map(({ id, name }) => (
-          <Tab key={id} isActive={id === selectedId} name={name} />
+          <Tab key={id} id={id} isActive={id === selectedId} name={name} />
         ))}
         <TabPlus />
       </TabBarContent>

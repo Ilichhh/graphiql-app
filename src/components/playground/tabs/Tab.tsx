@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import theme from '../../../theme';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
+import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
+import { selectTab } from '../../../store/tabsSlice';
 
 const TabWrapper = styled.div<{ isActive?: boolean }>`
   display: flex;
@@ -51,15 +53,20 @@ const AddBtn = styled(AddIcon)`
 `;
 
 interface TabProps {
-  isActive: boolean;
+  id: string;
   name: string;
+  isActive: boolean;
 }
-export const Tab = ({ name, isActive }: TabProps) => {
+export const Tab = ({ id, name, isActive }: TabProps) => {
+  const dispatch = useAppDispatch();
+
   return (
-    <TabWrapper isActive={isActive}>
-      <TabName isActive={isActive}>{name}</TabName>
-      <CloseBtn isActive={isActive} fontSize="small" />
-    </TabWrapper>
+    <>
+      <TabWrapper isActive={isActive} onClick={() => dispatch(selectTab(id))}>
+        <TabName isActive={isActive}>{name}</TabName>
+        <CloseBtn isActive={isActive} fontSize="small" />
+      </TabWrapper>
+    </>
   );
 };
 

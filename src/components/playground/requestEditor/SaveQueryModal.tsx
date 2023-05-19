@@ -8,7 +8,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from '../../../muiTheme';
 import theme from '../../../theme';
 import styled from 'styled-components';
-import { useEditorState } from '../../../hooks/useEditorState';
+import { useTabStateContext } from '../../../context/TabStateContext';
 
 const Container = styled(Box)`
   position: absolute;
@@ -40,7 +40,7 @@ interface SaveQueryModalProps {
 }
 
 export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
-  const { query, variables, headers } = useEditorState();
+  const { query, variables, headers } = useTabStateContext();
   const [name, setName] = useState('');
   const { t } = useTranslation();
 

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { DocsTab } from './docsTab';
 import { Explorer } from './explorer';
 import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
-import { useEndpointState } from '../../../hooks/useEndpointState';
+import { useTabStateContext } from '../../../context/TabStateContext';
 
 interface ExplorerWrapperProps {
   isOpen: boolean;
@@ -24,7 +24,7 @@ const DocsPanelWrapper = styled.div<ExplorerWrapperProps>`
 
 const DocsPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { endpoint } = useEndpointState();
+  const { endpoint } = useTabStateContext();
   const { schema } = useGraphQLSchema(endpoint);
 
   useEffect(() => {

@@ -23,7 +23,7 @@ import { TypeLink } from './typeLink';
 import { Field } from './field';
 import { Args } from './args';
 import { useGraphQLSchema } from '../../../../hooks/useGraphQLSchema';
-import { useEndpointState } from '../../../../hooks/useEndpointState';
+import { useTabStateContext } from '../../../../context/TabStateContext';
 
 const SearchBarWrapper = styled.div`
   display: flex;
@@ -132,7 +132,7 @@ const getSearchResults = (schema: GraphQLSchema, stackItem: StackItem, searchVal
 
 export const SearchBar = () => {
   const { searchQuery, setSearchQuery, getCurrent } = useContext(DocsNavContext);
-  const { endpoint } = useEndpointState();
+  const { endpoint } = useTabStateContext();
   const { schema } = useGraphQLSchema(endpoint);
 
   const [searchResults, setSearchResults] = useState<SearchResults>({

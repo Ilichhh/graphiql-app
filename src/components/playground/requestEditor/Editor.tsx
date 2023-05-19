@@ -8,7 +8,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
-import { useEditorState } from '../../../hooks/useEditorState';
+import { useTabStateContext } from '../../../context/TabStateContext';
 
 const Container = styled.section`
   display: flex;
@@ -60,7 +60,7 @@ interface EditorProps {
 }
 
 export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
-  const { query, setQuery } = useEditorState();
+  const { query, setQuery } = useTabStateContext();
   const [saveQueryModalOpen, setSaveQueryModalOpen] = useState(false);
   const { t } = useTranslation();
 

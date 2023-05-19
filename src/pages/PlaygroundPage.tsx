@@ -11,8 +11,7 @@ import { Footer, Header } from '../components';
 import styled from 'styled-components';
 import theme from '../theme';
 import { TabBar } from '../components/playground/tabs/TabBar';
-import { useEndpointState } from '../hooks/useEndpointState';
-import { useEditorState } from '../hooks/useEditorState';
+import { useTabStateContext } from '../context/TabStateContext';
 
 const Wrapper = styled.main`
   position: relative;
@@ -34,12 +33,13 @@ const Playground = styled.div`
 `;
 
 export const PlaygroundPage = React.memo(() => {
-  const { setQuery } = useEditorState();
-  const { endpoint, setEndpoint } = useEndpointState();
+  const { endpoint, setEndpoint, setQuery } = useTabStateContext();
   const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
+
+  console.log('PlaygroundPage');
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {

@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useLazyGetResponseQuery } from '../store/apiSlice';
 import { useTranslation } from 'react-i18next';
-import { useEditorState } from './useEditorState';
-import { useErrorState } from './useErrorState';
+import { useTabStateContext } from '../context/TabStateContext';
+import { useLazyGetResponseQuery } from '../store/apiSlice';
 
 type ResponseData =
   | {
@@ -21,8 +20,8 @@ type ErrorObject =
 export const usePlayground = (endpoint: string) => {
   const { t } = useTranslation();
 
-  const { query, variables, headers } = useEditorState();
-  const { setError } = useErrorState();
+  const { query, variables, headers } = useTabStateContext();
+  const { setError } = useTabStateContext();
   const [parsedVariables, parsedHeaders, paramsError] = useMemo(
     () => parseParams(variables, headers),
     [variables, headers]

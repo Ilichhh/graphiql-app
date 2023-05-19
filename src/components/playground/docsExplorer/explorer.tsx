@@ -12,7 +12,7 @@ import { SearchBar } from './components/searchBar';
 import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from '../../../muiTheme';
-import { useEndpointState } from '../../../hooks/useEndpointState';
+import { useTabStateContext } from '../../../context/TabStateContext';
 
 const ExplorerWrapper = styled.div`
   position: absolute;
@@ -52,7 +52,7 @@ const ExplorerContent = styled.div`
 const useDocsContent = () => {
   const { getCurrent, isSchemaDoc, searchQuery } = useContext(DocsNavContext);
   const { data } = getCurrent();
-  const { endpoint } = useEndpointState();
+  const { endpoint } = useTabStateContext();
   const { schema } = useGraphQLSchema(endpoint);
 
   if (!schema || searchQuery) {

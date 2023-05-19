@@ -8,9 +8,9 @@ import { Button, Divider, TextField } from '@mui/material';
 
 import styled from 'styled-components';
 import theme from '../../theme';
-import { ENDPOINTS } from '../../constants';
+import { useTabStateContext } from '../../context/TabStateContext';
 import { getDefaultQuery } from '../../utils/defaultQuery';
-import { useEditorState } from '../../hooks/useEditorState';
+import { ENDPOINTS } from '../../constants';
 
 const Container = styled.div`
   background-color: ${theme.colors.bgBlue};
@@ -85,7 +85,7 @@ interface ModalProps {
 export const Modal = ({ setIsModal }: ModalProps) => {
   const { endpoint, setEndpoint, inputValue, setInputValue, handleInputChange } =
     useEndpointInput();
-  const { setQuery } = useEditorState();
+  const { setQuery } = useTabStateContext();
   const { isSchemaError } = useGraphQLSchema(endpoint);
   const { t } = useTranslation();
 

@@ -1,14 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVerticalResize } from '../../../hooks/useVerticalResize';
-
+import { useTabStateContext } from '../../../context/TabStateContext';
 import { MetadataEditor } from '../codemirror';
-
 import { Tab } from '../../../types';
-
 import theme from '../../../theme';
 import styled from 'styled-components';
-import { useEditorState } from '../../../hooks/useEditorState';
 
 const EditorBox = styled.section`
   position: relative;
@@ -64,7 +61,7 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 `;
 
 export const EditorTools = () => {
-  const { headers, variables, setVariables, setHeaders } = useEditorState();
+  const { headers, variables, setVariables, setHeaders } = useTabStateContext();
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { panelHeight, handleResize, isDragging } = useVerticalResize(300);

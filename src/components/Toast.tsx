@@ -1,14 +1,14 @@
 import React from 'react';
 import { Alert, Snackbar } from '@mui/material';
 import Slide, { SlideProps } from '@mui/material/Slide';
-import { useErrorState } from '../hooks/useErrorState';
+import { useTabStateContext } from '../context/TabStateContext';
 
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="left" />;
 }
 
 export const Toast = () => {
-  const { error, setError } = useErrorState();
+  const { error, setError } = useTabStateContext();
 
   const handleClose = () => {
     setError('');
