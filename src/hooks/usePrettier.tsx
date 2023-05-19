@@ -8,10 +8,10 @@ export const usePrettier = () => {
   const dispatch = useAppDispatch();
   const { query } = useAppSelector((store) => store.editor);
 
+  const formattedQuery = prettier.format(query, { parser: 'graphql', plugins: [graphQl] });
   const prettify = useCallback(() => {
-    const formattedQuery = prettier.format(query, { parser: 'graphql', plugins: [graphQl] });
     dispatch(setQuery(formattedQuery));
-  }, [query, dispatch]);
+  }, [formattedQuery, dispatch]);
 
   return { prettify };
 };
