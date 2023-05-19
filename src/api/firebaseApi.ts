@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { doc, setDoc, addDoc, getDocs, deleteDoc, collection } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
-import { queryTemplateData } from '../types';
+import { QueryTemplateData } from '../types';
 
 import i18n from '../i18n';
 
@@ -88,7 +88,7 @@ export const checkTokenExpiration = async () => {
   }
 };
 
-export const saveQueryTemplate = async (templateData: queryTemplateData) => {
+export const saveQueryTemplate = async (templateData: QueryTemplateData) => {
   try {
     const userUid = auth.currentUser?.uid;
     if (!userUid) return;

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEndpointInput } from '../../hooks/useEndpointInput';
+import { useSidebar } from '../../hooks/useSidebar';
 
 import styled from 'styled-components';
 import theme from '../../theme';
@@ -55,28 +56,25 @@ const ErrorBadge = styled.span`
 
 interface PlaygroundHeaderProps {
   isError: boolean;
-  isSidebarOpen: boolean;
-  openSidebar: () => void;
 }
 
-export const PlaygroundHeader = React.memo(
-  ({ isError, isSidebarOpen, openSidebar }: PlaygroundHeaderProps) => {
-    const { endpoint, handleInputChange } = useEndpointInput();
-    const { t } = useTranslation();
+export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) => {
+  const { endpoint, handleInputChange } = useEndpointInput();
+  const { isOpen: isSidebarOpen, openSidebar } = useSidebar();
+  const { t } = useTranslation();
 
-    useEffect(() => {
-      localStorage.setItem('last-endpoint', endpoint);
-    }, [endpoint]);
+  useEffect(() => {
+    localStorage.setItem('last-endpoint', endpoint);
+  }, [endpoint]);
 
-    return (
-      <Header>
-        {!isSidebarOpen && <OpenSidebarButton size="small" onClick={openSidebar} />}
-        <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
-        <InputContainer>
-          <Input autoFocus defaultValue={endpoint} onChange={handleInputChange} />
-          {isError && <ErrorBadge>{t(`playground.serverError`)}</ErrorBadge>}
-        </InputContainer>
-      </Header>
-    );
-  }
-);
+  return (
+    <Header>
+      {!isSidebarOpen && <OpenSidebarButton size="small" onClick={openSidebar} />}
+      <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
+      <InputContainer>
+        <Input autoFocus defaultValue={endpoint} onChange={handleInputChange} />
+        {isError && <ErrorBadge>{t(`playground.serverError`)}</ErrorBadge>}
+      </InputContainer>
+    </Header>
+  );
+});

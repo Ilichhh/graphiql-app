@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAllQueryTemplates } from '../../../api/firebaseApi';
+import { useSidebar } from '../../../hooks/useSidebar';
 
 import { QueryPreview } from './QueryPreview';
 import {
@@ -39,24 +39,16 @@ const ContentBox = styled.div`
   border-top: 1px solid ${theme.colors.bgDarkBlue};
 `;
 
-interface SidebarProps {
-  close: () => void;
-}
-
-export const Sidebar = ({ close }: SidebarProps) => {
+export const Sidebar = () => {
+  const { closeSidebar, queryTemplates } = useSidebar();
   const [queriesArray, setQueriesArray] = useState<React.ReactNode[]>([]);
 
-  const fetchData = async () => {
-    const data = await getAllQueryTemplates();
-    const qArr = data.map((template) => (
+  useEffect(() => {
+    const arr = queryTemplates.map((template) => (
       <QueryPreview key={template.id} templateId={template.id} data={template.data} />
     ));
-    setQueriesArray(qArr);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+    setQueriesArray(arr);
+  }, [queryTemplates]);
 
   return (
     <Container>
@@ -65,7 +57,7 @@ export const Sidebar = ({ close }: SidebarProps) => {
           <TemplatesTabButton size="small" />
           <RequestsHistoryTabButton size="small" disabled />
         </Tabs>
-        <CloseSidebarButton size="small" onClick={close} />
+        <CloseSidebarButton size="small" onClick={closeSidebar} />
       </Header>
       <ContentBox>{queriesArray}</ContentBox>
     </Container>

@@ -43,8 +43,8 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
       <Name>{data.name}</Name>
       <IconButton onClick={() => deleteQueryTemplate(templateId)}>
         <DeleteOutlineOutlinedIcon />
-        <ShowOptionsButton size="small" />
       </IconButton>
+      <ShowOptionsButton size="small" />
     </Container>
   );
 };

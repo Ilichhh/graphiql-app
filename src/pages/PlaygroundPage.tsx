@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
 import { setQuery } from '../store/editorSlice';
 import { getDefaultQuery } from '../utils/defaultQuery';
+import { useSidebar } from '../hooks/useSidebar';
 import { set } from '../store/endpointSlice';
 
 import { PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
@@ -43,11 +44,14 @@ const Playground = styled.div`
 export const PlaygroundPage = React.memo(() => {
   const dispatch = useAppDispatch();
   const endpoint = useAppSelector((store) => store.endpoint);
+  const { isOpen: isSidebarOpen, fetchQueryTemplatesData } = useSidebar();
   const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const DocsPanel = React.lazy(() => import('../components/playground/docsExplorer/docsPanel'));
+  const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
@@ -56,24 +60,21 @@ export const PlaygroundPage = React.memo(() => {
     }
   }, [dispatch, endpoint, lastEndpoint, isModal]);
 
+  useEffect(() => {
+    fetchQueryTemplatesData();
+  }, [fetchQueryTemplatesData]);
+
   if (isModal) {
     return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
   }
-
-  const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
-  const DocsPanel = React.lazy(() => import('../components/playground/docsExplorer/docsPanel'));
 
   return (
     <>
       <Header currentPage="playground" />
       <Wrapper>
-        {isSidebarOpen && <Sidebar close={() => setIsSidebarOpen(false)} />}
+        {isSidebarOpen && <Sidebar />}
         <PlaygroundWrapper>
-          <PlaygroundHeader
-            isSidebarOpen={isSidebarOpen}
-            openSidebar={() => setIsSidebarOpen(true)}
-            isError={isSchemaError}
-          />
+          <PlaygroundHeader isError={isSchemaError} />
           <Playground>
             <Editor isFetching={isFetching} sendRequest={sendRequest} />
             <ResponseBox

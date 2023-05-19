@@ -1,14 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { SidebarTabs } from '../types';
+import { SidebarTabs, QueryTemplateData } from '../types';
+
+interface SidebarState {
+  isOpen: boolean;
+  activeTab: SidebarTabs;
+  queryTemplates: QueryTemplateData[];
+}
+
+const initialState: SidebarState = {
+  isOpen: false,
+  activeTab: SidebarTabs.Templates,
+  queryTemplates: [],
+};
 
 const sidebarSlice = createSlice({
   name: 'sidebar',
-  initialState: {
-    isOpen: false,
-    activeTab: SidebarTabs.Templates,
-    queryTemplates: '',
-  },
+  initialState,
   reducers: {
     setIsOpen: (state, action: PayloadAction<boolean>) => {
       state.isOpen = action.payload;
@@ -16,7 +24,7 @@ const sidebarSlice = createSlice({
     setActiveTab: (state, action: PayloadAction<SidebarTabs>) => {
       state.activeTab = action.payload;
     },
-    setQueryTemplates: (state, action: PayloadAction<string>) => {
+    setQueryTemplates: (state, action: PayloadAction<QueryTemplateData[]>) => {
       state.queryTemplates = action.payload;
     },
   },
