@@ -9,6 +9,7 @@ import {
   HistoryOutlined,
   SaveOutlined,
   MoreHoriz,
+  SettingsOutlined,
 } from '@mui/icons-material';
 
 import theme from '../../theme';
@@ -48,6 +49,14 @@ export const RequestsHistoryTabButton = (props: IconButtonProps) => {
   return (
     <IconButton {...props} sx={IconButtonStyle}>
       <HistoryOutlined />
+    </IconButton>
+  );
+};
+
+export const SettingsTabButton = (props: IconButtonProps) => {
+  return (
+    <IconButton {...props} sx={IconButtonStyle}>
+      <SettingsOutlined />
     </IconButton>
   );
 };

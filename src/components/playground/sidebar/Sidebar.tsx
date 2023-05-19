@@ -5,8 +5,11 @@ import { QueryPreview } from './QueryPreview';
 import {
   CloseSidebarButton,
   RequestsHistoryTabButton,
+  SettingsTabButton,
   TemplatesTabButton,
 } from '../../../components/common/IconButtons';
+
+import { SidebarTabs } from '../../../types';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -14,7 +17,7 @@ import styled from 'styled-components';
 const Container = styled.aside`
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 360px;
   color: ${theme.colors.textGrey};
   background-color: ${theme.colors.bgBlue};
 `;
@@ -27,6 +30,8 @@ const Header = styled.div`
 `;
 
 const Tabs = styled.div`
+  display: flex;
+  gap: 5px;
   padding: 10px;
 `;
 
@@ -38,8 +43,8 @@ const ContentBox = styled.div`
   border-top: 1px solid ${theme.colors.bgDarkBlue};
 `;
 
-export const Sidebar = () => {
-  const { closeSidebar, queryTemplates } = useSidebar();
+export const Sidebar = React.memo(() => {
+  const { closeSidebar, queryTemplates, activeTab, changeTab } = useSidebar();
   const [queriesArray, setQueriesArray] = useState<React.ReactNode[]>([]);
 
   useEffect(() => {
@@ -53,12 +58,13 @@ export const Sidebar = () => {
     <Container>
       <Header>
         <Tabs>
-          <TemplatesTabButton size="small" />
-          <RequestsHistoryTabButton size="small" disabled />
+          <TemplatesTabButton size="small" onClick={() => changeTab(SidebarTabs.Templates)} />
+          <RequestsHistoryTabButton size="small" onClick={() => changeTab(SidebarTabs.History)} />
+          <SettingsTabButton size="small" onClick={() => changeTab(SidebarTabs.Settings)} />
         </Tabs>
         <CloseSidebarButton size="small" onClick={closeSidebar} />
       </Header>
-      <ContentBox>{queriesArray}</ContentBox>
+      <ContentBox>{activeTab === 'templates' && queriesArray}</ContentBox>
     </Container>
   );
-};
+});

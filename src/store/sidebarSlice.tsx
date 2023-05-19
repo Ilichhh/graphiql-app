@@ -30,5 +30,5 @@ const sidebarSlice = createSlice({
   },
 });
 
-export const { setIsOpen, setQueryTemplates } = sidebarSlice.actions;
+export const { setIsOpen, setActiveTab, setQueryTemplates } = sidebarSlice.actions;
 export default sidebarSlice.reducer;

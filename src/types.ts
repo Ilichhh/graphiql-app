@@ -13,6 +13,7 @@ export enum FormMode {
 export enum SidebarTabs {
   Templates = 'templates',
   History = 'history',
+  Settings = 'settings',
 }
 
 export interface QueryTemplateData {

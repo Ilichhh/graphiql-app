@@ -2,12 +2,12 @@ import { useCallback } from 'react';
 import { useAppSelector } from './reduxTypedHooks';
 import { useAppDispatch } from './reduxTypedHooks';
 
-import { setIsOpen } from '../store/sidebarSlice';
-import { setQueryTemplates } from '../store/sidebarSlice';
+import { setIsOpen, setActiveTab, setQueryTemplates } from '../store/sidebarSlice';
 import { getAllQueryTemplates, deleteQueryTemplate } from '../api/firebaseApi';
 import { saveQueryTemplate } from '../api/firebaseApi';
 
 import { DocumentData } from '@firebase/firestore';
+import { SidebarTabs } from '../types';
 
 export const useSidebar = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +20,13 @@ export const useSidebar = () => {
   const openSidebar = useCallback(() => {
     dispatch(setIsOpen(true));
   }, [dispatch]);
+
+  const changeTab = useCallback(
+    (tab: SidebarTabs) => {
+      dispatch(setActiveTab(tab));
+    },
+    [dispatch]
+  );
 
   const fetchQueryTemplatesData = useCallback(async () => {
     try {
@@ -62,6 +69,7 @@ export const useSidebar = () => {
     isOpen,
     closeSidebar,
     openSidebar,
+    changeTab,
     queryTemplates,
     fetchQueryTemplatesData,
     activeTab,

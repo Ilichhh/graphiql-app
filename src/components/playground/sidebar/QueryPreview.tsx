@@ -21,7 +21,7 @@ const DataWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 250px;
+  width: 240px;
   height: 58px;
   padding: 5px 10px;
   border-radius: 5px;
