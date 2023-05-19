@@ -47,7 +47,8 @@
     "saveQuery": "Save Query",
     "queryName": "Query Name",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "prettify": "Prettify"
   },
   "landing": {
     "hero": {
