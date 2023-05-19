@@ -27,8 +27,7 @@ const Header = styled.div`
 `;
 
 const Tabs = styled.div`
-  // height: 52px;
-  // padding: 10px;
+  padding: 10px;
 `;
 
 const ContentBox = styled.div`

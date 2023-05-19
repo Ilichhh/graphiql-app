@@ -10,6 +10,7 @@ import { OpenSidebarButton } from '../../components/common/IconButtons';
 const Header = styled.header`
   display: flex;
   align-items: center;
+  gap: 10px;
   height: 52px;
   padding: 10px;
   background: ${theme.colors.bgBlue};
@@ -18,7 +19,8 @@ const Header = styled.header`
 const HeaderEndpoint = styled.span`
   flex: 0 0 auto;
   padding: 7px 10px;
-  border-radius: 2px;
+  height: 32px;
+  border-radius: 4px;
   text-transform: uppercase;
   font-weight: 600;
   font-size: 0.9rem;
@@ -32,7 +34,6 @@ const InputContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1 1 0;
-  margin-left: 6px;
 `;
 
 const Input = styled.input.attrs(() => ({
@@ -40,6 +41,7 @@ const Input = styled.input.attrs(() => ({
 }))`
   flex: 1 1 0;
   padding: 6px 12px;
+  height: 32px;
   font-size: 0.9rem;
   background: ${theme.colors.bgDarkBlue};
   color: ${theme.colors.textGrey};

@@ -1,9 +1,7 @@
 import React from 'react';
 import { useSidebar } from '../../../hooks/useSidebar';
 
-import { IconButton } from '@mui/material';
 import { ShowOptionsButton } from '../../../components/common/IconButtons';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -13,23 +11,36 @@ import { DocumentData } from '@firebase/firestore';
 const Container = styled.aside`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   width: 100%;
   color: ${theme.colors.textGrey};
   background-color: ${theme.colors.bgBlue};
 `;
 
-const Name = styled.div`
-  width: 100%;
-  height: 28px;
+const DataWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 250px;
+  height: 58px;
   padding: 5px 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
   border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background-color: ${theme.colors.hoverLight};
+    background-color: ${theme.colors.bgDarkBlue};
   }
+`;
+
+const Name = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const Endpoint = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: ${theme.colors.textInactive};
 `;
 
 interface QueryPreviewProps {
@@ -41,11 +52,11 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
   const { deleteTemplate } = useSidebar();
   return (
     <Container>
-      <Name>{data.name}</Name>
-      <IconButton onClick={() => deleteTemplate(templateId)}>
-        <DeleteOutlineOutlinedIcon />
-      </IconButton>
-      <ShowOptionsButton size="small" />
+      <DataWrapper>
+        <Name>{data.name}</Name>
+        <Endpoint>{data.endpoint}</Endpoint>
+      </DataWrapper>
+      <ShowOptionsButton size="small" onClick={() => deleteTemplate(templateId)} />
     </Container>
   );
 };
