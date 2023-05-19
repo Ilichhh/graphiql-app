@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector, useAppDispatch } from '../../../hooks/reduxTypedHooks';
 import { setQuery } from '../../../store/editorSlice';
+import { usePrettier } from '../../../hooks/usePrettier';
 
 import { EditorTools, PlayButton, SaveQueryModal } from './';
 import { RequestEditor } from '../codemirror';
 import { IconButton } from '@mui/material';
+import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 import theme from '../../../theme';
@@ -65,6 +67,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
   const [saveQueryModalOpen, setSaveQueryModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { prettify } = usePrettier();
 
   return (
     <Container>
@@ -77,6 +80,9 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
               onClick={() => setSaveQueryModalOpen(true)}
             >
               <SaveOutlinedIcon />
+            </IconButton>
+            <IconButton title={t('playground.prettify') as string} onClick={prettify}>
+              <AutoFixHighOutlinedIcon />
             </IconButton>
             <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
           </RequestEditorControls>
