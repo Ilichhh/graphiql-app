@@ -47,11 +47,11 @@ export const TabStateProvider = ({ children }: { children: ReactNode }) => {
   const errors = useAppSelector((store) => store.error);
   const dispatch = useAppDispatch();
 
-  const endpoint = endpoints[tabId];
-  const query = stateQueries[tabId];
-  const variables = stateVariables[tabId];
-  const headers = stateHeaders[tabId];
-  const error = errors[tabId];
+  const endpoint = endpoints[tabId] || '';
+  const query = stateQueries[tabId] || '';
+  const variables = stateVariables[tabId] || '';
+  const headers = stateHeaders[tabId] || '';
+  const error = errors[tabId] || '';
 
   return (
     <TabStateContext.Provider
