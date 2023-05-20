@@ -10,6 +10,7 @@ import {
   SaveOutlined,
   MoreHoriz,
   SettingsOutlined,
+  AutoFixHighOutlined,
 } from '@mui/icons-material';
 
 import theme from '../../theme';
@@ -65,6 +66,14 @@ export const SaveRequestButton = (props: IconButtonProps) => {
   return (
     <IconButton {...props} sx={{ ...IconButtonStyle, height: 37, width: 37 }}>
       <SaveOutlined />
+    </IconButton>
+  );
+};
+
+export const PrettifyRequestButton = (props: IconButtonProps) => {
+  return (
+    <IconButton {...props} sx={{ ...IconButtonStyle, height: 37, width: 37 }}>
+      <AutoFixHighOutlined />
     </IconButton>
   );
 };

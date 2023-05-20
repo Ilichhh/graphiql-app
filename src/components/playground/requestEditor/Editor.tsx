@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector, useAppDispatch } from '../../../hooks/reduxTypedHooks';
 import { setQuery } from '../../../store/editorSlice';
+import { usePrettier } from '../../../hooks/usePrettier';
 
 import { EditorTools, PlayButton, SaveQueryModal } from './';
 import { RequestEditor } from '../codemirror';
-import { SaveRequestButton } from '../../../components/common/IconButtons';
+import { PrettifyRequestButton, SaveRequestButton } from '../../../components/common/IconButtons';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -64,6 +65,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
   const [saveQueryModalOpen, setSaveQueryModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { prettify } = usePrettier();
 
   return (
     <Container>
@@ -75,6 +77,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
               title={t('playground.saveOperation') as string}
               onClick={() => setSaveQueryModalOpen(true)}
             />
+            <PrettifyRequestButton title={t('playground.prettify') as string} onClick={prettify} />
             <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
           </RequestEditorControls>
         </RequestEditorHeader>
