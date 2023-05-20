@@ -25,10 +25,16 @@ const tabsSlice = createSlice({
   reducers: {
     addTab: (state) => {
       state.tabs.push({ name: 'New Tab' });
+      state.selectedIdx = state.tabs.length - 1;
     },
     deleteTab: (state, { payload: index }: PayloadAction<number>) => {
       state.tabs.splice(index, 1);
-      state.selectedIdx = index >= state.tabs.length ? state.tabs.length - 1 : index;
+      if (state.selectedIdx === index) {
+        state.selectedIdx = index >= state.tabs.length ? state.tabs.length - 1 : index;
+      }
+      if (state.selectedIdx >= state.tabs.length) {
+        state.selectedIdx = state.tabs.length - 1;
+      }
     },
     selectTab: (state, { payload: index }: PayloadAction<number>) => {
       state.selectedIdx = index;
