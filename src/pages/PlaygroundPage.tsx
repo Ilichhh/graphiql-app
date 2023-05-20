@@ -48,7 +48,7 @@ export const PlaygroundPage = React.memo(() => {
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
 
-  const DocsPanel = React.lazy(() => import('../components/playground/docsExplorer/docsPanel'));
+  const DocsPanel = React.lazy(() => import('../components/playground/docsExplorer/DocsPanel'));
   const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
 
   useEffect(() => {

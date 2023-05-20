@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../../../theme';
-import { Markdown } from './markdown';
+import { Markdown } from './Markdown';
 
 const Description = styled.div`
   color: ${theme.docs.comment};

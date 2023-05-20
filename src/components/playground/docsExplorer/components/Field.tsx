@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Args } from './args';
-import { ReturnType } from './returnType';
+import { Args } from './Args';
+import { ReturnType } from './ReturnType';
 import { GraphQLField, GraphQLInputField } from 'graphql/type';
 import styled from 'styled-components';
 import theme from '../../../../theme';
 import { DocsNavContext } from '../docsContext';
-import { Deprecated } from './depricated';
+import { Deprecated } from './Depricated';
 
 const Content = styled.div<{ short: boolean; hasArgs: boolean }>`
   display: ${({ short }) => (short ? 'inline-block' : 'block')};

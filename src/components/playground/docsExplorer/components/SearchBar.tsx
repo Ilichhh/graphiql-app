@@ -6,7 +6,7 @@ import { InputAdornment } from '@mui/material';
 import { useTabsState } from '../../../../hooks/useTabsState';
 import theme from '../../../../theme';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
-import { TitleBar } from './titleBar';
+import { TitleBar } from './TitleBar';
 import { DocsNavContext, StackItem } from '../docsContext';
 import {
   GraphQLArgument,
@@ -19,10 +19,10 @@ import {
   isObjectType,
   isType,
 } from 'graphql/type';
-import { Spacer } from './spacer';
-import { TypeLink } from './typeLink';
-import { Field } from './field';
-import { Args } from './args';
+import { Spacer } from './Spacer';
+import { TypeLink } from './TypeLink';
+import { Field } from './Field';
+import { Args } from './Args';
 import { useGraphQLSchema } from '../../../../hooks/useGraphQLSchema';
 
 const SearchBarWrapper = styled.div`

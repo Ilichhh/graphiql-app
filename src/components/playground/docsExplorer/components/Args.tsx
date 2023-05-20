@@ -1,6 +1,6 @@
 import React from 'react';
 import { GraphQLArgument } from 'graphql/type';
-import { Arg } from './arg';
+import { Arg } from './Arg';
 
 interface FieldArgsProps {
   args: readonly GraphQLArgument[];
