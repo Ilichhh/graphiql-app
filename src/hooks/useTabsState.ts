@@ -12,14 +12,13 @@ export const useTabsState = () => {
     headers: stateHeaders,
   } = useAppSelector((state) => state.editor);
   const endpoints = useAppSelector((store) => store.endpoint);
-  const errors = useAppSelector((store) => store.error);
+  const error = useAppSelector((store) => store.error);
   const dispatch = useAppDispatch();
 
   const endpoint = endpoints[tabIdx] || '';
   const query = stateQueries[tabIdx] || '';
   const variables = stateVariables[tabIdx] || '';
   const headers = stateHeaders[tabIdx] || '';
-  const error = errors[tabIdx] || '';
 
   return {
     endpoint,
@@ -43,9 +42,6 @@ export const useTabsState = () => {
       (headers: string) => dispatch(setHeaders({ tabIdx, headers })),
       [dispatch, tabIdx]
     ),
-    setError: useCallback(
-      (error: string) => dispatch(setError({ tabIdx, error })),
-      [dispatch, tabIdx]
-    ),
+    setError: useCallback((error: string) => dispatch(setError({ error })), [dispatch]),
   };
 };
