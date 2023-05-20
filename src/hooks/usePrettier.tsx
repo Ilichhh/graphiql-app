@@ -4,12 +4,20 @@ import graphQl from 'prettier/parser-graphql';
 import { useTabsState } from './useTabsState';
 
 export const usePrettier = () => {
-  const { query, setQuery } = useTabsState();
+  const { query, setQuery, setError } = useTabsState();
 
-  const formattedQuery = prettier.format(query, { parser: 'graphql', plugins: [graphQl] });
   const prettify = useCallback(() => {
-    setQuery(formattedQuery);
-  }, [formattedQuery, setQuery]);
+    try {
+      const formattedQuery = prettier.format(query, { parser: 'graphql', plugins: [graphQl] });
+      setQuery(formattedQuery);
+    } catch (e) {
+      if (typeof e === 'string') {
+        setError(e);
+      } else if (e instanceof Error) {
+        setError(`${e.name}: ${e.message}`);
+      }
+    }
+  }, [query, setQuery, setError]);
 
   return { prettify };
 };
