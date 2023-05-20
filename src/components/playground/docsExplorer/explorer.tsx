@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Divider } from '@mui/material';
 import styled from 'styled-components';
+import { useTabsState } from '../../../hooks/useTabsState';
 import { SchemaDoc } from './schemaDoc';
 import { TypeDoc } from './typeDoc';
 import { FieldDoc } from './fieldDoc';
@@ -10,7 +11,6 @@ import { DocsNavContext } from './docsContext';
 import { ExplorerTitleBar } from './components/explorerTitleBar';
 import { SearchBar } from './components/searchBar';
 import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
-import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from '../../../muiTheme';
 
@@ -39,10 +39,12 @@ const ExplorerContent = styled.div`
   width: 100%;
   overflow: auto;
   margin-left: 15px;
+
   &::-webkit-scrollbar {
     width: 7px;
     height: 7px;
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: ${theme.docs.border};
     border-radius: 5px;
@@ -52,7 +54,7 @@ const ExplorerContent = styled.div`
 const useDocsContent = () => {
   const { getCurrent, isSchemaDoc, searchQuery } = useContext(DocsNavContext);
   const { data } = getCurrent();
-  const endpoint = useAppSelector((store) => store.endpoint);
+  const { endpoint } = useTabsState();
   const { schema } = useGraphQLSchema(endpoint);
 
   if (!schema || searchQuery) {

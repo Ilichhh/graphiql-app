@@ -2,8 +2,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import endpointReducer from './endpointSlice';
 import editorSlice from './editorSlice';
 import { apiSlice } from './apiSlice';
-import errorSlice from './errorSlice';
 import sidebarSlice from './sidebarSlice';
+import errorSlice from './errorState';
+import tabsSlice from './tabsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     editor: editorSlice,
     sidebar: sidebarSlice,
     error: errorSlice,
+    tabs: tabsSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),

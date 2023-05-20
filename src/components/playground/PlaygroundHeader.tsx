@@ -61,7 +61,7 @@ interface PlaygroundHeaderProps {
 }
 
 export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) => {
-  const { endpoint, handleInputChange } = useEndpointInput();
+  const { inputValue, endpoint, handleInputChange } = useEndpointInput();
   const { isOpen: isSidebarOpen, openSidebar } = useSidebar();
   const { t } = useTranslation();
 
@@ -74,7 +74,7 @@ export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) 
       {!isSidebarOpen && <OpenSidebarButton size="small" onClick={openSidebar} />}
       <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
       <InputContainer>
-        <Input autoFocus defaultValue={endpoint} onChange={handleInputChange} />
+        <Input autoFocus value={inputValue} onChange={handleInputChange} />
         {isError && <ErrorBadge>{t(`playground.serverError`)}</ErrorBadge>}
       </InputContainer>
     </Header>

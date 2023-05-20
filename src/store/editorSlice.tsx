@@ -1,22 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
+type EditorState = {
+  queries: string[];
+  variables: string[];
+  headers: string[];
+};
+
+const initialState: EditorState = {
+  queries: [],
+  headers: [],
+  variables: [],
+};
+
 const editorSlice = createSlice({
   name: 'editor',
-  initialState: {
-    query: '',
-    variables: '',
-    headers: '',
-  },
+  initialState: initialState,
   reducers: {
-    setQuery: (state, action: PayloadAction<string>) => {
-      state.query = action.payload;
+    setQuery: (
+      state,
+      { payload: { tabIdx, query } }: PayloadAction<{ tabIdx: number; query: string }>
+    ) => {
+      state.queries[tabIdx] = query;
     },
-    setVariables: (state, action: PayloadAction<string>) => {
-      state.variables = action.payload;
+    setVariables: (
+      state,
+      { payload: { tabIdx, variables } }: PayloadAction<{ tabIdx: number; variables: string }>
+    ) => {
+      state.variables[tabIdx] = variables;
     },
-    setHeaders: (state, action: PayloadAction<string>) => {
-      state.headers = action.payload;
+    setHeaders: (
+      state,
+      { payload: { tabIdx, headers } }: PayloadAction<{ tabIdx: number; headers: string }>
+    ) => {
+      state.headers[tabIdx] = headers;
     },
   },
 });

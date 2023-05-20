@@ -1,11 +1,11 @@
-import React, { useState, useCallback, ChangeEvent } from 'react';
-import { useAppSelector } from '../../../hooks/reduxTypedHooks';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSidebar } from '../../../hooks/useSidebar';
 
 import { Box, Button, Modal, TextField } from '@mui/material';
 
 import { ThemeProvider } from '@mui/material/styles';
+import { useTabsState } from '../../../hooks/useTabsState';
 import { lightTheme } from '../../../muiTheme';
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -40,8 +40,7 @@ interface SaveQueryModalProps {
 }
 
 export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
-  const { query, variables, headers } = useAppSelector((state) => state.editor);
-  const endpoint = useAppSelector((state) => state.endpoint);
+  const { endpoint, query, variables, headers } = useTabsState();
   const { saveTemplate } = useSidebar();
   const [name, setName] = useState('');
   const { t } = useTranslation();
@@ -51,7 +50,7 @@ export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
     setName('');
   }, [setOpen]);
 
-  const handleChenge = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   }, []);
 
@@ -70,7 +69,7 @@ export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
             label={t('playground.queryName')}
             variant="outlined"
             value={name}
-            onChange={handleChenge}
+            onChange={handleChange}
           />
           <Buttons>
             <Button variant="outlined" onClick={handleClose}>

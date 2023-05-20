@@ -1,18 +1,16 @@
-import React, { useCallback, FormEvent } from 'react';
+import React, { FormEvent, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../hooks/reduxTypedHooks';
 import { useEndpointInput } from '../../hooks/useEndpointInput';
 import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
-import { set } from '../../store/endpointSlice';
 
 import EastIcon from '@mui/icons-material/East';
-import { Divider, Button, TextField } from '@mui/material';
+import { Button, Divider, TextField } from '@mui/material';
 
 import styled from 'styled-components';
+import { useTabsState } from '../../hooks/useTabsState';
 import theme from '../../theme';
-import { ENDPOINTS } from '../../constants';
-import { setQuery } from '../../store/editorSlice';
 import { getDefaultQuery } from '../../utils/defaultQuery';
+import { ENDPOINTS } from '../../constants';
 
 const Container = styled.div`
   background-color: ${theme.colors.bgBlue};
@@ -41,8 +39,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const ModalHeader = styled.h1`
-  margin: 0;
-  margin-left: 30px;
+  margin: 0 0 0 30px;
   text-align: center;
   color: ${theme.colors.textGrey};
   @media (max-width: 500px) {
@@ -86,21 +83,22 @@ interface ModalProps {
 }
 
 export const Modal = ({ setIsModal }: ModalProps) => {
-  const { endpoint, inputValue, setInputValue, handleInputChange } = useEndpointInput();
+  const { endpoint, setEndpoint, inputValue, setInputValue, handleInputChange } =
+    useEndpointInput();
+  const { setQuery } = useTabsState();
   const { isSchemaError } = useGraphQLSchema(endpoint);
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (isSchemaError) return;
-      dispatch(set(endpoint));
-      dispatch(setQuery(getDefaultQuery(endpoint)));
+      setEndpoint(endpoint);
+      setQuery(getDefaultQuery(endpoint));
       localStorage.setItem('last-endpoint', endpoint);
       setIsModal(false);
     },
-    [endpoint, dispatch, setIsModal, isSchemaError]
+    [isSchemaError, setEndpoint, endpoint, setQuery, setIsModal]
   );
 
   const handleSelectEndpoint = useCallback(

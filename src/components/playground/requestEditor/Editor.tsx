@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector, useAppDispatch } from '../../../hooks/reduxTypedHooks';
-import { setQuery } from '../../../store/editorSlice';
 import { usePrettier } from '../../../hooks/usePrettier';
+import { useTabsState } from '../../../hooks/useTabsState';
 
 import { EditorTools, PlayButton, SaveQueryModal } from './';
 import { RequestEditor } from '../codemirror';
@@ -61,9 +60,8 @@ interface EditorProps {
 }
 
 export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
-  const { query } = useAppSelector((state) => state.editor);
+  const { query, setQuery } = useTabsState();
   const [saveQueryModalOpen, setSaveQueryModalOpen] = useState(false);
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const { prettify } = usePrettier();
 
@@ -81,7 +79,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
             <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
           </RequestEditorControls>
         </RequestEditorHeader>
-        <RequestEditor value={query} onChange={(value) => dispatch(setQuery(value))} />
+        <RequestEditor value={query} onChange={(value) => setQuery(value)} />
       </EditorBox>
       <EditorTools />
       <SaveQueryModal open={saveQueryModalOpen} setOpen={setSaveQueryModalOpen} />

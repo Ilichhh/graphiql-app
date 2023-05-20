@@ -1,20 +1,19 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { usePlayground } from '../hooks/usePlayground';
-import { useAppDispatch, useAppSelector } from '../hooks/reduxTypedHooks';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
-import { setQuery } from '../store/editorSlice';
+import { useTabsState } from '../hooks/useTabsState';
 import { getDefaultQuery } from '../utils/defaultQuery';
 import { useSidebar } from '../hooks/useSidebar';
-import { set } from '../store/endpointSlice';
 
-import { PlaygroundHeader, ResponseBox, Modal } from '../components/playground';
+import { Modal, PlaygroundHeader, ResponseBox } from '../components/playground';
 import { Editor } from '../components/playground/requestEditor';
 import { Header, Footer } from '../components';
 import { Sidebar } from '../components/playground/sidebar';
 
 import styled from 'styled-components';
 import theme from '../theme';
+import { TabBar } from '../components/playground/tabs/TabBar';
 
 const Wrapper = styled.main`
   position: relative;
@@ -42,8 +41,7 @@ const Playground = styled.div`
 `;
 
 export const PlaygroundPage = React.memo(() => {
-  const dispatch = useAppDispatch();
-  const endpoint = useAppSelector((store) => store.endpoint);
+  const { endpoint, setEndpoint, setQuery } = useTabsState();
   const { isOpen: isSidebarOpen, fetchQueryTemplatesData } = useSidebar();
   const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
@@ -55,10 +53,10 @@ export const PlaygroundPage = React.memo(() => {
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
-      dispatch(set(lastEndpoint));
-      dispatch(setQuery(getDefaultQuery(lastEndpoint)));
+      setEndpoint(lastEndpoint);
+      setQuery(getDefaultQuery(lastEndpoint));
     }
-  }, [dispatch, endpoint, lastEndpoint, isModal]);
+  }, [endpoint, lastEndpoint, isModal, setEndpoint, setQuery]);
 
   useEffect(() => {
     fetchQueryTemplatesData();
@@ -74,6 +72,7 @@ export const PlaygroundPage = React.memo(() => {
       <Wrapper>
         {isSidebarOpen && <Sidebar />}
         <PlaygroundWrapper>
+          <TabBar />
           <PlaygroundHeader isError={isSchemaError} />
           <Playground>
             <Editor isFetching={isFetching} sendRequest={sendRequest} />

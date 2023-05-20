@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useTabsState } from '../../../hooks/useTabsState';
 import { DocsNavProvider } from './docsContext';
 import styled from 'styled-components';
 import { DocsTab } from './docsTab';
 import { Explorer } from './explorer';
 import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
-import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 
 interface ExplorerWrapperProps {
   isOpen: boolean;
@@ -24,7 +24,7 @@ const DocsPanelWrapper = styled.div<ExplorerWrapperProps>`
 
 const DocsPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const endpoint = useAppSelector((store) => store.endpoint);
+  const { endpoint } = useTabsState();
   const { schema } = useGraphQLSchema(endpoint);
 
   useEffect(() => {
