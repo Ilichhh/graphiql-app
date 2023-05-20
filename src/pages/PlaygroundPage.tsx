@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { usePlayground } from '../hooks/usePlayground';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
+import { useTabsState } from '../hooks/useTabsState';
 import { getDefaultQuery } from '../utils/defaultQuery';
 
 import { Modal, PlaygroundHeader, ResponseBox } from '../components/playground';
@@ -11,7 +12,6 @@ import { Footer, Header } from '../components';
 import styled from 'styled-components';
 import theme from '../theme';
 import { TabBar } from '../components/playground/tabs/TabBar';
-import { useTabStateContext } from '../context/TabStateContext';
 
 const Wrapper = styled.main`
   position: relative;
@@ -33,7 +33,7 @@ const Playground = styled.div`
 `;
 
 export const PlaygroundPage = React.memo(() => {
-  const { endpoint, setEndpoint, setQuery } = useTabStateContext();
+  const { endpoint, setEndpoint, setQuery } = useTabsState();
   const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');

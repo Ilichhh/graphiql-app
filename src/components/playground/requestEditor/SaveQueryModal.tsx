@@ -5,10 +5,10 @@ import { saveQeryTemplate } from '../../../api/firebaseApi';
 import { Box, Button, Modal, TextField } from '@mui/material';
 
 import { ThemeProvider } from '@mui/material/styles';
+import { useTabsState } from '../../../hooks/useTabsState';
 import { lightTheme } from '../../../muiTheme';
 import theme from '../../../theme';
 import styled from 'styled-components';
-import { useTabStateContext } from '../../../context/TabStateContext';
 
 const Container = styled(Box)`
   position: absolute;
@@ -40,7 +40,7 @@ interface SaveQueryModalProps {
 }
 
 export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
-  const { query, variables, headers } = useTabStateContext();
+  const { query, variables, headers } = useTabsState();
   const [name, setName] = useState('');
   const { t } = useTranslation();
 

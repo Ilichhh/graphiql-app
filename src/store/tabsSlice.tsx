@@ -2,21 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type Tab = {
-  id: string;
   name: string;
 };
 
 type TabsState = {
-  selectedId: string;
+  selectedIdx: number;
   tabs: Tab[];
 };
 
 const initialState: TabsState = {
-  selectedId: '1',
+  selectedIdx: 0,
   tabs: [
     {
       name: 'New Tab',
-      id: '1',
     },
   ],
 };
@@ -26,45 +24,20 @@ const tabsSlice = createSlice({
   initialState: initialState,
   reducers: {
     addTab: (state) => {
-      const id = new Date().getTime().toString();
-      return {
-        ...state,
-        selectedId: id,
-        tabs: [
-          ...state.tabs,
-          {
-            id: id,
-            name: 'New Tab',
-          },
-        ],
-      };
+      state.tabs.push({ name: 'New Tab' });
     },
-    deleteTab: (state, { payload: id }: PayloadAction<string>) => {
-      const index = state.tabs.findIndex(({ id: tabId }) => tabId === id);
-      const nextIndex = index === state.tabs.length - 1 ? state.tabs.length - 2 : index + 1;
-      const { id: selectedId } = state.tabs[nextIndex];
-      const { selectedId: currentSelectedId } = state;
-
-      return {
-        ...state,
-        selectedId: currentSelectedId === id ? selectedId : currentSelectedId,
-        tabs: [...state.tabs.filter(({ id: tabId }) => tabId !== id)],
-      };
+    deleteTab: (state, { payload: index }: PayloadAction<number>) => {
+      state.tabs.splice(index, 1);
+      state.selectedIdx = index >= state.tabs.length ? state.tabs.length - 1 : index;
     },
-    selectTab: (state, { payload: id }: PayloadAction<string>) => {
-      return {
-        ...state,
-        selectedId: id,
-      };
+    selectTab: (state, { payload: index }: PayloadAction<number>) => {
+      state.selectedIdx = index;
     },
-    changeName: (state, { payload: { id, name } }: PayloadAction<{ id: string; name: string }>) => {
-      const tab = state.tabs.find(({ id: tabId }) => tabId === id);
-      if (tab) {
-        tab.name = name;
-      }
-      return {
-        ...state,
-      };
+    changeName: (
+      state,
+      { payload: { index, name } }: PayloadAction<{ index: number; name: string }>
+    ) => {
+      state.tabs[index].name = name;
     },
   },
 });

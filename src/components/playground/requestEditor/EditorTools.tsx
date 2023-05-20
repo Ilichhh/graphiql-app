@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useTabsState } from '../../../hooks/useTabsState';
 import { useVerticalResize } from '../../../hooks/useVerticalResize';
-import { useTabStateContext } from '../../../context/TabStateContext';
 import { MetadataEditor } from '../codemirror';
 import { Tab } from '../../../types';
 import theme from '../../../theme';
@@ -61,7 +61,7 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 `;
 
 export const EditorTools = () => {
-  const { headers, variables, setVariables, setHeaders } = useTabStateContext();
+  const { headers, variables, setVariables, setHeaders } = useTabsState();
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { panelHeight, handleResize, isDragging } = useVerticalResize(300);

@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-type ErrorState = { [key: string]: string };
+type ErrorState = string[];
 
-const initialState: ErrorState = {};
+const initialState: ErrorState = [];
 
 const errorSlice = createSlice({
   name: 'error',
@@ -11,12 +11,9 @@ const errorSlice = createSlice({
   reducers: {
     setError: (
       state,
-      { payload: { tabId, error } }: PayloadAction<{ tabId: string; error: string }>
+      { payload: { tabIdx, error } }: PayloadAction<{ tabIdx: number; error: string }>
     ) => {
-      return {
-        ...state,
-        [tabId]: error,
-      };
+      state[tabIdx] = error;
     },
   },
 });

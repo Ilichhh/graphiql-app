@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react';
 import { GraphQLField, GraphQLInputField, GraphQLNamedType } from 'graphql/type';
-import { useTabStateContext } from '../../../context/TabStateContext';
+import { useTabsState } from '../../../hooks/useTabsState';
 
 export type StackItem = {
   name: string;
@@ -48,7 +48,7 @@ export const DocsNavContext = createContext<DocsNavContext>({
 export const DocsNavProvider = ({ children }: { children: ReactNode }) => {
   const [navStack, setNavStack] = useState<StackItem[]>(initStackItems);
   const [searchQuery, setSearchQuery] = useState('');
-  const { endpoint } = useTabStateContext();
+  const { endpoint } = useTabsState();
 
   useEffect(() => {
     setNavStack(initStackItems);

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import TextField from '@mui/material/TextField';
 import { InputAdornment } from '@mui/material';
+import { useTabsState } from '../../../../hooks/useTabsState';
 import theme from '../../../../theme';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import { TitleBar } from './titleBar';
@@ -23,7 +24,6 @@ import { TypeLink } from './typeLink';
 import { Field } from './field';
 import { Args } from './args';
 import { useGraphQLSchema } from '../../../../hooks/useGraphQLSchema';
-import { useTabStateContext } from '../../../../context/TabStateContext';
 
 const SearchBarWrapper = styled.div`
   display: flex;
@@ -132,7 +132,7 @@ const getSearchResults = (schema: GraphQLSchema, stackItem: StackItem, searchVal
 
 export const SearchBar = () => {
   const { searchQuery, setSearchQuery, getCurrent } = useContext(DocsNavContext);
-  const { endpoint } = useTabStateContext();
+  const { endpoint } = useTabsState();
   const { schema } = useGraphQLSchema(endpoint);
 
   const [searchResults, setSearchResults] = useState<SearchResults>({

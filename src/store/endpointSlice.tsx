@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-type EndpointState = { [key: string]: string };
+type EndpointState = string[];
 
-const initialState: EndpointState = {};
+const initialState: EndpointState = [];
 
 const endpointSlice = createSlice({
   name: 'endpoint',
@@ -11,12 +11,9 @@ const endpointSlice = createSlice({
   reducers: {
     setEndpoint: (
       state,
-      { payload: { tabId, endpoint } }: PayloadAction<{ tabId: string; endpoint: string }>
+      { payload: { tabIdx, endpoint } }: PayloadAction<{ tabIdx: number; endpoint: string }>
     ) => {
-      return {
-        ...state,
-        [tabId]: endpoint,
-      };
+      state[tabIdx] = endpoint;
     },
   },
 });

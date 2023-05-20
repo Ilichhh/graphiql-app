@@ -9,7 +9,6 @@ import { PrivateRoutes } from './utils/PrivateRoutes';
 import { withTokenExpirationWrapper } from './utils/tokenExpirationWrapper';
 
 import { FormMode } from './types';
-import { TabStateProvider } from './context/TabStateContext';
 
 const App = () => (
   <Routes>
@@ -19,14 +18,7 @@ const App = () => (
       <Route path="/register" element={<FormPage mode={FormMode.Register} />} />
     </Route>
     <Route element={<PrivateRoutes forLoggedInUser />}>
-      <Route
-        path="/playground"
-        element={
-          <TabStateProvider>
-            <PlaygroundPage />
-          </TabStateProvider>
-        }
-      />
+      <Route path="/playground" element={<PlaygroundPage />} />
     </Route>
     <Route path="*" element={<ErrorPage />} />
   </Routes>

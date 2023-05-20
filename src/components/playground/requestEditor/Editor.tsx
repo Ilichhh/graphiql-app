@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePrettier } from '../../../hooks/usePrettier';
+import { useTabsState } from '../../../hooks/useTabsState';
 
 import { EditorTools, PlayButton, SaveQueryModal } from './';
 import { RequestEditor } from '../codemirror';
@@ -10,7 +11,6 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
-import { useTabStateContext } from '../../../context/TabStateContext';
 
 const Container = styled.section`
   display: flex;
@@ -62,7 +62,7 @@ interface EditorProps {
 }
 
 export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
-  const { query, setQuery } = useTabStateContext();
+  const { query, setQuery } = useTabsState();
   const [saveQueryModalOpen, setSaveQueryModalOpen] = useState(false);
   const { t } = useTranslation();
   const { prettify } = usePrettier();

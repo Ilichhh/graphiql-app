@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from 'react';
 import { useDebouncedInput } from './useDebouncedInput';
-import { useTabStateContext } from '../context/TabStateContext';
+import { useTabsState } from './useTabsState';
 
 export const useEndpointInput = () => {
-  const { endpoint, setEndpoint } = useTabStateContext();
+  const { endpoint, setEndpoint } = useTabsState();
 
   const handleChangeEndpoint = useCallback(
     (value: string) => {

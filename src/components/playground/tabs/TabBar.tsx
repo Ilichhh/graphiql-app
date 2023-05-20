@@ -23,17 +23,17 @@ const TabBarContent = styled.div`
   }
 `;
 export const TabBar = () => {
-  const { tabs, selectedId } = useAppSelector(({ tabs }) => tabs);
+  const { tabs, selectedIdx } = useAppSelector(({ tabs }) => tabs);
   const showCloseBtn = tabs.length > 1;
 
   return (
     <TabBarWrapper>
       <TabBarContent>
-        {tabs.map(({ id, name }) => (
+        {tabs.map(({ name }, i) => (
           <Tab
-            key={id}
-            id={id}
-            isActive={id === selectedId}
+            key={i}
+            index={i}
+            isActive={i === selectedIdx}
             name={name}
             showCloseBtn={showCloseBtn}
           />

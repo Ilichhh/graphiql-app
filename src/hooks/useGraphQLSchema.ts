@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { buildClientSchema } from 'graphql/utilities';
 import { useGetSchemaQuery } from '../store/apiSlice';
 import { useTranslation } from 'react-i18next';
-import { useTabStateContext } from '../context/TabStateContext';
+import { useTabsState } from './useTabsState';
 
 type Schema = ReturnType<typeof buildClientSchema> | null;
 type ErrorObject =
@@ -13,7 +13,7 @@ type ErrorObject =
   | undefined;
 
 export const useGraphQLSchema = (endpoint: string) => {
-  const { setError } = useTabStateContext();
+  const { setError } = useTabsState();
   const { currentData: data, isError, error } = useGetSchemaQuery(endpoint, { skip: !endpoint });
   const [schema, setSchema] = useState<Schema>(null);
   const [schemaErrorMessage, setSchemaErrorMessage] = useState<ErrorObject>();

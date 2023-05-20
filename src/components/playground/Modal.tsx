@@ -7,8 +7,8 @@ import EastIcon from '@mui/icons-material/East';
 import { Button, Divider, TextField } from '@mui/material';
 
 import styled from 'styled-components';
+import { useTabsState } from '../../hooks/useTabsState';
 import theme from '../../theme';
-import { useTabStateContext } from '../../context/TabStateContext';
 import { getDefaultQuery } from '../../utils/defaultQuery';
 import { ENDPOINTS } from '../../constants';
 
@@ -85,7 +85,7 @@ interface ModalProps {
 export const Modal = ({ setIsModal }: ModalProps) => {
   const { endpoint, setEndpoint, inputValue, setInputValue, handleInputChange } =
     useEndpointInput();
-  const { setQuery } = useTabStateContext();
+  const { setQuery } = useTabsState();
   const { isSchemaError } = useGraphQLSchema(endpoint);
   const { t } = useTranslation();
 
