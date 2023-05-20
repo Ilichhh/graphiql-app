@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { usePrettier } from '../../../hooks/usePrettier';
 import { useTabsState } from '../../../hooks/useTabsState';
 
-import { EditorTools, PlayButton, SaveQueryModal } from './';
+import { EditorTools, PlayButton } from './';
+import { QueryTemplateModal } from '../sidebar';
 import { RequestEditor } from '../codemirror';
 import { PrettifyRequestButton, SaveRequestButton } from '../../../components/common/IconButtons';
 
@@ -82,7 +83,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
         <RequestEditor value={query} onChange={(value) => setQuery(value)} />
       </EditorBox>
       <EditorTools />
-      <SaveQueryModal open={saveQueryModalOpen} setOpen={setSaveQueryModalOpen} />
+      <QueryTemplateModal mode="save" open={saveQueryModalOpen} setOpen={setSaveQueryModalOpen} />
     </Container>
   );
 };

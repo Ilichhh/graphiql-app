@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSidebar } from '../../../hooks/useSidebar';
 
 import { ShowOptionsButton } from '../../../components/common/IconButtons';
+import { QueryTemplateModal } from './';
 import Popover from '@mui/material/Popover';
 
 import theme from '../../../theme';
@@ -52,6 +53,10 @@ const Option = styled.div`
   }
 `;
 
+const DeleteOption = styled(Option)`
+  color: ${theme.colors.error};
+`;
+
 interface QueryPreviewProps {
   templateId: string;
   data: DocumentData;
@@ -60,6 +65,7 @@ interface QueryPreviewProps {
 export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
   const { deleteTemplate } = useSidebar();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [saveQueryModalOpen, setSaveQueryModalOpen] = useState(false);
 
   const openPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -89,10 +95,16 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
             horizontal: 'left',
           }}
         >
-          <Option>Rename</Option>
-          <Option onClick={() => deleteTemplate(templateId)}>Delete</Option>
+          <Option onClick={() => setSaveQueryModalOpen(true)}>Rename request</Option>
+          <DeleteOption onClick={() => deleteTemplate(templateId)}>Delete</DeleteOption>
         </Popover>
       </div>
+      <QueryTemplateModal
+        mode="rename"
+        templateId={templateId}
+        open={saveQueryModalOpen}
+        setOpen={setSaveQueryModalOpen}
+      />
     </Container>
   );
 };

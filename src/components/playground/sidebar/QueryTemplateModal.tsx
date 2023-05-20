@@ -37,11 +37,13 @@ const Buttons = styled.div`
 interface SaveQueryModalProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  mode: 'save' | 'rename';
+  templateId?: string;
 }
 
-export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
+export const QueryTemplateModal = ({ open, setOpen, mode, templateId }: SaveQueryModalProps) => {
   const { endpoint, query, variables, headers } = useTabsState();
-  const { saveTemplate } = useSidebar();
+  const { saveTemplate, renameTemplate } = useSidebar();
   const [name, setName] = useState('');
   const { t } = useTranslation();
 
@@ -54,10 +56,26 @@ export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
     setName(e.target.value);
   }, []);
 
-  const handleSaveQueryTemplate = useCallback(() => {
+  const handleSubmit = useCallback(() => {
     handleClose();
-    saveTemplate({ name, endpoint, query, variables, headers });
-  }, [name, endpoint, query, variables, headers, handleClose, saveTemplate]);
+    if (mode === 'save') {
+      saveTemplate({ name, endpoint, query, variables, headers });
+    }
+    if (mode === 'rename' && templateId) {
+      renameTemplate(templateId, name);
+    }
+  }, [
+    handleClose,
+    mode,
+    saveTemplate,
+    name,
+    endpoint,
+    query,
+    variables,
+    headers,
+    renameTemplate,
+    templateId,
+  ]);
 
   return (
     <ThemeProvider theme={lightTheme}>
@@ -75,7 +93,7 @@ export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
             <Button variant="outlined" onClick={handleClose}>
               {t('playground.cancel')}
             </Button>
-            <Button variant="contained" disabled={!name} onClick={handleSaveQueryTemplate}>
+            <Button variant="contained" disabled={!name} onClick={handleSubmit}>
               {t('playground.save')}
             </Button>
           </Buttons>
