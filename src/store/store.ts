@@ -3,11 +3,13 @@ import endpointReducer from './endpointSlice';
 import editorSlice from './editorSlice';
 import { apiSlice } from './apiSlice';
 import errorSlice from './errorSlice';
+import sidebarSlice from './sidebarSlice';
 
 export const store = configureStore({
   reducer: {
     endpoint: endpointReducer,
     editor: editorSlice,
+    sidebar: sidebarSlice,
     error: errorSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },

@@ -11,7 +11,7 @@ import { logOut } from '../api/firebaseApi';
 import { MenuItem, Button } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { GraphQLIcon } from './Icons';
+import { GraphQLIcon } from './common/Icons';
 
 import styled, { css } from 'styled-components';
 import theme from '../theme';

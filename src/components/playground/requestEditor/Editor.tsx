@@ -6,9 +6,7 @@ import { usePrettier } from '../../../hooks/usePrettier';
 
 import { EditorTools, PlayButton, SaveQueryModal } from './';
 import { RequestEditor } from '../codemirror';
-import { IconButton } from '@mui/material';
-import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import { PrettifyRequestButton, SaveRequestButton } from '../../../components/common/IconButtons';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -75,15 +73,11 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
         <RequestEditorHeader>
           {t('playground.operation')}
           <RequestEditorControls>
-            <IconButton
+            <SaveRequestButton
               title={t('playground.saveOperation') as string}
               onClick={() => setSaveQueryModalOpen(true)}
-            >
-              <SaveOutlinedIcon />
-            </IconButton>
-            <IconButton title={t('playground.prettify') as string} onClick={prettify}>
-              <AutoFixHighOutlinedIcon />
-            </IconButton>
+            />
+            <PrettifyRequestButton title={t('playground.prettify') as string} onClick={prettify} />
             <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
           </RequestEditorControls>
         </RequestEditorHeader>

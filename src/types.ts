@@ -1,3 +1,5 @@
+import { DocumentData } from '@firebase/firestore';
+
 export enum Tab {
   Variables = 'variables',
   Headers = 'headers',
@@ -8,9 +10,13 @@ export enum FormMode {
   Register = 'register',
 }
 
-export interface queryTemplateData {
-  name: string;
-  query: string;
-  variables: string;
-  headers: string;
+export enum SidebarTabs {
+  Templates = 'templates',
+  History = 'history',
+  Settings = 'settings',
+}
+
+export interface QueryTemplateData {
+  id: string;
+  data: DocumentData;
 }

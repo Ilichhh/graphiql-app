@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
-import { Toast } from './components';
+import { Toast } from './components/common';
 import { store } from './store/store';
 
 import { ThemeProvider } from '@mui/material/styles';
