@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSidebar } from '../../../hooks/useSidebar';
 
 import { ShowOptionsButton } from '../../../components/common/IconButtons';
+import Popover from '@mui/material/Popover';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -43,6 +44,14 @@ const Endpoint = styled.div`
   color: ${theme.colors.textInactive};
 `;
 
+const Option = styled.div`
+  padding: 10px 20px;
+  cursor: pointer;
+  &:hover {
+    background-color: ${theme.colors.hoverLight};
+  }
+`;
+
 interface QueryPreviewProps {
   templateId: string;
   data: DocumentData;
@@ -50,13 +59,40 @@ interface QueryPreviewProps {
 
 export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
   const { deleteTemplate } = useSidebar();
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const openPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const isPopoverOpen = Boolean(anchorEl);
+
   return (
     <Container>
       <DataWrapper>
         <Name>{data.name}</Name>
         <Endpoint>{data.endpoint}</Endpoint>
       </DataWrapper>
-      <ShowOptionsButton size="small" onClick={() => deleteTemplate(templateId)} />
+      <div>
+        <ShowOptionsButton size="small" onClick={openPopover} />
+        <Popover
+          id={templateId}
+          open={isPopoverOpen}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+        >
+          <Option>Rename</Option>
+          <Option onClick={() => deleteTemplate(templateId)}>Delete</Option>
+        </Popover>
+      </div>
     </Container>
   );
 };

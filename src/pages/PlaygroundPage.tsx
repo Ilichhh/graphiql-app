@@ -19,7 +19,7 @@ const Wrapper = styled.main`
   position: relative;
   display: flex;
   width: 100%;
-  min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
+  min-height: calc(100vh - 43px - ${theme.headerHeight} - ${theme.footerHeight});
   background: ${theme.colors.bgBlack};
 `;
 
@@ -69,10 +69,10 @@ export const PlaygroundPage = React.memo(() => {
   return (
     <>
       <Header currentPage="playground" />
+      <TabBar />
       <Wrapper>
         {isSidebarOpen && <Sidebar />}
         <PlaygroundWrapper>
-          <TabBar />
           <PlaygroundHeader isError={isSchemaError} />
           <Playground>
             <Editor isFetching={isFetching} sendRequest={sendRequest} />
