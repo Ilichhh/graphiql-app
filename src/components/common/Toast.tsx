@@ -1,7 +1,7 @@
 import React from 'react';
-import { Alert, Snackbar } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
 import Slide, { SlideProps } from '@mui/material/Slide';
-import { useTabsState } from '../hooks/useTabsState';
+import { useTabsState } from '../../hooks/useTabsState';
 
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="left" />;

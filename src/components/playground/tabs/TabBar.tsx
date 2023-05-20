@@ -5,7 +5,6 @@ import theme from '../../../theme';
 import { useAppSelector } from '../../../hooks/reduxTypedHooks';
 
 const TabBarWrapper = styled.div`
-  height: 57px;
   background-color: ${theme.colors.bgBlack};
   overflow: hidden;
 `;
@@ -13,7 +12,6 @@ const TabBarWrapper = styled.div`
 const TabBarContent = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 15px;
   overflow-x: auto;
 
   &::-webkit-scrollbar {

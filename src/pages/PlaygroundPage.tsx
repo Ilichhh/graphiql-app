@@ -4,10 +4,12 @@ import { usePlayground } from '../hooks/usePlayground';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
 import { useTabsState } from '../hooks/useTabsState';
 import { getDefaultQuery } from '../utils/defaultQuery';
+import { useSidebar } from '../hooks/useSidebar';
 
 import { Modal, PlaygroundHeader, ResponseBox } from '../components/playground';
 import { Editor } from '../components/playground/requestEditor';
-import { Footer, Header } from '../components';
+import { Header, Footer } from '../components';
+import { Sidebar } from '../components/playground/sidebar';
 
 import styled from 'styled-components';
 import theme from '../theme';
@@ -16,10 +18,16 @@ import { TabBar } from '../components/playground/tabs/TabBar';
 const Wrapper = styled.main`
   position: relative;
   display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
   width: 100%;
+  min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
   background: ${theme.colors.bgBlack};
+`;
+
+const PlaygroundWrapper = styled.main`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 const Playground = styled.div`
@@ -34,10 +42,14 @@ const Playground = styled.div`
 
 export const PlaygroundPage = React.memo(() => {
   const { endpoint, setEndpoint, setQuery } = useTabsState();
+  const { isOpen: isSidebarOpen, fetchQueryTemplatesData } = useSidebar();
   const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
+
+  const DocsPanel = React.lazy(() => import('../components/playground/docsExplorer/docsPanel'));
+  const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
@@ -46,31 +58,34 @@ export const PlaygroundPage = React.memo(() => {
     }
   }, [endpoint, lastEndpoint, isModal, setEndpoint, setQuery]);
 
+  useEffect(() => {
+    fetchQueryTemplatesData();
+  }, [fetchQueryTemplatesData]);
+
   if (isModal) {
     return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
   }
-
-  const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
-  const DocsPanel = React.lazy(() => import('../components/playground/docsExplorer/docsPanel'));
 
   return (
     <>
       <Header currentPage="playground" />
       <Wrapper>
-        <TabBar />
-        <PlaygroundHeader isError={isSchemaError} />
-        <Playground>
-          <Editor isFetching={isFetching} sendRequest={sendRequest} />
-          <ResponseBox
-            isFetching={isFetching}
-            response={responseText}
-            status={response?.status || errorMessage?.status}
-          />
-
-          <Suspense>
-            <DocsPanel />
-          </Suspense>
-        </Playground>
+        {isSidebarOpen && <Sidebar />}
+        <PlaygroundWrapper>
+          <TabBar />
+          <PlaygroundHeader isError={isSchemaError} />
+          <Playground>
+            <Editor isFetching={isFetching} sendRequest={sendRequest} />
+            <ResponseBox
+              isFetching={isFetching}
+              response={responseText}
+              status={response?.status || errorMessage?.status}
+            />
+            <Suspense>
+              <DocsPanel />
+            </Suspense>
+          </Playground>
+        </PlaygroundWrapper>
       </Wrapper>
       <Footer />
     </>

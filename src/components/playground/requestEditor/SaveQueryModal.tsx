@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { saveQeryTemplate } from '../../../api/firebaseApi';
+import { useSidebar } from '../../../hooks/useSidebar';
 
 import { Box, Button, Modal, TextField } from '@mui/material';
 
@@ -40,7 +40,8 @@ interface SaveQueryModalProps {
 }
 
 export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
-  const { query, variables, headers } = useTabsState();
+  const { endpoint, query, variables, headers } = useTabsState();
+  const { saveTemplate } = useSidebar();
   const [name, setName] = useState('');
   const { t } = useTranslation();
 
@@ -55,8 +56,8 @@ export const SaveQueryModal = ({ open, setOpen }: SaveQueryModalProps) => {
 
   const handleSaveQueryTemplate = useCallback(() => {
     handleClose();
-    saveQeryTemplate({ name, query, variables, headers });
-  }, [name, query, variables, headers, handleClose]);
+    saveTemplate({ name, endpoint, query, variables, headers });
+  }, [name, endpoint, query, variables, headers, handleClose, saveTemplate]);
 
   return (
     <ThemeProvider theme={lightTheme}>

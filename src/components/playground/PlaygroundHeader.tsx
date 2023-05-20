@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAllQueryTemplates } from '../../api/firebaseApi';
-
-import { IconButton } from '@mui/material';
-import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined';
+import { useEndpointInput } from '../../hooks/useEndpointInput';
+import { useSidebar } from '../../hooks/useSidebar';
 
 import styled from 'styled-components';
 import theme from '../../theme';
-import { useEndpointInput } from '../../hooks/useEndpointInput';
+import { OpenSidebarButton } from '../../components/common/IconButtons';
 
 const Header = styled.header`
   display: flex;
   align-items: center;
+  gap: 10px;
+  height: 52px;
   padding: 10px;
   background: ${theme.colors.bgBlue};
 `;
@@ -19,7 +19,8 @@ const Header = styled.header`
 const HeaderEndpoint = styled.span`
   flex: 0 0 auto;
   padding: 7px 10px;
-  border-radius: 2px;
+  height: 32px;
+  border-radius: 4px;
   text-transform: uppercase;
   font-weight: 600;
   font-size: 0.9rem;
@@ -33,7 +34,6 @@ const InputContainer = styled.div`
   display: flex;
   align-items: center;
   flex: 1 1 0;
-  margin-left: 6px;
 `;
 
 const Input = styled.input.attrs(() => ({
@@ -41,6 +41,7 @@ const Input = styled.input.attrs(() => ({
 }))`
   flex: 1 1 0;
   padding: 6px 12px;
+  height: 32px;
   font-size: 0.9rem;
   background: ${theme.colors.bgDarkBlue};
   color: ${theme.colors.textGrey};
@@ -61,12 +62,8 @@ interface PlaygroundHeaderProps {
 
 export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) => {
   const { inputValue, endpoint, handleInputChange } = useEndpointInput();
+  const { isOpen: isSidebarOpen, openSidebar } = useSidebar();
   const { t } = useTranslation();
-
-  const handleGetAllQueryTemplates = useCallback(async () => {
-    const templates = await getAllQueryTemplates();
-    console.log(templates);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem('last-endpoint', endpoint);
@@ -74,9 +71,7 @@ export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) 
 
   return (
     <Header>
-      <IconButton onClick={handleGetAllQueryTemplates}>
-        <KeyboardDoubleArrowRightOutlinedIcon />
-      </IconButton>
+      {!isSidebarOpen && <OpenSidebarButton size="small" onClick={openSidebar} />}
       <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
       <InputContainer>
         <Input autoFocus value={inputValue} onChange={handleInputChange} />
