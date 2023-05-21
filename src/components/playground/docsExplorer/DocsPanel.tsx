@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useTabsState } from '../../../hooks/useTabsState';
 import { DocsNavProvider } from './docsContext';
 import styled from 'styled-components';
-import { DocsTab } from './docsTab';
-import { Explorer } from './explorer';
+import { DocsTab } from './DocsTab';
+import { Explorer } from './Explorer';
 import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
 
 interface ExplorerWrapperProps {

@@ -10,14 +10,14 @@ import {
   isNamedType,
   isObjectType,
 } from 'graphql/type';
-import { ReturnType } from './components/returnType';
-import { Field } from './components/field';
-import { TitleBar } from './components/titleBar';
+import { ReturnType } from './components/ReturnType';
+import { Field } from './components/Field';
+import { TitleBar } from './components/TitleBar';
 import styled from 'styled-components';
-import { Deprecated } from './components/depricated';
-import { InlineDescription } from './components/inlineDescription';
-import { Markdown } from './components/markdown';
-import { Spacer } from './components/spacer';
+import { Deprecated } from './components/Depricated';
+import { InlineDescription } from './components/InlineDescription';
+import { Markdown } from './components/Markdown';
+import { Spacer } from './components/Spacer';
 import theme from '../../../theme';
 
 interface TypeProps {
