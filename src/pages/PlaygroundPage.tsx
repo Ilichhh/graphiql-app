@@ -33,7 +33,6 @@ const PlaygroundWrapper = styled.main`
 const Playground = styled.div`
   display: flex;
   flex: 1 1 0;
-  padding-left: 10px;
   background: ${theme.colors.bgBlue};
   @media (max-width: 600px) {
     flex-direction: column;

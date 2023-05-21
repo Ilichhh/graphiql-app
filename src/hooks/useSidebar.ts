@@ -2,9 +2,18 @@ import { useCallback } from 'react';
 import { useAppSelector } from './reduxTypedHooks';
 import { useAppDispatch } from './reduxTypedHooks';
 
-import { setIsOpen, setActiveTab, setQueryTemplates } from '../store/sidebarSlice';
-import { getAllQueryTemplates, deleteQueryTemplate } from '../api/firebaseApi';
-import { saveQueryTemplate } from '../api/firebaseApi';
+import {
+  setIsOpen,
+  setActiveTab,
+  setQueryTemplates,
+  renameTemplate as renameTemplateAction,
+} from '../store/sidebarSlice';
+import {
+  getAllQueryTemplates,
+  deleteQueryTemplate,
+  saveQueryTemplate,
+  renameQueryTemplate,
+} from '../api/firebaseApi';
 
 import { DocumentData } from '@firebase/firestore';
 import { SidebarTabs } from '../types';
@@ -51,6 +60,18 @@ export const useSidebar = () => {
     [dispatch, queryTemplates]
   );
 
+  const renameTemplate = useCallback(
+    async (templateId: string, newName: string) => {
+      try {
+        await renameQueryTemplate(templateId, newName);
+        dispatch(renameTemplateAction({ templateId, newName }));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [dispatch]
+  );
+
   const saveTemplate = useCallback(
     async (templateData: DocumentData) => {
       try {
@@ -75,5 +96,6 @@ export const useSidebar = () => {
     activeTab,
     deleteTemplate,
     saveTemplate,
+    renameTemplate,
   };
 };
