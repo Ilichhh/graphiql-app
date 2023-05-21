@@ -23,8 +23,8 @@ const tabsSlice = createSlice({
   name: 'tabs',
   initialState: initialState,
   reducers: {
-    addTab: (state) => {
-      state.tabs.push({ name: 'New Tab' });
+    addTab: (state, { payload: name }: PayloadAction<string>) => {
+      state.tabs.push({ name });
       state.selectedIdx = state.tabs.length - 1;
     },
     deleteTab: (state, { payload: index }: PayloadAction<number>) => {
