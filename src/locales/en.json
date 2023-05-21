@@ -44,15 +44,30 @@
     "paramsError": "Please provide valid parameters",
     "saveOperation": "Save operation",
     "schemaError": "Failed to fetch schema. Please check your connection",
-    "saveQuery": "Save Query",
-    "renameQuery": "Rename Query",
-    "queryName": "Query Name",
     "cancel": "Cancel",
-    "save": "Save",
     "prettify": "Prettify",
     "expand": "Expand",
     "collapse": "Collapse",
-    "queriesCollection": "Queries collection"
+    "renameQuery": "Rename query",
+    "deleteQuery": "Delete",
+    "queriesCollection": "Queries collection",
+    "modal": {
+      "save": {
+        "header": "Save Query",
+        "title": "Query Name",
+        "submit": "Save"
+      },
+      "rename": {
+        "header": "Rename Query",
+        "title": "Query Name",
+        "submit": "Rename"
+      },
+      "delete": {
+        "header": "Delete Query",
+        "title": "Are you sure you want to delete the {{name}} query?",
+        "submit": "Delete"
+      }
+    }
   },
   "landing": {
     "hero": {

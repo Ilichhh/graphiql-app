@@ -8,6 +8,8 @@ import { QueryTemplateModal } from '../sidebar';
 import { RequestEditor } from '../codemirror';
 import { PrettifyRequestButton, SaveRequestButton } from '../../../components/common/IconButtons';
 
+import { TemplateModalMode } from '../../../types';
+
 import theme from '../../../theme';
 import styled from 'styled-components';
 
@@ -62,7 +64,9 @@ interface EditorProps {
 
 export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
   const { query, setQuery } = useTabsState();
-  const [saveQueryModalOpen, setSaveQueryModalOpen] = useState(false);
+  const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
+    null
+  );
   const { t } = useTranslation();
   const { prettify } = usePrettier();
 
@@ -74,7 +78,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
           <RequestEditorControls>
             <SaveRequestButton
               title={t('playground.saveOperation') as string}
-              onClick={() => setSaveQueryModalOpen(true)}
+              onClick={() => setQueryTemplateModalMode(TemplateModalMode.Save)}
             />
             <PrettifyRequestButton title={t('playground.prettify') as string} onClick={prettify} />
             <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
@@ -83,12 +87,13 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
         <RequestEditor value={query} onChange={(value) => setQuery(value)} />
       </EditorBox>
       <EditorTools />
-      <QueryTemplateModal
-        mode="save"
-        prevName=""
-        open={saveQueryModalOpen}
-        setOpen={setSaveQueryModalOpen}
-      />
+      {queryTemplateModalMode && (
+        <QueryTemplateModal
+          mode={TemplateModalMode.Save}
+          prevName=""
+          setOpen={setQueryTemplateModalMode}
+        />
+      )}
     </Container>
   );
 };

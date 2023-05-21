@@ -1,14 +1,15 @@
 import React, { useState, useCallback } from 'react';
-import { useSidebar } from '../../../hooks/useSidebar';
+import { useTranslation } from 'react-i18next';
 
 import { ShowOptionsButton } from '../../../components/common/IconButtons';
 import { QueryTemplateModal } from './';
 import Popover from '@mui/material/Popover';
 
+import { DocumentData } from '@firebase/firestore';
+import { TemplateModalMode } from '../../../types';
+
 import theme from '../../../theme';
 import styled from 'styled-components';
-
-import { DocumentData } from '@firebase/firestore';
 
 const Container = styled.aside`
   display: flex;
@@ -71,9 +72,11 @@ interface QueryPreviewProps {
 }
 
 export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
-  const { deleteTemplate } = useSidebar();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [queryTemplateModalOpen, setQueryTemplateModalOpen] = useState(false);
+  const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
+    null
+  );
+  const { t } = useTranslation();
 
   const openPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -83,12 +86,13 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
     setAnchorEl(null);
   }, []);
 
-  const handleOpenModal = useCallback(() => {
-    handleClosePopover();
-    setQueryTemplateModalOpen(true);
-  }, [handleClosePopover]);
-
-  const isPopoverOpen = Boolean(anchorEl);
+  const handleOpenModal = useCallback(
+    (mode: TemplateModalMode) => {
+      handleClosePopover();
+      setQueryTemplateModalMode(mode);
+    },
+    [handleClosePopover]
+  );
 
   return (
     <Container>
@@ -100,7 +104,7 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
         <ShowOptionsButton size="small" onClick={openPopover} />
         <Popover
           id={templateId}
-          open={isPopoverOpen}
+          open={!!anchorEl}
           anchorEl={anchorEl}
           onClose={handleClosePopover}
           anchorOrigin={{
@@ -108,17 +112,22 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
             horizontal: 'left',
           }}
         >
-          <Option onClick={handleOpenModal}>Rename request</Option>
-          <DeleteOption onClick={() => deleteTemplate(templateId)}>Delete</DeleteOption>
+          <Option onClick={() => handleOpenModal(TemplateModalMode.Rename)}>
+            {t('playground.renameQuery')}
+          </Option>
+          <DeleteOption onClick={() => handleOpenModal(TemplateModalMode.Delete)}>
+            {t('playground.deleteQuery')}
+          </DeleteOption>
         </Popover>
       </div>
-      <QueryTemplateModal
-        mode="rename"
-        open={queryTemplateModalOpen}
-        setOpen={setQueryTemplateModalOpen}
-        templateId={templateId}
-        prevName={data.name}
-      />
+      {queryTemplateModalMode && (
+        <QueryTemplateModal
+          mode={queryTemplateModalMode}
+          setOpen={setQueryTemplateModalMode}
+          templateId={templateId}
+          prevName={data.name}
+        />
+      )}
     </Container>
   );
 };

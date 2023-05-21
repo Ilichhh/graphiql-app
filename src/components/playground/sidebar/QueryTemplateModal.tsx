@@ -2,12 +2,14 @@ import React, { ChangeEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSidebar } from '../../../hooks/useSidebar';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+import { useTabsState } from '../../../hooks/useTabsState';
 
 import { Button, Modal, TextField } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
+import { TemplateModalMode } from '../../../types';
+
 import { ThemeProvider } from '@mui/material/styles';
-import { useTabsState } from '../../../hooks/useTabsState';
 import { lightTheme } from '../../../muiTheme';
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -30,24 +32,27 @@ const Header = styled.h2`
   margin: 0;
 `;
 
+const Subheader = styled.p`
+  margin: 0;
+`;
+
 const Buttons = styled.div`
   display: flex;
   justify-content: end;
   gap: 20px;
 `;
 
-interface SaveQueryModalProps {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  mode: 'save' | 'rename';
+interface QueryTemplateModalProps {
+  setOpen: React.Dispatch<React.SetStateAction<TemplateModalMode | null>>;
+  mode: TemplateModalMode;
   templateId?: string;
   prevName: string;
 }
 
 export const QueryTemplateModal = React.memo(
-  ({ open, setOpen, mode, templateId, prevName }: SaveQueryModalProps) => {
+  ({ setOpen, mode, templateId, prevName }: QueryTemplateModalProps) => {
     const { endpoint, query, variables, headers } = useTabsState();
-    const { saveTemplate, renameTemplate } = useSidebar();
+    const { saveTemplate, renameTemplate, deleteTemplate } = useSidebar();
     const [newName, setNewName] = useState(prevName || '');
     const { t } = useTranslation();
     const {
@@ -57,7 +62,7 @@ export const QueryTemplateModal = React.memo(
     } = useForm();
 
     const handleClose = useCallback(() => {
-      setOpen(false);
+      setOpen(null);
     }, [setOpen]);
 
     const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -66,29 +71,35 @@ export const QueryTemplateModal = React.memo(
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
       if (mode === 'save') {
+        console.log('saving');
         await saveTemplate({ name: data.newName, endpoint, query, variables, headers });
       }
       if (mode === 'rename' && templateId) {
         await renameTemplate(templateId, data.newName);
+      }
+      if (mode === 'delete' && templateId) {
+        await deleteTemplate(templateId);
       }
       handleClose();
     };
 
     return (
       <ThemeProvider theme={lightTheme}>
-        <Modal open={open} onClose={handleClose}>
+        <Modal open={!!mode} onClose={handleClose}>
           <Container onSubmit={handleSubmit(onSubmit)}>
-            <Header>
-              {t(mode === 'save' ? 'playground.saveQuery' : 'playground.renameQuery')}
-            </Header>
-            <TextField
-              fullWidth
-              label={t('playground.queryName')}
-              variant="outlined"
-              {...register('newName', { required: true })}
-              value={newName}
-              onChange={handleChange}
-            />
+            <Header>{t(`playground.modal.${mode}.header`)}</Header>
+            {mode === 'delete' ? (
+              <Subheader>{t(`playground.modal.${mode}.title`, { name: prevName })}</Subheader>
+            ) : (
+              <TextField
+                fullWidth
+                label={t(`playground.modal.${mode}.title`)}
+                variant="outlined"
+                {...register('newName', { required: true })}
+                value={newName}
+                onChange={handleChange}
+              />
+            )}
             <Buttons>
               <Button variant="outlined" onClick={handleClose}>
                 {t('playground.cancel')}
@@ -99,7 +110,7 @@ export const QueryTemplateModal = React.memo(
                 disabled={!newName}
                 loading={isSubmitting}
               >
-                {t('playground.save')}
+                {t(`playground.modal.${mode}.submit`)}
               </LoadingButton>
             </Buttons>
           </Container>
