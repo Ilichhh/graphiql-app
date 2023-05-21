@@ -2,7 +2,12 @@ import { useCallback } from 'react';
 import { useAppSelector } from './reduxTypedHooks';
 import { useAppDispatch } from './reduxTypedHooks';
 
-import { setIsOpen, setActiveTab, setQueryTemplates } from '../store/sidebarSlice';
+import {
+  setIsOpen,
+  setActiveTab,
+  setQueryTemplates,
+  renameTemplate as renameTemplateAction,
+} from '../store/sidebarSlice';
 import {
   getAllQueryTemplates,
   deleteQueryTemplate,
@@ -59,27 +64,12 @@ export const useSidebar = () => {
     async (templateId: string, newName: string) => {
       try {
         await renameQueryTemplate(templateId, newName);
-        dispatch(
-          setQueryTemplates(
-            queryTemplates.map((template) => {
-              if (template.id === templateId) {
-                return {
-                  id: template.id,
-                  data: {
-                    ...template.data,
-                    name: newName,
-                  },
-                };
-              }
-              return template;
-            })
-          )
-        );
+        dispatch(renameTemplateAction({ templateId, newName }));
       } catch (error) {
         console.error(error);
       }
     },
-    [dispatch, queryTemplates]
+    [dispatch]
   );
 
   const saveTemplate = useCallback(
