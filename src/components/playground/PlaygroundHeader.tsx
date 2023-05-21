@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEndpointInput } from '../../hooks/useEndpointInput';
-import { useSidebar } from '../../hooks/useSidebar';
 
 import styled from 'styled-components';
 import theme from '../../theme';
-import { OpenSidebarButton } from '../../components/common/IconButtons';
 
 const Header = styled.header`
   display: flex;
@@ -62,7 +60,6 @@ interface PlaygroundHeaderProps {
 
 export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) => {
   const { inputValue, endpoint, handleInputChange } = useEndpointInput();
-  const { isOpen: isSidebarOpen, openSidebar } = useSidebar();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -71,7 +68,6 @@ export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) 
 
   return (
     <Header>
-      {!isSidebarOpen && <OpenSidebarButton size="small" onClick={openSidebar} />}
       <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
       <InputContainer>
         <Input autoFocus value={inputValue} onChange={handleInputChange} />

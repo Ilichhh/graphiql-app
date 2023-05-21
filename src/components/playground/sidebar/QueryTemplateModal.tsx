@@ -78,7 +78,9 @@ export const QueryTemplateModal = React.memo(
       <ThemeProvider theme={lightTheme}>
         <Modal open={open} onClose={handleClose}>
           <Container onSubmit={handleSubmit(onSubmit)}>
-            <Header>{t('playground.saveQuery')}</Header>
+            <Header>
+              {t(mode === 'save' ? 'playground.saveQuery' : 'playground.renameQuery')}
+            </Header>
             <TextField
               fullWidth
               label={t('playground.queryName')}

@@ -45,10 +45,14 @@
     "saveOperation": "Save operation",
     "schemaError": "Failed to fetch schema. Please check your connection",
     "saveQuery": "Save Query",
+    "renameQuery": "Rename Query",
     "queryName": "Query Name",
     "cancel": "Cancel",
     "save": "Save",
-    "prettify": "Prettify"
+    "prettify": "Prettify",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "queriesCollection": "Queries collection"
   },
   "landing": {
     "hero": {

@@ -19,30 +19,38 @@ const Container = styled.aside`
   background-color: ${theme.colors.bgBlue};
 `;
 
+const Endpoint = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  color: ${theme.colors.textInactive};
+  transition: 0.2s all;
+`;
+
 const DataWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 240px;
+  flex-grow: 1;
   height: 58px;
   padding: 5px 10px;
-  border-radius: 5px;
+  border-radius: 4px;
+  overflow: hidden;
   cursor: pointer;
+  transition: 0.2s all;
   &:hover {
-    background-color: ${theme.colors.bgDarkBlue};
+    background-color: ${theme.colors.hoverLight};
+    ${Endpoint} {
+      color: ${theme.colors.textGrey};
+    }
   }
 `;
 
 const Name = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
-`;
-
-const Endpoint = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: ${theme.colors.textInactive};
+  font-size: 16px;
 `;
 
 const Option = styled.div`

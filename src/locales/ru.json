@@ -45,10 +45,14 @@
     "paramsError": "Пожалуйста, введите верные параметры",
     "saveOperation": "Сохранить запрос",
     "saveQuery": "Сохранить запрос",
+    "renameQuery": "Переименовать запрос",
     "queryName": "Имя запроса",
     "cancel": "Отмена",
     "save": "Сохранить",
-    "prettify": "Форматировать"
+    "prettify": "Форматировать",
+    "expand": "Раскрыть",
+    "collapse": "Свернуть",
+    "queriesCollection": "Коллекция запросов"
   },
   "landing": {
     "hero": {

@@ -19,7 +19,7 @@ const Wrapper = styled.main`
   position: relative;
   display: flex;
   width: 100%;
-  min-height: calc(100vh - 43px - ${theme.headerHeight} - ${theme.footerHeight});
+  min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
   background: ${theme.colors.bgBlack};
 `;
 
@@ -33,7 +33,6 @@ const PlaygroundWrapper = styled.main`
 const Playground = styled.div`
   display: flex;
   flex: 1 1 0;
-  padding-left: 10px;
   background: ${theme.colors.bgBlue};
   @media (max-width: 600px) {
     flex-direction: column;
@@ -69,10 +68,10 @@ export const PlaygroundPage = React.memo(() => {
   return (
     <>
       <Header currentPage="playground" />
-      <TabBar />
       <Wrapper>
         {isSidebarOpen && <Sidebar />}
         <PlaygroundWrapper>
+          <TabBar />
           <PlaygroundHeader isError={isSchemaError} />
           <Playground>
             <Editor isFetching={isFetching} sendRequest={sendRequest} />
