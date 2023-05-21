@@ -14,7 +14,6 @@ export const Toast = () => {
     setError('');
   }, [setError]);
 
-  console.log('toast');
   return (
     <Snackbar
       open={!!error}
