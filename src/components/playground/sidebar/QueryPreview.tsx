@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useSidebar } from '../../../hooks/useSidebar';
 
 import { ShowOptionsButton } from '../../../components/common/IconButtons';
@@ -65,15 +65,20 @@ interface QueryPreviewProps {
 export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
   const { deleteTemplate } = useSidebar();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [saveQueryModalOpen, setSaveQueryModalOpen] = useState(false);
+  const [queryTemplateModalOpen, setQueryTemplateModalOpen] = useState(false);
 
-  const openPopover = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const openPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClosePopover = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
+
+  const handleOpenModal = useCallback(() => {
+    handleClosePopover();
+    setQueryTemplateModalOpen(true);
+  }, [handleClosePopover]);
 
   const isPopoverOpen = Boolean(anchorEl);
 
@@ -89,21 +94,22 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
           id={templateId}
           open={isPopoverOpen}
           anchorEl={anchorEl}
-          onClose={handleClose}
+          onClose={handleClosePopover}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',
           }}
         >
-          <Option onClick={() => setSaveQueryModalOpen(true)}>Rename request</Option>
+          <Option onClick={handleOpenModal}>Rename request</Option>
           <DeleteOption onClick={() => deleteTemplate(templateId)}>Delete</DeleteOption>
         </Popover>
       </div>
       <QueryTemplateModal
         mode="rename"
+        open={queryTemplateModalOpen}
+        setOpen={setQueryTemplateModalOpen}
         templateId={templateId}
-        open={saveQueryModalOpen}
-        setOpen={setSaveQueryModalOpen}
+        prevName={data.name}
       />
     </Container>
   );

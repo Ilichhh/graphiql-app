@@ -83,7 +83,12 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
         <RequestEditor value={query} onChange={(value) => setQuery(value)} />
       </EditorBox>
       <EditorTools />
-      <QueryTemplateModal mode="save" open={saveQueryModalOpen} setOpen={setSaveQueryModalOpen} />
+      <QueryTemplateModal
+        mode="save"
+        prevName=""
+        open={saveQueryModalOpen}
+        setOpen={setSaveQueryModalOpen}
+      />
     </Container>
   );
 };
