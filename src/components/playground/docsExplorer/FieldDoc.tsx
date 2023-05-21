@@ -1,10 +1,10 @@
 import React from 'react';
 import { GraphQLField, GraphQLInputField } from 'graphql/type';
-import { ReturnType } from './components/returnType';
-import { TitleBar } from './components/titleBar';
-import { Args } from './components/args';
+import { ReturnType } from './components/ReturnType';
+import { TitleBar } from './components/TitleBar';
+import { Args } from './components/Args';
 import styled from 'styled-components';
-import { Markdown } from './components/markdown';
+import { Markdown } from './components/Markdown';
 
 interface FieldProps<T, V> {
   field: GraphQLField<T, V> | GraphQLInputField;

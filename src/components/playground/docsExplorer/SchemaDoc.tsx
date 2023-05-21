@@ -1,7 +1,7 @@
 import React from 'react';
 import { GraphQLSchema } from 'graphql/type';
-import { TitleBar } from './components/titleBar';
-import { ReturnType } from './components/returnType';
+import { TitleBar } from './components/TitleBar';
+import { ReturnType } from './components/ReturnType';
 import styled from 'styled-components';
 import theme from '../../../theme';
 

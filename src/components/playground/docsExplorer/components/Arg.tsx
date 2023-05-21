@@ -1,11 +1,11 @@
 import React from 'react';
 import { GraphQLArgument } from 'graphql/type';
-import { ReturnType } from './returnType';
+import { ReturnType } from './ReturnType';
 import theme from '../../../../theme';
 import styled from 'styled-components';
-import { DefaultValue } from './defaultValue';
-import { Deprecated } from './depricated';
-import { InlineDescription } from './inlineDescription';
+import { DefaultValue } from './DefaultValue';
+import { Deprecated } from './Depricated';
+import { InlineDescription } from './InlineDescription';
 
 interface FieldArgsProps {
   arg: GraphQLArgument;
