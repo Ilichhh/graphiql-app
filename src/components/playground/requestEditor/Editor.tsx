@@ -91,7 +91,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
         <QueryTemplateModal
           mode={TemplateModalMode.Save}
           prevName=""
-          setOpen={setQueryTemplateModalMode}
+          setMode={setQueryTemplateModalMode}
         />
       )}
     </Container>

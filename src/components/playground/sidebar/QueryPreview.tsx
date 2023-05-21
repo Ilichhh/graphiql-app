@@ -123,7 +123,7 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
       {queryTemplateModalMode && (
         <QueryTemplateModal
           mode={queryTemplateModalMode}
-          setOpen={setQueryTemplateModalMode}
+          setMode={setQueryTemplateModalMode}
           templateId={templateId}
           prevName={data.name}
         />

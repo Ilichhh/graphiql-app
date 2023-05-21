@@ -43,14 +43,14 @@ const Buttons = styled.div`
 `;
 
 interface QueryTemplateModalProps {
-  setOpen: React.Dispatch<React.SetStateAction<TemplateModalMode | null>>;
+  setMode: React.Dispatch<React.SetStateAction<TemplateModalMode | null>>;
   mode: TemplateModalMode;
   templateId?: string;
   prevName: string;
 }
 
 export const QueryTemplateModal = React.memo(
-  ({ setOpen, mode, templateId, prevName }: QueryTemplateModalProps) => {
+  ({ setMode, mode, templateId, prevName }: QueryTemplateModalProps) => {
     const { endpoint, query, variables, headers } = useTabsState();
     const { saveTemplate, renameTemplate, deleteTemplate } = useSidebar();
     const [newName, setNewName] = useState(prevName || '');
@@ -62,8 +62,8 @@ export const QueryTemplateModal = React.memo(
     } = useForm();
 
     const handleClose = useCallback(() => {
-      setOpen(null);
-    }, [setOpen]);
+      setMode(null);
+    }, [setMode]);
 
     const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
       setNewName(e.target.value);
@@ -71,7 +71,6 @@ export const QueryTemplateModal = React.memo(
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
       if (mode === 'save') {
-        console.log('saving');
         await saveTemplate({ name: data.newName, endpoint, query, variables, headers });
       }
       if (mode === 'rename' && templateId) {
