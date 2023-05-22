@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import theme from '../../../theme';
 
 const Container = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 1;
   min-height: 55px;
   display: flex;
   justify-content: space-between;
