@@ -1,8 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from './store';
+import { setQuery, setVariables, setHeaders } from './editorSlice';
+import { setEndpoint } from './endpointSlice';
+
+import { AnyAction } from 'redux';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { DocumentData } from '@firebase/firestore';
 
 type Tab = {
   name: string;
+  instanceOfTemplate?: string;
 };
 
 type TabsState = {
@@ -23,8 +31,8 @@ const tabsSlice = createSlice({
   name: 'tabs',
   initialState: initialState,
   reducers: {
-    addTab: (state) => {
-      state.tabs.push({ name: 'New Tab' });
+    addTab: (state, { payload: { name, instanceOfTemplate } }: PayloadAction<Tab>) => {
+      state.tabs.push({ name, instanceOfTemplate });
       state.selectedIdx = state.tabs.length - 1;
     },
     deleteTab: (state, { payload: index }: PayloadAction<number>) => {
@@ -41,12 +49,36 @@ const tabsSlice = createSlice({
     },
     changeName: (
       state,
-      { payload: { index, name } }: PayloadAction<{ index: number; name: string }>
+      {
+        payload: { name, index, templateId },
+      }: PayloadAction<{ name: string; index?: number; templateId: string }>
     ) => {
-      state.tabs[index].name = name;
+      if (index) {
+        state.tabs[index].name = name;
+        state.tabs[index].instanceOfTemplate = templateId;
+        return;
+      }
+      state.tabs.map((tab) => {
+        if (tab.instanceOfTemplate === templateId) {
+          tab.name = name;
+        }
+      });
     },
   },
 });
+
+export const addNewTab = (data: DocumentData, templateId: string) => {
+  const { name, endpoint, query, variables, headers } = data;
+  return (dispatch: ThunkDispatch<RootState, undefined, AnyAction>, getState: () => RootState) => {
+    dispatch(addTab({ name, instanceOfTemplate: templateId }));
+    const state = getState();
+    const tabIdx = state.tabs.selectedIdx;
+    dispatch(setEndpoint({ tabIdx, endpoint }));
+    dispatch(setQuery({ tabIdx, query }));
+    dispatch(setVariables({ tabIdx, variables }));
+    dispatch(setHeaders({ tabIdx, headers }));
+  };
+};
 
 export const { addTab, deleteTab, selectTab, changeName } = tabsSlice.actions;
 export default tabsSlice.reducer;

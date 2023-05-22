@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
 
 import { ShowOptionsButton } from '../../../components/common/IconButtons';
 import { QueryTemplateModal } from './';
@@ -10,6 +11,8 @@ import { TemplateModalMode } from '../../../types';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
+
+import { addNewTab } from '../../../store/tabsSlice';
 
 const Container = styled.aside`
   display: flex;
@@ -72,11 +75,13 @@ interface QueryPreviewProps {
 }
 
 export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
+  const { name, endpoint } = data;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
     null
   );
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const openPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -94,11 +99,15 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
     [handleClosePopover]
   );
 
+  const handleOpenTab = useCallback(() => {
+    dispatch(addNewTab(data, templateId));
+  }, [data, dispatch, templateId]);
+
   return (
     <Container>
-      <DataWrapper>
-        <Name>{data.name}</Name>
-        <Endpoint>{data.endpoint}</Endpoint>
+      <DataWrapper onClick={handleOpenTab}>
+        <Name>{name}</Name>
+        <Endpoint>{endpoint}</Endpoint>
       </DataWrapper>
       <div>
         <ShowOptionsButton size="small" onClick={openPopover} />
@@ -125,7 +134,7 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
           mode={queryTemplateModalMode}
           setMode={setQueryTemplateModalMode}
           templateId={templateId}
-          prevName={data.name}
+          prevName={name}
         />
       )}
     </Container>
