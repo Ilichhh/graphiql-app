@@ -17,6 +17,8 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   flex: 1 1 0;
+  width: 100%;
+  overflow-x: auto;
 `;
 
 const EditorBox = styled.section`
@@ -35,11 +37,15 @@ const EditorBox = styled.section`
     border-radius: 5px;
   }
   &::-webkit-scrollbar-corner {
-    background-color: ${theme.colors.bgBlue};
+    background-color: ${theme.colors.bgDarkBlue};
   }
 `;
 
 const RequestEditorHeader = styled.div`
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
   min-height: 55px;
   display: flex;
   justify-content: space-between;
