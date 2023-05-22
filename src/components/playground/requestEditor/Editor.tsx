@@ -40,6 +40,9 @@ const EditorBox = styled.section`
 `;
 
 const RequestEditorHeader = styled.div`
+  position: sticky;
+  z-index: 1;
+  top: 0;
   min-height: 55px;
   display: flex;
   justify-content: space-between;
