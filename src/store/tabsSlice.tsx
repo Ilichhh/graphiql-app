@@ -42,8 +42,15 @@ const tabsSlice = createSlice({
     },
     changeName: (
       state,
-      { payload: { name, templateId } }: PayloadAction<{ name: string; templateId: string }>
+      {
+        payload: { name, index, templateId },
+      }: PayloadAction<{ name: string; index?: number; templateId: string }>
     ) => {
+      if (index) {
+        state.tabs[index].name = name;
+        state.tabs[index].instanceOfTemplate = templateId;
+        return;
+      }
       state.tabs.map((tab) => {
         if (tab.instanceOfTemplate === templateId) {
           tab.name = name;
