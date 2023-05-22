@@ -12,7 +12,7 @@ import { TemplateModalMode } from '../../../types';
 import theme from '../../../theme';
 import styled from 'styled-components';
 
-import { addNewTab } from '../../../store/thunks';
+import { addNewTab } from '../../../store/tabsSlice';
 
 const Container = styled.aside`
   display: flex;
