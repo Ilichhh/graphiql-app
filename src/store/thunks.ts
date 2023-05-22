@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 import { RootState } from './store';
 import { addTab } from './tabsSlice';
 import { setQuery, setVariables, setHeaders } from './editorSlice';
@@ -9,7 +9,7 @@ import { DocumentData } from '@firebase/firestore';
 
 export const addNewTab = (data: DocumentData, templateId: string) => {
   const { name, endpoint, query, variables, headers } = data;
-  return (dispatch: ThunkDispatch<RootState, undefined, any>, getState: () => RootState) => {
+  return (dispatch: ThunkDispatch<RootState, undefined, AnyAction>, getState: () => RootState) => {
     dispatch(addTab({ name, instanceOfTemplate: templateId }));
     const state = getState();
     const tabIdx = state.tabs.selectedIdx;
