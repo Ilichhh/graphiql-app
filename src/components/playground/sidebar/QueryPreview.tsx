@@ -12,7 +12,7 @@ import { TemplateModalMode } from '../../../types';
 import theme from '../../../theme';
 import styled from 'styled-components';
 
-import { addNewTab } from '../../../store/tabsSlice';
+import { addTab } from '../../../store/tabsSlice';
 
 const Container = styled.aside`
   display: flex;
@@ -100,7 +100,17 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
   );
 
   const handleOpenTab = useCallback(() => {
-    dispatch(addNewTab(data, templateId));
+    const { name, endpoint, query, variables, headers } = data;
+    dispatch(
+      addTab({
+        name,
+        instanceOfTemplate: templateId,
+        endpoint,
+        query,
+        headers,
+        variables,
+      })
+    );
   }, [data, dispatch, templateId]);
 
   return (

@@ -1,24 +1,15 @@
 import { useCallback } from 'react';
-import { setHeaders, setQuery, setVariables } from '../store/editorSlice';
-import { setEndpoint } from '../store/endpointSlice';
 import { setError } from '../store/errorState';
+import { setEndpoint, setHeaders, setQuery, setVariables } from '../store/tabsSlice';
 import { useAppDispatch, useAppSelector } from './reduxTypedHooks';
 
 export const useTabsState = () => {
   const tabIdx = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
-  const {
-    queries: stateQueries,
-    variables: stateVariables,
-    headers: stateHeaders,
-  } = useAppSelector((state) => state.editor);
-  const endpoints = useAppSelector((store) => store.endpoint);
   const error = useAppSelector((store) => store.error);
+  const { endpoint, query, headers, variables } = useAppSelector(
+    ({ tabs: { tabs, selectedIdx } }) => tabs[selectedIdx]
+  );
   const dispatch = useAppDispatch();
-
-  const endpoint = endpoints[tabIdx] || '';
-  const query = stateQueries[tabIdx] || '';
-  const variables = stateVariables[tabIdx] || '';
-  const headers = stateHeaders[tabIdx] || '';
 
   return {
     endpoint,

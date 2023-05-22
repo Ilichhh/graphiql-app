@@ -1,16 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ThunkDispatch } from 'redux-thunk';
-import { RootState } from './store';
-import { setQuery, setVariables, setHeaders } from './editorSlice';
-import { setEndpoint } from './endpointSlice';
-
-import { AnyAction } from 'redux';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { DocumentData } from '@firebase/firestore';
 
 type Tab = {
   name: string;
   instanceOfTemplate?: string;
+  endpoint: string;
+  query: string;
+  variables: string;
+  headers: string;
 };
 
 type TabsState = {
@@ -23,6 +20,10 @@ const initialState: TabsState = {
   tabs: [
     {
       name: 'New Tab',
+      endpoint: '',
+      query: '',
+      variables: '',
+      headers: '',
     },
   ],
 };
@@ -31,8 +32,8 @@ const tabsSlice = createSlice({
   name: 'tabs',
   initialState: initialState,
   reducers: {
-    addTab: (state, { payload: { name, instanceOfTemplate } }: PayloadAction<Tab>) => {
-      state.tabs.push({ name, instanceOfTemplate });
+    addTab: (state, { payload: tab }: PayloadAction<Tab>) => {
+      state.tabs.push(tab);
       state.selectedIdx = state.tabs.length - 1;
     },
     deleteTab: (state, { payload: index }: PayloadAction<number>) => {
@@ -64,21 +65,41 @@ const tabsSlice = createSlice({
         }
       });
     },
+    setEndpoint: (
+      state,
+      { payload: { tabIdx, endpoint } }: PayloadAction<{ tabIdx: number; endpoint: string }>
+    ) => {
+      state.tabs[tabIdx].endpoint = endpoint;
+    },
+    setQuery: (
+      state,
+      { payload: { tabIdx, query } }: PayloadAction<{ tabIdx: number; query: string }>
+    ) => {
+      state.tabs[tabIdx].query = query;
+    },
+    setVariables: (
+      state,
+      { payload: { tabIdx, variables } }: PayloadAction<{ tabIdx: number; variables: string }>
+    ) => {
+      state.tabs[tabIdx].variables = variables;
+    },
+    setHeaders: (
+      state,
+      { payload: { tabIdx, headers } }: PayloadAction<{ tabIdx: number; headers: string }>
+    ) => {
+      state.tabs[tabIdx].headers = headers;
+    },
   },
 });
 
-export const addNewTab = (data: DocumentData, templateId: string) => {
-  const { name, endpoint, query, variables, headers } = data;
-  return (dispatch: ThunkDispatch<RootState, undefined, AnyAction>, getState: () => RootState) => {
-    dispatch(addTab({ name, instanceOfTemplate: templateId }));
-    const state = getState();
-    const tabIdx = state.tabs.selectedIdx;
-    dispatch(setEndpoint({ tabIdx, endpoint }));
-    dispatch(setQuery({ tabIdx, query }));
-    dispatch(setVariables({ tabIdx, variables }));
-    dispatch(setHeaders({ tabIdx, headers }));
-  };
-};
-
-export const { addTab, deleteTab, selectTab, changeName } = tabsSlice.actions;
+export const {
+  addTab,
+  deleteTab,
+  selectTab,
+  changeName,
+  setEndpoint,
+  setQuery,
+  setVariables,
+  setHeaders,
+} = tabsSlice.actions;
 export default tabsSlice.reducer;
