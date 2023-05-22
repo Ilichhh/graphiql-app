@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
-import { addTab } from '../../../store/tabsSlice';
 
 import { ShowOptionsButton } from '../../../components/common/IconButtons';
 import { QueryTemplateModal } from './';
@@ -12,6 +11,8 @@ import { TemplateModalMode } from '../../../types';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
+
+import { addNewTab } from '../../../store/thunks';
 
 const Container = styled.aside`
   display: flex;
@@ -98,9 +99,13 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
     [handleClosePopover]
   );
 
+  const handleOpenTab = () => {
+    dispatch(addNewTab(data));
+  };
+
   return (
     <Container>
-      <DataWrapper onClick={() => dispatch(addTab(name))}>
+      <DataWrapper onClick={handleOpenTab}>
         <Name>{name}</Name>
         <Endpoint>{endpoint}</Endpoint>
       </DataWrapper>
