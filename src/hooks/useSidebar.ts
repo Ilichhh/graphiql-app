@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import { useAppSelector } from './reduxTypedHooks';
 import { useAppDispatch } from './reduxTypedHooks';
 
+import { changeName } from '../store/tabsSlice';
+
 import {
   setIsOpen,
   setActiveTab,
@@ -65,6 +67,7 @@ export const useSidebar = () => {
       try {
         await renameQueryTemplate(templateId, newName);
         dispatch(renameTemplateAction({ templateId, newName }));
+        dispatch(changeName({ name: newName, templateId }));
       } catch (error) {
         console.error(error);
       }
@@ -79,6 +82,7 @@ export const useSidebar = () => {
         if (!id) return;
 
         dispatch(setQueryTemplates([...queryTemplates, { id, data: templateData }]));
+        dispatch(changeName({ name: templateData.name, templateId: id }));
       } catch (error) {
         console.error(error);
       }

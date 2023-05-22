@@ -100,7 +100,7 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
   );
 
   const handleOpenTab = () => {
-    dispatch(addNewTab(data));
+    dispatch(addNewTab(data, templateId));
   };
 
   return (

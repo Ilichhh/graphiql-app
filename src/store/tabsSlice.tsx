@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 type Tab = {
   name: string;
+  instanceOfTemplate?: string;
 };
 
 type TabsState = {
@@ -23,8 +24,8 @@ const tabsSlice = createSlice({
   name: 'tabs',
   initialState: initialState,
   reducers: {
-    addTab: (state, { payload: name }: PayloadAction<string>) => {
-      state.tabs.push({ name });
+    addTab: (state, { payload: { name, instanceOfTemplate } }: PayloadAction<Tab>) => {
+      state.tabs.push({ name, instanceOfTemplate });
       state.selectedIdx = state.tabs.length - 1;
     },
     deleteTab: (state, { payload: index }: PayloadAction<number>) => {
@@ -41,9 +42,13 @@ const tabsSlice = createSlice({
     },
     changeName: (
       state,
-      { payload: { index, name } }: PayloadAction<{ index: number; name: string }>
+      { payload: { name, templateId } }: PayloadAction<{ name: string; templateId: string }>
     ) => {
-      state.tabs[index].name = name;
+      state.tabs.map((tab) => {
+        if (tab.instanceOfTemplate === templateId) {
+          tab.name = name;
+        }
+      });
     },
   },
 });

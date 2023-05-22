@@ -6,9 +6,10 @@ import { setQuery, setVariables, setHeaders } from './editorSlice';
 
 import { DocumentData } from '@firebase/firestore';
 
-export const addNewTab = ({ name, query, variables, headers }: DocumentData) => {
+export const addNewTab = (data: DocumentData, templateId: string) => {
+  const { name, query, variables, headers } = data;
   return (dispatch: ThunkDispatch<RootState, undefined, any>, getState: () => RootState) => {
-    dispatch(addTab(name));
+    dispatch(addTab({ name, instanceOfTemplate: templateId }));
     const state = getState();
     const tabIdx = state.tabs.selectedIdx;
     dispatch(setQuery({ tabIdx, query }));
