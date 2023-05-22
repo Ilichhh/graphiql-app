@@ -27,8 +27,15 @@ const sidebarSlice = createSlice({
     setQueryTemplates: (state, action: PayloadAction<QueryTemplateData[]>) => {
       state.queryTemplates = action.payload;
     },
+    renameTemplate: (state, action: PayloadAction<{ templateId: string; newName: string }>) => {
+      const { templateId, newName } = action.payload;
+      const template = state.queryTemplates.find((template) => template.id === templateId);
+      if (template) {
+        template.data.name = newName;
+      }
+    },
   },
 });
 
-export const { setIsOpen, setActiveTab, setQueryTemplates } = sidebarSlice.actions;
+export const { setIsOpen, setActiveTab, setQueryTemplates, renameTemplate } = sidebarSlice.actions;
 export default sidebarSlice.reducer;
