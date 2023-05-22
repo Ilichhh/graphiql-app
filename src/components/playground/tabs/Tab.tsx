@@ -83,7 +83,19 @@ export const TabPlus = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <TabWrapper onClick={() => dispatch(addTab({ name: 'New Tab' }))}>
+    <TabWrapper
+      onClick={() =>
+        dispatch(
+          addTab({
+            name: 'New Tab',
+            endpoint: '',
+            query: '',
+            variables: '',
+            headers: '',
+          })
+        )
+      }
+    >
       <AddBtn fontSize="medium" />
     </TabWrapper>
   );
