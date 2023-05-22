@@ -99,9 +99,9 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
     [handleClosePopover]
   );
 
-  const handleOpenTab = () => {
+  const handleOpenTab = useCallback(() => {
     dispatch(addNewTab(data, templateId));
-  };
+  }, [data, dispatch, templateId]);
 
   return (
     <Container>
