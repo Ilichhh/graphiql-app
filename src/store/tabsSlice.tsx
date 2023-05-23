@@ -8,11 +8,17 @@ type Tab = {
   query: string;
   variables: string;
   headers: string;
+  response?: Response;
 };
 
 type TabsState = {
   selectedIdx: number;
   tabs: Tab[];
+};
+
+export type Response = {
+  data: string;
+  status?: number;
 };
 
 const initialState: TabsState = {
@@ -89,6 +95,12 @@ const tabsSlice = createSlice({
     ) => {
       state.tabs[tabIdx].headers = headers;
     },
+    setResponse: (
+      state,
+      { payload: { tabIdx, response } }: PayloadAction<{ tabIdx: number; response?: Response }>
+    ) => {
+      state.tabs[tabIdx].response = response;
+    },
   },
 });
 
@@ -101,5 +113,6 @@ export const {
   setQuery,
   setVariables,
   setHeaders,
+  setResponse,
 } = tabsSlice.actions;
 export default tabsSlice.reducer;
