@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSidebar } from '../../../hooks/useSidebar';
+import { useTabsState } from '../../../hooks/useTabsState';
 
 import { Button, CircularProgress } from '@mui/material';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -12,11 +14,23 @@ interface PlayButtonProps {
 }
 
 export const PlayButton = ({ isFetching, sendRequest }: PlayButtonProps) => {
+  const { query, variables, headers, endpoint, name, instanceOfTemplate } = useTabsState();
+  const { saveQueryRun } = useSidebar();
   const { t } = useTranslation();
+
+  const handleClick = useCallback(() => {
+    sendRequest();
+    const data = { query, variables, headers, endpoint, name };
+    if (instanceOfTemplate) {
+      saveQueryRun({ ...data, instanceOfTemplate });
+    } else {
+      saveQueryRun(data);
+    }
+  }, [sendRequest, saveQueryRun, query, variables, headers, endpoint, name, instanceOfTemplate]);
 
   return (
     <Button
-      onClick={sendRequest}
+      onClick={handleClick}
       variant="contained"
       size="medium"
       startIcon={

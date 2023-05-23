@@ -1,17 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { SidebarTabs, QueryTemplateData } from '../types';
+import { SidebarTabs, QueryTemplateData, RunHistoryData } from '../types';
 
 interface SidebarState {
   isOpen: boolean;
   activeTab: SidebarTabs;
   queryTemplates: QueryTemplateData[];
+  runHistory: RunHistoryData[];
 }
 
 const initialState: SidebarState = {
   isOpen: false,
   activeTab: SidebarTabs.Templates,
   queryTemplates: [],
+  runHistory: [],
 };
 
 const sidebarSlice = createSlice({
@@ -34,8 +36,12 @@ const sidebarSlice = createSlice({
         template.data.name = newName;
       }
     },
+    setRunHistory: (state, action: PayloadAction<RunHistoryData[]>) => {
+      state.runHistory = action.payload;
+    },
   },
 });
 
-export const { setIsOpen, setActiveTab, setQueryTemplates, renameTemplate } = sidebarSlice.actions;
+export const { setIsOpen, setActiveTab, setQueryTemplates, renameTemplate, setRunHistory } =
+  sidebarSlice.actions;
 export default sidebarSlice.reducer;

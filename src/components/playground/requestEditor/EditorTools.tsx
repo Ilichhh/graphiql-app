@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTabsState } from '../../../hooks/useTabsState';
 import { useVerticalResize } from '../../../hooks/useVerticalResize';
 import { MetadataEditor } from '../codemirror';
-import { Tab } from '../../../types';
+import { EditorToolsTab } from '../../../types';
 import theme from '../../../theme';
 import styled from 'styled-components';
 
@@ -62,14 +62,14 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
 
 export const EditorTools = () => {
   const { headers, variables, setVariables, setHeaders } = useTabsState();
-  const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
+  const [activeToolsTab, setActiveToolsTab] = useState<EditorToolsTab>(EditorToolsTab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
   const { panelHeight, handleResize, isDragging } = useVerticalResize(300);
   const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
 
   const handleToolsTabClick = useCallback(
-    (e: React.MouseEvent, tab: Tab) => {
+    (e: React.MouseEvent, tab: EditorToolsTab) => {
       setActiveToolsTab(tab);
       setIsEditorToolsOpen(true);
       e.stopPropagation();
@@ -103,13 +103,13 @@ export const EditorTools = () => {
       <ToolsBar onMouseDown={handleToolsTabResize} onMouseUp={handleToolsTabToggle}>
         <ToolsTab
           isActive={activeToolsTab === 'variables'}
-          onClick={(e) => handleToolsTabClick(e, Tab.Variables)}
+          onClick={(e) => handleToolsTabClick(e, EditorToolsTab.Variables)}
         >
           {t('playground.variablesTabHeader')}
         </ToolsTab>
         <ToolsTab
           isActive={activeToolsTab === 'headers'}
-          onClick={(e) => handleToolsTabClick(e, Tab.Headers)}
+          onClick={(e) => handleToolsTabClick(e, EditorToolsTab.Headers)}
         >
           {t('playground.headersTabHeader')} {headersLength ? `(${headersLength})` : null}
         </ToolsTab>

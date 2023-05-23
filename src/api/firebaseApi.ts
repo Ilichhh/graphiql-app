@@ -1,7 +1,16 @@
 import { UseFormSetError, FieldValues } from 'react-hook-form';
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { doc, setDoc, addDoc, getDocs, deleteDoc, updateDoc, collection } from 'firebase/firestore';
+import {
+  doc,
+  setDoc,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+  collection,
+  serverTimestamp,
+} from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
 import { DocumentData } from '@firebase/firestore';
@@ -140,6 +149,20 @@ export const renameQueryTemplate = async (templateId: string, newName: string) =
 
     const templateRef = doc(db, 'users', userUid, 'queryTemplates', templateId);
     await updateDoc(templateRef, { name: newName });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const saveQueryRunToHistory = async (queryRunData: DocumentData) => {
+  try {
+    const userUid = auth.currentUser?.uid;
+    if (!userUid) return;
+
+    const queryRunRef = collection(doc(db, 'users', userUid), 'runHistory');
+    const docRef = await addDoc(queryRunRef, { ...queryRunData, date: serverTimestamp() });
+
+    return docRef.id;
   } catch (error) {
     console.error(error);
   }

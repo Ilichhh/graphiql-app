@@ -9,12 +9,14 @@ import {
   setActiveTab,
   setQueryTemplates,
   renameTemplate as renameTemplateAction,
+  setRunHistory,
 } from '../store/sidebarSlice';
 import {
   getAllQueryTemplates,
   deleteQueryTemplate,
   saveQueryTemplate,
   renameQueryTemplate,
+  saveQueryRunToHistory,
 } from '../api/firebaseApi';
 
 import { DocumentData } from '@firebase/firestore';
@@ -22,7 +24,9 @@ import { SidebarTabs } from '../types';
 
 export const useSidebar = () => {
   const dispatch = useAppDispatch();
-  const { isOpen, activeTab, queryTemplates } = useAppSelector((state) => state.sidebar);
+  const { isOpen, activeTab, queryTemplates, runHistory } = useAppSelector(
+    (state) => state.sidebar
+  );
   const tabIdx = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
 
   const closeSidebar = useCallback(() => {
@@ -91,6 +95,20 @@ export const useSidebar = () => {
     [dispatch, queryTemplates, tabIdx]
   );
 
+  const saveQueryRun = useCallback(
+    async (queryRunData: DocumentData) => {
+      try {
+        const id = await saveQueryRunToHistory(queryRunData);
+        if (!id) return;
+
+        dispatch(setRunHistory([...runHistory, { id, data: queryRunData }]));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [dispatch, runHistory]
+  );
+
   return {
     isOpen,
     closeSidebar,
@@ -102,5 +120,6 @@ export const useSidebar = () => {
     deleteTemplate,
     saveTemplate,
     renameTemplate,
+    saveQueryRun,
   };
 };

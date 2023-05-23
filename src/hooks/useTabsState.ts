@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from './reduxTypedHooks';
 export const useTabsState = () => {
   const tabIdx = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
   const error = useAppSelector((store) => store.error);
-  const { endpoint, query, headers, variables } = useAppSelector(
+  const { endpoint, query, headers, variables, name, instanceOfTemplate } = useAppSelector(
     ({ tabs: { tabs, selectedIdx } }) => tabs[selectedIdx]
   );
   const dispatch = useAppDispatch();
@@ -16,7 +16,9 @@ export const useTabsState = () => {
     query,
     variables,
     headers,
+    name,
     error,
+    instanceOfTemplate,
     setEndpoint: useCallback(
       (endpoint: string) => dispatch(setEndpoint({ tabIdx, endpoint })),
       [dispatch, tabIdx]

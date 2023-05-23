@@ -1,6 +1,6 @@
 import { DocumentData } from '@firebase/firestore';
 
-export enum Tab {
+export enum EditorToolsTab {
   Variables = 'variables',
   Headers = 'headers',
 }
@@ -23,6 +23,11 @@ export enum TemplateModalMode {
 }
 
 export interface QueryTemplateData {
+  id: string;
+  data: DocumentData;
+}
+
+export interface RunHistoryData {
   id: string;
   data: DocumentData;
 }
