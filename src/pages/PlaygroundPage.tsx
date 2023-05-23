@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { DocsPanel } from '../components/playground/docsExplorer';
 import { usePlayground } from '../hooks/usePlayground';
 import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
 import { useTabsState } from '../hooks/useTabsState';
@@ -46,8 +47,6 @@ export const PlaygroundPage = React.memo(() => {
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
-
-  const DocsPanel = React.lazy(() => import('../components/playground/docsExplorer/DocsPanel'));
   const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
 
   useEffect(() => {
