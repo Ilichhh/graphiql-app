@@ -65,6 +65,11 @@ const ContentBox = styled.div`
   }
 `;
 
+const EmptyCollectionMessage = styled.div`
+  padding: 10px;
+  color: ${theme.colors.textInactive};
+`;
+
 export const Sidebar = React.memo(() => {
   const { closeSidebar, queryTemplates, activeTab, changeTab } = useSidebar();
   const [queriesArray, setQueriesArray] = useState<React.ReactNode[]>([]);
@@ -92,7 +97,13 @@ export const Sidebar = React.memo(() => {
         />
       </Nav>
       <Header>{t('playground.queriesCollection')}</Header>
-      <ContentBox>{activeTab === 'templates' && queriesArray}</ContentBox>
+      <ContentBox>
+        {activeTab === 'templates' && queriesArray.length ? (
+          queriesArray
+        ) : (
+          <EmptyCollectionMessage>{t('playground.emptyCollectionMessage')}</EmptyCollectionMessage>
+        )}
+      </ContentBox>
     </Container>
   );
 });
