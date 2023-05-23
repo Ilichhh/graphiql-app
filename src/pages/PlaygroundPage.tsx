@@ -15,6 +15,7 @@ import { Sidebar } from '../components/playground/sidebar';
 import styled from 'styled-components';
 import theme from '../theme';
 import { TabBar } from '../components/playground/tabs/TabBar';
+import { ResizeHandle } from '../components/common/ResizeHandle';
 
 const Wrapper = styled.main`
   position: relative;
@@ -74,6 +75,7 @@ export const PlaygroundPage = React.memo(() => {
           <PlaygroundHeader isError={isSchemaError} />
           <Playground>
             <Editor isFetching={isFetching} sendRequest={sendRequest} />
+            <ResizeHandle></ResizeHandle>
             <ResponseBox
               isFetching={isFetching}
               response={responseText}
