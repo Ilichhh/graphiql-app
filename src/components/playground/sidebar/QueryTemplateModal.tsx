@@ -18,7 +18,8 @@ const Container = styled.form`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   gap: 20px;
