@@ -20,6 +20,15 @@ const Container = styled.aside`
   flex-direction: column;
   color: ${theme.colors.textGrey};
   background-color: ${theme.colors.bgBlue};
+  @media (max-width: 800px) {
+    position: absolute;
+    z-index: 100;
+    height: 100%;
+    box-shadow: 3px 0px 2px rgba(0, 0, 0, 0.25);
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const Nav = styled.div`
@@ -51,6 +60,14 @@ const ContentBox = styled.div`
   padding: 5px 10px;
   width: 320px;
   border-top: 1px solid ${theme.colors.bgDarkBlue};
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+`;
+
+const EmptyCollectionMessage = styled.div`
+  padding: 10px;
+  color: ${theme.colors.textInactive};
 `;
 
 export const Sidebar = React.memo(() => {
@@ -80,7 +97,13 @@ export const Sidebar = React.memo(() => {
         />
       </Nav>
       <Header>{t('playground.queriesCollection')}</Header>
-      <ContentBox>{activeTab === 'templates' && queriesArray}</ContentBox>
+      <ContentBox>
+        {activeTab === 'templates' && queriesArray.length ? (
+          queriesArray
+        ) : (
+          <EmptyCollectionMessage>{t('playground.emptyCollectionMessage')}</EmptyCollectionMessage>
+        )}
+      </ContentBox>
     </Container>
   );
 });

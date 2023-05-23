@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSidebar } from '../../../hooks/useSidebar';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
@@ -18,7 +18,8 @@ const Container = styled.form`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -53,21 +54,19 @@ export const QueryTemplateModal = React.memo(
   ({ setMode, mode, templateId, prevName }: QueryTemplateModalProps) => {
     const { endpoint, query, variables, headers } = useTabsState();
     const { saveTemplate, renameTemplate, deleteTemplate } = useSidebar();
-    const [newName, setNewName] = useState(prevName || '');
     const { t } = useTranslation();
     const {
       register,
       handleSubmit,
       formState: { isSubmitting },
+      watch,
     } = useForm();
+
+    const newName = watch('newName');
 
     const handleClose = useCallback(() => {
       setMode(null);
     }, [setMode]);
-
-    const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-      setNewName(e.target.value);
-    }, []);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
       if (mode === 'save') {
@@ -92,11 +91,11 @@ export const QueryTemplateModal = React.memo(
             ) : (
               <TextField
                 fullWidth
+                autoFocus
                 label={t(`playground.modal.${mode}.title`)}
                 variant="outlined"
+                defaultValue={prevName}
                 {...register('newName', { required: true })}
-                value={newName}
-                onChange={handleChange}
               />
             )}
             <Buttons>
@@ -106,7 +105,7 @@ export const QueryTemplateModal = React.memo(
               <LoadingButton
                 type="submit"
                 variant="contained"
-                disabled={!newName}
+                disabled={!newName && !prevName}
                 loading={isSubmitting}
               >
                 {t(`playground.modal.${mode}.submit`)}
