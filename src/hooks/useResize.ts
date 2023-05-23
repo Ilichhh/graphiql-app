@@ -1,13 +1,20 @@
 import { useState, useCallback } from 'react';
 
-export const useVerticalResize = (initialHeight: number) => {
-  const [panelHeight, setPanelHeight] = useState(initialHeight);
+export const useResize = (initialValue: number, attribute: 'width' | 'height') => {
+  const [value, setValue] = useState(initialValue);
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    setPanelHeight((panelHeight) => panelHeight - e.movementY);
-    setIsDragging(true);
-  }, []);
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (attribute === 'width') {
+        setValue((value) => value + e.movementX);
+      } else {
+        setValue((value) => value - e.movementY);
+      }
+      setIsDragging(true);
+    },
+    [attribute]
+  );
 
   const handleMouseUp = useCallback(() => {
     document.removeEventListener('mousemove', handleMouseMove);
@@ -20,5 +27,5 @@ export const useVerticalResize = (initialHeight: number) => {
     document.addEventListener('mouseup', handleMouseUp);
   }, [handleMouseMove, handleMouseUp]);
 
-  return { panelHeight, setPanelHeight, handleResize, isDragging };
+  return { value, setValue, handleResize, isDragging };
 };

@@ -13,11 +13,18 @@ import { TemplateModalMode } from '../../../types';
 import theme from '../../../theme';
 import styled from 'styled-components';
 
-const Container = styled.section`
+type ContainerProps = {
+  w: number;
+};
+
+const Container = styled.section.attrs<ContainerProps>(({ w }) => ({
+  style: {
+    width: `${w}px`,
+  },
+}))<ContainerProps>`
   display: flex;
   flex-direction: column;
-  flex: 1 1 0;
-  width: 100%;
+
   overflow-x: auto;
 `;
 
@@ -64,11 +71,12 @@ const RequestEditorControls = styled.div`
 `;
 
 interface EditorProps {
+  width: number;
   isFetching: boolean;
   sendRequest: () => void;
 }
 
-export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
+export const Editor = ({ isFetching, sendRequest, width }: EditorProps) => {
   const { query, setQuery } = useTabsState();
   const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
     null
@@ -77,7 +85,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
   const { prettify } = usePrettier();
 
   return (
-    <Container>
+    <Container w={width}>
       <EditorBox>
         <RequestEditorHeader>
           {t('playground.operation')}

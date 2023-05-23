@@ -22,9 +22,9 @@ const Handle = styled.div`
   }
 `;
 
-export const ResizeHandle = () => {
+export const ResizeHandle = ({ ...props }) => {
   return (
-    <Container>
+    <Container {...props}>
       <Handle></Handle>
     </Container>
   );
