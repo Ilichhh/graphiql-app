@@ -14,14 +14,14 @@ type ErrorObject =
 export const usePlayground = (endpoint: string) => {
   const { t } = useTranslation();
 
-  const { query, variables, headers, response, setResponse, setError, tabIdx } = useTabsState();
+  const { query, variables, headers, response, setResponse, setError, tabId } = useTabsState();
   const [parsedVariables, parsedHeaders, paramsError] = useMemo(
     () => parseParams(variables, headers),
     [variables, headers]
   );
 
   const [trigger, { data, error, isLoading: isFetching }] = useGetResponseMutation({
-    fixedCacheKey: hashFromObject({ tabIdx }),
+    fixedCacheKey: hashFromObject({ tabId }),
   });
   const [errorMessage, setErrorMessage] = useState<ErrorObject>();
 

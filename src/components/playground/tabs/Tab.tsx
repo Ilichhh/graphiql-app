@@ -51,21 +51,21 @@ const AddBtn = styled(AddIcon)`
 `;
 
 interface TabProps {
-  index: number;
+  id: number;
   name: string;
   isActive: boolean;
   showCloseBtn: boolean;
 }
-export const Tab = ({ index, name, isActive, showCloseBtn }: TabProps) => {
+export const Tab = ({ id, name, isActive, showCloseBtn }: TabProps) => {
   const dispatch = useAppDispatch();
   const handleDelete = (e: React.MouseEvent<SVGSVGElement>) => {
-    dispatch(deleteTab(index));
+    dispatch(deleteTab(id));
     e.stopPropagation();
   };
 
   return (
     <>
-      <TabWrapper isActive={isActive} onClick={() => dispatch(selectTab(index))}>
+      <TabWrapper isActive={isActive} onClick={() => dispatch(selectTab(id))}>
         <TabName isActive={isActive}>{name}</TabName>
         {showCloseBtn && (
           <CloseBtn
