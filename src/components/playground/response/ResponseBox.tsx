@@ -12,7 +12,9 @@ const Container = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 1 1 0;
+  flex: 1 1 auto;
+  min-width: 300px;
+
   overflow: hidden;
   background: ${theme.colors.bgDarkBlue};
 `;

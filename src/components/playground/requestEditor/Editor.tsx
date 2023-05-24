@@ -15,19 +15,17 @@ import styled from 'styled-components';
 
 type ContainerProps = {
   width: number;
-  height: number;
 };
 
-const Container = styled.section.attrs<ContainerProps>(({ width, height }) => ({
+const Container = styled.section.attrs<ContainerProps>(({ width }) => ({
   style: {
-    width: width === -1 ? '100%' : `${width}px`,
-    height: height === -1 ? '100%' : `${height}px`,
+    width: `${width}px`,
   },
 }))<ContainerProps>`
   display: flex;
   flex-direction: column;
 
-  min-width: 400px;
+  min-width: 300px;
   min-height: 300px;
 
   @media (max-width: 600px) {
@@ -80,12 +78,11 @@ const RequestEditorControls = styled.div`
 
 interface EditorProps {
   width: number;
-  height: number;
   isFetching: boolean;
   sendRequest: () => void;
 }
 
-export const Editor = ({ isFetching, sendRequest, width, height }: EditorProps) => {
+export const Editor = ({ isFetching, sendRequest, width }: EditorProps) => {
   const { query, setQuery } = useTabsState();
   const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
     null
@@ -94,7 +91,7 @@ export const Editor = ({ isFetching, sendRequest, width, height }: EditorProps) 
   const { prettify } = usePrettier();
 
   return (
-    <Container width={width} height={height}>
+    <Container width={width}>
       <EditorBox>
         <RequestEditorHeader>
           {t('playground.operation')}

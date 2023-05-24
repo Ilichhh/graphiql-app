@@ -51,16 +51,7 @@ export const PlaygroundPage = React.memo(() => {
   const [isModal, setIsModal] = useState(!lastEndpoint);
   const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
 
-  const { width, height, handleResize, setDirection } = useResize(800, 600, 'horizontal');
-
-  const windowWidth = window.innerWidth;
-  useEffect(() => {
-    if (windowWidth < 600) {
-      setDirection('vertical');
-    } else {
-      setDirection('horizontal');
-    }
-  }, [windowWidth, setDirection]);
+  const { size: panelWidth, handleResize } = useResize(800, 'horizontal');
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
@@ -86,12 +77,7 @@ export const PlaygroundPage = React.memo(() => {
           <TabBar />
           <PlaygroundHeader isError={isSchemaError} />
           <Playground>
-            <Editor
-              isFetching={isFetching}
-              sendRequest={sendRequest}
-              width={width}
-              height={height}
-            />
+            <Editor isFetching={isFetching} sendRequest={sendRequest} width={panelWidth} />
             <ResizeHandle onMouseDown={handleResize} />
             <ResponseBox
               isFetching={isFetching}

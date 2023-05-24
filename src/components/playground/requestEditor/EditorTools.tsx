@@ -31,7 +31,7 @@ const Container = styled.section<{ isOpen: boolean; height: number }>`
   display: flex;
   background: ${theme.colors.bgBlack};
   flex-direction: column;
-  min-height: 40px;
+  min-height: 35px;
   max-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight} - 106px);
   ${({ isOpen, height }) => isOpen && `height: ${height}px`};
 `;
@@ -46,8 +46,8 @@ const ToolsBar = styled.div`
   user-select: none;
   border-bottom: 1px solid ${theme.colors.bgDarkBlue};
   cursor: row-resize;
+
   @media (max-width: 600px) {
-    height: 100%;
     padding: 8px;
     font-size: 0.6rem;
   }
@@ -65,7 +65,7 @@ export const EditorTools = () => {
   const { headers, variables, setVariables, setHeaders } = useTabsState();
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
-  const { height: panelHeight, handleResize, isDragging } = useResize(-1, 300, 'vertical');
+  const { size: panelHeight, handleResize, isDragging } = useResize(300, 'vertical');
   const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
 
