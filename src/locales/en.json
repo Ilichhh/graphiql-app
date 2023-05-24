@@ -38,11 +38,11 @@
     "endpointSubmit": "Use endpoint",
     "chooseEndpoint": "or choose one of the following",
     "serverError": "Server cannot be reached",
-    "operation": "Operation",
+    "operation": "Query",
     "response": "Response",
     "playBtn": "Run",
     "paramsError": "Please provide valid parameters",
-    "saveOperation": "Save operation",
+    "saveOperation": "Save query",
     "schemaError": "Failed to fetch schema. Please check your connection",
     "cancel": "Cancel",
     "prettify": "Prettify",
@@ -51,6 +51,7 @@
     "renameQuery": "Rename query",
     "deleteQuery": "Delete",
     "queriesCollection": "Queries collection",
+    "emptyCollectionMessage": "You do not have any saved queries. Save a query to see it in the collection.",
     "modal": {
       "save": {
         "header": "Save Query",
