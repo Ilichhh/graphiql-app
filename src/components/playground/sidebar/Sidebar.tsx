@@ -3,12 +3,8 @@ import { useSidebar } from '../../../hooks/useSidebar';
 import { useTranslation } from 'react-i18next';
 
 import { QueryPreview } from './QueryPreview';
-import {
-  CloseSidebarButton,
-  RequestsHistoryTabButton,
-  SettingsTabButton,
-  TemplatesTabButton,
-} from '../../../components/common/IconButtons';
+import { CloseSidebarButton } from '../../../components/common/IconButtons';
+import { BookmarkBorderOutlined, HistoryOutlined } from '@mui/icons-material';
 
 import { SidebarTabs } from '../../../types';
 
@@ -35,6 +31,21 @@ const Nav = styled.div`
 const Tabs = styled.div`
   display: flex;
   gap: 5px;
+`;
+
+const SidebarTab = styled.div<{ isActive?: boolean }>`
+  display: flex;
+  height: 43px;
+  align-items: center;
+  padding: 10px;
+  background-color: ${({ isActive }) =>
+    isActive ? `${theme.colors.bgBlue}` : `${theme.colors.bgDarkBlue}`};
+  user-select: none;
+
+  &:hover {
+    background-color: ${theme.colors.bgBlue};
+    cursor: pointer;
+  }
 `;
 
 const Header = styled.div`
@@ -69,9 +80,18 @@ export const Sidebar = React.memo(() => {
     <Container>
       <Nav>
         <Tabs>
-          <TemplatesTabButton size="small" onClick={() => changeTab(SidebarTabs.Templates)} />
-          <RequestsHistoryTabButton size="small" disabled />
-          <SettingsTabButton size="small" disabled />
+          <SidebarTab
+            isActive={activeTab === 'templates'}
+            onClick={() => changeTab(SidebarTabs.Templates)}
+          >
+            <BookmarkBorderOutlined />
+          </SidebarTab>
+          <SidebarTab
+            isActive={activeTab === 'history'}
+            onClick={() => changeTab(SidebarTabs.History)}
+          >
+            <HistoryOutlined disabled />
+          </SidebarTab>
         </Tabs>
         <CloseSidebarButton
           size="small"
