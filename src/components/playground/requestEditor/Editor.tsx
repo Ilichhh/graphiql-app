@@ -25,7 +25,7 @@ const Container = styled.section.attrs<ContainerProps>(({ width }) => ({
   display: flex;
   flex-direction: column;
 
-  min-width: 300px;
+  min-width: 380px;
   min-height: 300px;
 
   @media (max-width: 600px) {
