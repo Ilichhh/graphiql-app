@@ -167,3 +167,22 @@ export const saveQueryRunToHistory = async (queryRunData: DocumentData) => {
     console.error(error);
   }
 };
+
+export const getAllQueriesHistory = async () => {
+  try {
+    const userUid = auth.currentUser?.uid;
+    if (!userUid) return [];
+
+    const queriesHistoryRef = collection(doc(db, 'users', userUid), 'runHistory');
+    const querySnapshot = await getDocs(queriesHistoryRef);
+    const history = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      data: doc.data(),
+    }));
+
+    return history;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};

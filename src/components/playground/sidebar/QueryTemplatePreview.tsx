@@ -4,8 +4,8 @@ import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
 import { useSidebar } from '../../../hooks/useSidebar';
 import { addTab } from '../../../store/tabsSlice';
 
-import { ShowOptionsButton } from '../../../components/common/IconButtons';
-import { QueryTemplateModal } from './';
+import { ShowOptionsButton } from '../../common/IconButtons';
+import { QueryTemplateModal } from '.';
 import Popover from '@mui/material/Popover';
 
 import { DocumentData } from '@firebase/firestore';
@@ -69,12 +69,12 @@ const DeleteOption = styled(Option)`
   color: ${theme.colors.error};
 `;
 
-interface QueryPreviewProps {
+interface QueryTemplatePreviewProps {
   templateId: string;
   data: DocumentData;
 }
 
-export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
+export const QueryTemplatePreview = ({ templateId, data }: QueryTemplatePreviewProps) => {
   const { name, endpoint } = data;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(

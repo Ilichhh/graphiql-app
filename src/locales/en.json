@@ -51,6 +51,7 @@
     "renameQuery": "Rename query",
     "deleteQuery": "Delete",
     "queriesCollection": "Queries collection",
+    "runHistory": "Run history",
     "emptyCollectionMessage": "You do not have any saved queries. Save a query to see it in the collection.",
     "modal": {
       "save": {

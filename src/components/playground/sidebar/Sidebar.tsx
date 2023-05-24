@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSidebar } from '../../../hooks/useSidebar';
 import { useTranslation } from 'react-i18next';
 
-import { QueryPreview } from './QueryPreview';
+import { QueryTemplatePreview, QueryHistoryPreview } from './';
 import { CloseSidebarButton } from '../../../components/common/IconButtons';
 import { BookmarkBorderOutlined, HistoryOutlined } from '@mui/icons-material';
 
@@ -68,9 +68,22 @@ const Header = styled.div`
 const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1 1 0;
   padding: 5px 10px;
   width: 320px;
   border-top: 1px solid ${theme.colors.bgDarkBlue};
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${theme.colors.bgDarkBlue};
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: ${theme.colors.bgBlue};
+  }
   @media (max-width: 600px) {
     width: 100%;
   }
@@ -82,16 +95,62 @@ const EmptyCollectionMessage = styled.div`
 `;
 
 export const Sidebar = React.memo(() => {
-  const { closeSidebar, queryTemplates, activeTab, changeTab } = useSidebar();
-  const [queriesArray, setQueriesArray] = useState<React.ReactNode[]>([]);
+  const { closeSidebar, queryTemplates, activeTab, changeTab, runHistory } = useSidebar();
+  const [templatesArray, setTemplatesArray] = useState<React.ReactNode[]>([]);
+  const [runHistoryArray, setRunHistoryArray] = useState<React.ReactNode[]>([]);
   const { t } = useTranslation();
 
   useEffect(() => {
     const arr = queryTemplates.map((template) => (
-      <QueryPreview key={template.id} templateId={template.id} data={template.data} />
+      <QueryTemplatePreview key={template.id} templateId={template.id} data={template.data} />
     ));
-    setQueriesArray(arr);
+    setTemplatesArray(arr);
   }, [queryTemplates]);
+
+  useEffect(() => {
+    const arr = runHistory.map((historyItem) => (
+      <QueryHistoryPreview
+        key={historyItem.id}
+        templateId={historyItem.id}
+        data={historyItem.data}
+      />
+    ));
+    setRunHistoryArray(arr);
+  }, [runHistory]);
+
+  let tabContent;
+  if (activeTab === 'templates') {
+    tabContent = (
+      <>
+        <Header>{t('playground.queriesCollection')}</Header>
+        <ContentBox>
+          {templatesArray.length ? (
+            templatesArray
+          ) : (
+            <EmptyCollectionMessage>
+              {t('playground.emptyCollectionMessage')}
+            </EmptyCollectionMessage>
+          )}
+        </ContentBox>
+      </>
+    );
+  }
+  if (activeTab === 'history') {
+    tabContent = (
+      <>
+        <Header>{t('playground.runHistory')}</Header>
+        <ContentBox>
+          {runHistoryArray.length ? (
+            runHistoryArray
+          ) : (
+            <EmptyCollectionMessage>
+              {t('playground.emptyCollectionMessage')}
+            </EmptyCollectionMessage>
+          )}
+        </ContentBox>
+      </>
+    );
+  }
 
   return (
     <Container>
@@ -107,7 +166,7 @@ export const Sidebar = React.memo(() => {
             isActive={activeTab === 'history'}
             onClick={() => changeTab(SidebarTabs.History)}
           >
-            <HistoryOutlined disabled />
+            <HistoryOutlined />
           </SidebarTab>
         </Tabs>
         <CloseSidebarButton
@@ -116,14 +175,7 @@ export const Sidebar = React.memo(() => {
           onClick={closeSidebar}
         />
       </Nav>
-      <Header>{t('playground.queriesCollection')}</Header>
-      <ContentBox>
-        {activeTab === 'templates' && queriesArray.length ? (
-          queriesArray
-        ) : (
-          <EmptyCollectionMessage>{t('playground.emptyCollectionMessage')}</EmptyCollectionMessage>
-        )}
-      </ContentBox>
+      {tabContent}
     </Container>
   );
 });

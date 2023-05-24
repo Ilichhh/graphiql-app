@@ -3,7 +3,6 @@ import { useAppSelector } from './reduxTypedHooks';
 import { useAppDispatch } from './reduxTypedHooks';
 
 import { changeName } from '../store/tabsSlice';
-
 import {
   setIsOpen,
   setActiveTab,
@@ -17,6 +16,7 @@ import {
   saveQueryTemplate,
   renameQueryTemplate,
   saveQueryRunToHistory,
+  getAllQueriesHistory,
 } from '../api/firebaseApi';
 
 import { DocumentData } from '@firebase/firestore';
@@ -95,6 +95,15 @@ export const useSidebar = () => {
     [dispatch, queryTemplates, tabIdx]
   );
 
+  const fetchQueriesHistoryData = useCallback(async () => {
+    try {
+      const data = await getAllQueriesHistory();
+      dispatch(setRunHistory(data));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [dispatch]);
+
   const saveQueryRun = useCallback(
     async (queryRunData: DocumentData) => {
       try {
@@ -121,5 +130,7 @@ export const useSidebar = () => {
     saveTemplate,
     renameTemplate,
     saveQueryRun,
+    fetchQueriesHistoryData,
+    runHistory,
   };
 };
