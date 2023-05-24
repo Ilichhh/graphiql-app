@@ -25,6 +25,7 @@ export const useTabsState = () => {
     headers,
     response,
     error,
+    tabIdx,
     setEndpoint: useCallback(
       (endpoint: string) => dispatch(setEndpoint({ tabIdx, endpoint })),
       [dispatch, tabIdx]
