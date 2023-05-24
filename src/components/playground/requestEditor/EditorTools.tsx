@@ -46,11 +46,6 @@ const ToolsBar = styled.div`
   user-select: none;
   border-bottom: 1px solid ${theme.colors.bgDarkBlue};
   cursor: row-resize;
-
-  @media (max-width: 600px) {
-    padding: 8px;
-    font-size: 0.6rem;
-  }
 `;
 
 const ToolsTab = styled.span<{ isActive: boolean }>`

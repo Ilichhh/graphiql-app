@@ -12,7 +12,7 @@ import { Editor } from '../components/playground/requestEditor';
 import { Header, Footer } from '../components';
 import { Sidebar } from '../components/playground/sidebar';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from '../theme';
 import { TabBar } from '../components/playground/tabs/TabBar';
 import { ResizeHandle } from '../components/common/ResizeHandle';
@@ -33,10 +33,17 @@ const PlaygroundWrapper = styled.main`
   width: 100%;
 `;
 
-const Playground = styled.div`
+const Playground = styled.div<{ isSidebarOpen: boolean }>`
   display: flex;
   flex: 1 1 0;
   background: ${theme.colors.bgBlue};
+  ${({ isSidebarOpen }) =>
+    isSidebarOpen &&
+    css`
+      @media (min-width: 800px) and (max-width: 1100px) {
+        flex-direction: column;
+      }
+    `}
   @media (max-width: 600px) {
     flex-direction: column;
   }
@@ -76,7 +83,7 @@ export const PlaygroundPage = React.memo(() => {
         <PlaygroundWrapper>
           <TabBar />
           <PlaygroundHeader isError={isSchemaError} />
-          <Playground>
+          <Playground isSidebarOpen={isSidebarOpen}>
             <Editor isFetching={isFetching} sendRequest={sendRequest} width={panelWidth} />
             <ResizeHandle onMouseDown={handleResize} />
             <ResponseBox

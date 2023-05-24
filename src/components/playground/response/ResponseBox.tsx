@@ -40,6 +40,9 @@ const ResponseSection = styled.section`
   &::-webkit-scrollbar-corner {
     background-color: ${theme.colors.bgBlue};
   }
+  @media (max-width: 1100px) {
+    padding: 0 15px 20px;
+  }
 `;
 
 const ProgressWrapper = styled.div`

@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
+import { useSidebar } from '../../../hooks/useSidebar';
+import { addTab } from '../../../store/tabsSlice';
 
 import { ShowOptionsButton } from '../../../components/common/IconButtons';
 import { QueryTemplateModal } from './';
@@ -11,8 +13,6 @@ import { TemplateModalMode } from '../../../types';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
-
-import { addTab } from '../../../store/tabsSlice';
 
 const Container = styled.aside`
   display: flex;
@@ -80,6 +80,7 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
   const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
     null
   );
+  const { closeSidebar } = useSidebar();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -111,7 +112,10 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
         variables,
       })
     );
-  }, [data, dispatch, templateId]);
+    if (window.innerWidth < 800) {
+      closeSidebar();
+    }
+  }, [data, dispatch, templateId, closeSidebar]);
 
   return (
     <Container>
