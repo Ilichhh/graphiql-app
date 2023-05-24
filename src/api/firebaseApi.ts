@@ -160,7 +160,7 @@ export const saveQueryRunToHistory = async (queryRunData: DocumentData) => {
     if (!userUid) return;
 
     const queryRunRef = collection(doc(db, 'users', userUid), 'runHistory');
-    const docRef = await addDoc(queryRunRef, { ...queryRunData, date: serverTimestamp() });
+    const docRef = await addDoc(queryRunRef, { data: queryRunData, timestamp: serverTimestamp() });
 
     return docRef.id;
   } catch (error) {
@@ -177,7 +177,8 @@ export const getAllQueriesHistory = async () => {
     const querySnapshot = await getDocs(queriesHistoryRef);
     const history = querySnapshot.docs.map((doc) => ({
       id: doc.id,
-      data: doc.data(),
+      timestamp: doc.data().timestamp.toMillis(),
+      data: doc.data().data,
     }));
 
     return history;

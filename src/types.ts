@@ -29,5 +29,6 @@ export interface QueryTemplateData {
 
 export interface RunHistoryData {
   id: string;
+  timestamp: number;
   data: DocumentData;
 }

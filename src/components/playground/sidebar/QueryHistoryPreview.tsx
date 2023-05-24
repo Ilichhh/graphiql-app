@@ -60,13 +60,14 @@ const Date = styled.div`
 interface QueryHistoryPreviewProps {
   templateId: string;
   data: DocumentData;
+  timestamp: number;
 }
 
-export const QueryHistoryPreview = ({ templateId, data }: QueryHistoryPreviewProps) => {
+export const QueryHistoryPreview = ({ templateId, data, timestamp }: QueryHistoryPreviewProps) => {
   const { name, endpoint } = data;
   const { closeSidebar } = useSidebar();
   const dispatch = useAppDispatch();
-  const date = useTimestamp(data.date);
+  const date = useTimestamp(timestamp);
 
   const handleOpenTab = useCallback(() => {
     const { name, endpoint, query, variables, headers } = data;

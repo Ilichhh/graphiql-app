@@ -113,6 +113,7 @@ export const Sidebar = React.memo(() => {
         key={historyItem.id}
         templateId={historyItem.id}
         data={historyItem.data}
+        timestamp={historyItem.timestamp}
       />
     ));
     setRunHistoryArray(arr);

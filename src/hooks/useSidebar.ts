@@ -110,7 +110,7 @@ export const useSidebar = () => {
         const id = await saveQueryRunToHistory(queryRunData);
         if (!id) return;
 
-        dispatch(setRunHistory([...runHistory, { id, data: queryRunData }]));
+        dispatch(setRunHistory([...runHistory, { id, data: queryRunData, timestamp: Date.now() }]));
       } catch (error) {
         console.error(error);
       }
