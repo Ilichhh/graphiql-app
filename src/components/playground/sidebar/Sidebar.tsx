@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSidebar } from '../../../hooks/useSidebar';
 import { useTranslation } from 'react-i18next';
+import { useSidebar } from '../../../hooks';
 
 import { QueryPreview } from './QueryPreview';
 import {

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTabsState } from '../../../hooks/useTabsState';
-import { useResize } from '../../../hooks/useResize';
+import { useTabsState, useResize } from '../../../hooks';
 import { MetadataEditor } from '../codemirror';
 import { Tab } from '../../../types';
 import theme from '../../../theme';

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import TextField from '@mui/material/TextField';
 import { InputAdornment } from '@mui/material';
-import { useTabsState } from '../../../../hooks/useTabsState';
+import { useTabsState, useGraphQLSchema } from '../../../../hooks';
 import theme from '../../../../theme';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import { TitleBar } from './TitleBar';
@@ -23,7 +23,6 @@ import { Spacer } from './Spacer';
 import { TypeLink } from './TypeLink';
 import { Field } from './Field';
 import { Args } from './Args';
-import { useGraphQLSchema } from '../../../../hooks/useGraphQLSchema';
 
 const SearchBarWrapper = styled.div`
   display: flex;

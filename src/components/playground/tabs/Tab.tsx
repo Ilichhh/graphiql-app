@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import theme from '../../../theme';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
-import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
+import { useAppDispatch } from '../../../hooks';
 import { addTab, deleteTab, selectTab } from '../../../store/tabsSlice';
 
 const TabWrapper = styled.div<{ isActive?: boolean }>`

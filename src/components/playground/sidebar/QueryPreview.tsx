@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
-import { useSidebar } from '../../../hooks/useSidebar';
+import { useAppDispatch, useSidebar } from '../../../hooks';
+
 import { addTab } from '../../../store/tabsSlice';
 
 import { ShowOptionsButton } from '../../../components/common/IconButtons';

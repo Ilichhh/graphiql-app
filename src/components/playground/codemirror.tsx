@@ -2,10 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import CodeMirror, { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { graphql, updateSchema } from 'cm6-graphql';
-import { useTabsState } from '../../hooks/useTabsState';
+import { useTabsState, useGraphQLSchema } from '../../hooks';
 
 import theme from '../../theme';
-import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
 
 const requestEditorTheme = vscodeDarkInit({
   settings: { background: theme.colors.bgDarkBlue, gutterBackground: '#0f202d' },
