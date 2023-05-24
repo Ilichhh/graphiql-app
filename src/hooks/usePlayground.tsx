@@ -59,7 +59,7 @@ export const usePlayground = (endpoint: string) => {
     return () => {
       setErrorMessage(undefined);
     };
-  }, [data, error, setError, setResponse, tabIdx]);
+  }, [data, error, setError, setResponse]);
 
   return {
     response,
