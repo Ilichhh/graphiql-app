@@ -21,12 +21,7 @@ export const usePlayground = (endpoint: string) => {
   );
 
   const [trigger, { data, error, isLoading: isFetching }] = useGetResponseMutation({
-    fixedCacheKey: hashFromObject({
-      tabIdx,
-      query,
-      headers,
-      variables,
-    }),
+    fixedCacheKey: hashFromObject({ tabIdx }),
   });
   const [errorMessage, setErrorMessage] = useState<ErrorObject>();
 
