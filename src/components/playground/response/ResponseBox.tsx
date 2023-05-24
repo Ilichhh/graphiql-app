@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import theme from '../../../theme';
 
 const Container = styled.section`
+  position: relative;
   display: flex;
   flex-direction: column;
   flex: 1 1 0;
@@ -48,6 +49,7 @@ const ProgressWrapper = styled.div`
 
 const StartMessage = styled.div`
   position: absolute;
+  z-index: 2;
   top: 50%;
   left: 50%;
   display: flex;
@@ -79,12 +81,13 @@ export const ResponseBox = ({ isFetching, response, status }: ResponseBoxProps) 
           </ProgressWrapper>
         ) : (
           <>
-            <ResponseWindow value={response}>
-              {!response && <StartMessage>{t('playground.responsePlaceholder')}</StartMessage>}
-            </ResponseWindow>
+            <ResponseWindow value={response}></ResponseWindow>
           </>
         )}
       </ResponseSection>
+      {!response && !isFetching && (
+        <StartMessage>{t('playground.responsePlaceholder')}</StartMessage>
+      )}
     </Container>
   );
 };

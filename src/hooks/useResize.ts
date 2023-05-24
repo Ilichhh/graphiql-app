@@ -1,20 +1,28 @@
 import { useState, useCallback } from 'react';
 
-export const useResize = (initialValue: number, attribute: 'width' | 'height') => {
-  const [value, setValue] = useState(initialValue);
+type Direction = 'vertical' | 'horizontal';
+
+export const useResize = (
+  initialWidth: number,
+  initialHeight: number,
+  initialDirection: Direction
+) => {
+  const [width, setWidth] = useState(initialWidth);
+  const [height, setHeight] = useState(initialHeight);
+  const [direction, setDirection] = useState<Direction>(initialDirection);
   const [isDragging, setIsDragging] = useState(false);
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
       e.preventDefault();
-      if (attribute === 'width') {
-        setValue((value) => value + e.movementX);
-      } else {
-        setValue((value) => value - e.movementY);
+      if (width && direction === 'horizontal') {
+        setWidth((width) => width + e.movementX);
+      } else if (height && direction === 'vertical') {
+        setHeight((height) => height - e.movementY);
       }
       setIsDragging(true);
     },
-    [attribute]
+    [direction, height, width]
   );
 
   const handleMouseUp = useCallback(() => {
@@ -28,5 +36,5 @@ export const useResize = (initialValue: number, attribute: 'width' | 'height') =
     document.addEventListener('mouseup', handleMouseUp);
   }, [handleMouseMove, handleMouseUp]);
 
-  return { value, setValue, handleResize, isDragging };
+  return { width, height, handleResize, isDragging, setDirection };
 };

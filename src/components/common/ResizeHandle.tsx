@@ -8,6 +8,11 @@ const Container = styled.div`
   align-items: center;
 
   cursor: col-resize;
+
+  @media (max-width: 600px) {
+    justify-content: center;
+    cursor: row-resize;
+  }
 `;
 
 const Handle = styled.div`
@@ -19,6 +24,11 @@ const Handle = styled.div`
 
   ${Container}:hover & {
     background-color: ${theme.colors.bgDarkBlue};
+  }
+
+  @media (max-width: 600px) {
+    height: 5px;
+    width: 40%;
   }
 `;
 

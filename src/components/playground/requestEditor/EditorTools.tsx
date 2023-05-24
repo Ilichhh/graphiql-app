@@ -47,6 +47,7 @@ const ToolsBar = styled.div`
   border-bottom: 1px solid ${theme.colors.bgDarkBlue};
   cursor: row-resize;
   @media (max-width: 600px) {
+    height: 100%;
     padding: 8px;
     font-size: 0.6rem;
   }
@@ -64,7 +65,7 @@ export const EditorTools = () => {
   const { headers, variables, setVariables, setHeaders } = useTabsState();
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
-  const { value: panelHeight, handleResize, isDragging } = useResize(300, 'height');
+  const { height: panelHeight, handleResize, isDragging } = useResize(-1, 300, 'vertical');
   const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
 

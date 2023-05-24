@@ -14,18 +14,26 @@ import theme from '../../../theme';
 import styled from 'styled-components';
 
 type ContainerProps = {
-  w: number;
+  width: number;
+  height: number;
 };
 
-const Container = styled.section.attrs<ContainerProps>(({ w }) => ({
+const Container = styled.section.attrs<ContainerProps>(({ width, height }) => ({
   style: {
-    width: `${w}px`,
+    width: width === -1 ? '100%' : `${width}px`,
+    height: height === -1 ? '100%' : `${height}px`,
   },
 }))<ContainerProps>`
   display: flex;
   flex-direction: column;
 
   min-width: 400px;
+  min-height: 300px;
+
+  @media (max-width: 600px) {
+    min-width: 100%;
+    max-width: 100%;
+  }
 `;
 
 const EditorBox = styled.section`
@@ -72,11 +80,12 @@ const RequestEditorControls = styled.div`
 
 interface EditorProps {
   width: number;
+  height: number;
   isFetching: boolean;
   sendRequest: () => void;
 }
 
-export const Editor = ({ isFetching, sendRequest, width }: EditorProps) => {
+export const Editor = ({ isFetching, sendRequest, width, height }: EditorProps) => {
   const { query, setQuery } = useTabsState();
   const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
     null
@@ -85,7 +94,7 @@ export const Editor = ({ isFetching, sendRequest, width }: EditorProps) => {
   const { prettify } = usePrettier();
 
   return (
-    <Container w={width}>
+    <Container width={width} height={height}>
       <EditorBox>
         <RequestEditorHeader>
           {t('playground.operation')}

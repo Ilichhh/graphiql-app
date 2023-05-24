@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState, useCallback } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { DocsPanel } from '../components/playground/docsExplorer';
 import { usePlayground } from '../hooks/usePlayground';
@@ -51,11 +51,16 @@ export const PlaygroundPage = React.memo(() => {
   const [isModal, setIsModal] = useState(!lastEndpoint);
   const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
 
-  const { value: width, handleResize } = useResize(800, 'width');
+  const { width, height, handleResize, setDirection } = useResize(800, 600, 'horizontal');
 
-  const resize = useCallback(() => {
-    handleResize();
-  }, [handleResize]);
+  const windowWidth = window.innerWidth;
+  useEffect(() => {
+    if (windowWidth < 600) {
+      setDirection('vertical');
+    } else {
+      setDirection('horizontal');
+    }
+  }, [windowWidth, setDirection]);
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
@@ -81,8 +86,13 @@ export const PlaygroundPage = React.memo(() => {
           <TabBar />
           <PlaygroundHeader isError={isSchemaError} />
           <Playground>
-            <Editor isFetching={isFetching} sendRequest={sendRequest} width={width} />
-            <ResizeHandle onMouseDown={resize} />
+            <Editor
+              isFetching={isFetching}
+              sendRequest={sendRequest}
+              width={width}
+              height={height}
+            />
+            <ResizeHandle onMouseDown={handleResize} />
             <ResponseBox
               isFetching={isFetching}
               response={responseText}
