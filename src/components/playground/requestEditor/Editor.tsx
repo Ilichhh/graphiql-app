@@ -25,7 +25,7 @@ const Container = styled.section.attrs<ContainerProps>(({ w }) => ({
   display: flex;
   flex-direction: column;
 
-  overflow-x: auto;
+  min-width: 400px;
 `;
 
 const EditorBox = styled.section`

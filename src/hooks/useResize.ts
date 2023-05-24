@@ -6,6 +6,7 @@ export const useResize = (initialValue: number, attribute: 'width' | 'height') =
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
+      e.preventDefault();
       if (attribute === 'width') {
         setValue((value) => value + e.movementX);
       } else {

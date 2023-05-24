@@ -51,7 +51,7 @@ export const PlaygroundPage = React.memo(() => {
   const [isModal, setIsModal] = useState(!lastEndpoint);
   const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
 
-  const { value: width, handleResize } = useResize(500, 'width');
+  const { value: width, handleResize } = useResize(800, 'width');
 
   const resize = useCallback(() => {
     handleResize();
