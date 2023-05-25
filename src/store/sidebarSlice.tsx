@@ -37,7 +37,7 @@ const sidebarSlice = createSlice({
       }
     },
     setRunHistory: (state, action: PayloadAction<RunHistoryData[]>) => {
-      state.runHistory = action.payload;
+      state.runHistory = action.payload.sort((a, b) => b.timestamp - a.timestamp);
     },
   },
 });

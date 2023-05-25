@@ -39,7 +39,7 @@ const Nav = styled.div`
 
 const Tabs = styled.div`
   display: flex;
-  gap: 5px;
+  gap: 10px;
 `;
 
 const SidebarTab = styled.div<{ isActive?: boolean }>`
@@ -144,9 +144,7 @@ export const Sidebar = React.memo(() => {
           {runHistoryArray.length ? (
             runHistoryArray
           ) : (
-            <EmptyCollectionMessage>
-              {t('playground.emptyCollectionMessage')}
-            </EmptyCollectionMessage>
+            <EmptyCollectionMessage>{t('playground.emptyHistoryMessage')}</EmptyCollectionMessage>
           )}
         </ContentBox>
       </>

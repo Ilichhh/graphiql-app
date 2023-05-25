@@ -87,7 +87,7 @@ export const TabPlus = () => {
       onClick={() =>
         dispatch(
           addTab({
-            name: 'New Tab',
+            name: '',
             endpoint: '',
             query: '',
             variables: '',

@@ -53,6 +53,9 @@
     "queriesCollection": "Queries collection",
     "runHistory": "Run history",
     "emptyCollectionMessage": "You do not have any saved queries. Save a query to see it in the collection.",
+    "emptyHistoryMessage": "Request history is empty.",
+    "unnamedQuery": "(unnamed query)",
+    "newTab": "New Tab",
     "modal": {
       "save": {
         "header": "Save Query",

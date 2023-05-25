@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
 import { useSidebar } from '../../../hooks/useSidebar';
 import { useTimestamp } from '../../../hooks/useTimestamp';
+import { useTranslation } from 'react-i18next';
 import { addTab } from '../../../store/tabsSlice';
 
 import { DocumentData } from '@firebase/firestore';
@@ -16,6 +17,12 @@ const Endpoint = styled.div`
   font-size: 16px;
   color: ${theme.colors.textInactive};
   transition: 0.2s all;
+`;
+
+const Name = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
 `;
 
 const Container = styled.aside`
@@ -46,15 +53,9 @@ const DataWrapper = styled.div`
   overflow: hidden;
 `;
 
-const Name = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 16px;
-`;
-
 const Date = styled.div`
-  padding: 8px;
-  font-size: 14px;
+  padding: 11px;
+  font-size: 12px;
 `;
 
 interface QueryHistoryPreviewProps {
@@ -68,6 +69,7 @@ export const QueryHistoryPreview = ({ templateId, data, timestamp }: QueryHistor
   const { closeSidebar } = useSidebar();
   const dispatch = useAppDispatch();
   const date = useTimestamp(timestamp);
+  const { t } = useTranslation();
 
   const handleOpenTab = useCallback(() => {
     const { name, endpoint, query, variables, headers } = data;
@@ -89,7 +91,7 @@ export const QueryHistoryPreview = ({ templateId, data, timestamp }: QueryHistor
   return (
     <Container>
       <DataWrapper onClick={handleOpenTab}>
-        <Name>{name}</Name>
+        <Name>{name || t('playground.unnamedQuery')}</Name>
         <Endpoint>{endpoint}</Endpoint>
       </DataWrapper>
       <Date>{date}</Date>

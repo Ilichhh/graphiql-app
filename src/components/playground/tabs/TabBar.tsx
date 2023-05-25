@@ -51,7 +51,7 @@ export const TabBar = () => {
             key={i}
             index={i}
             isActive={i === selectedIdx}
-            name={name}
+            name={name || t('playground.newTab')}
             showCloseBtn={showCloseBtn}
           />
         ))}
