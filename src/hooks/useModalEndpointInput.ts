@@ -1,32 +1,30 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDebouncedInput } from './useDebouncedInput';
-import { useTabsState } from './useTabsState';
 
-export const useEndpointInput = () => {
-  const { endpoint, setEndpoint } = useTabsState();
+export const useModalEndpointInput = () => {
+  const [debouncedInput, setDebouncedInput] = useState<string>('');
 
   const handleChangeEndpoint = useCallback(
     (value: string) => {
-      setEndpoint(value);
+      setDebouncedInput(value);
     },
-    [setEndpoint]
+    [setDebouncedInput]
   );
 
   const { inputValue, setInputValue, handleInputChange } = useDebouncedInput(
     handleChangeEndpoint,
-    endpoint,
+    debouncedInput,
     500
   );
 
   useEffect(() => {
-    setInputValue(endpoint);
-  }, [endpoint, setInputValue]);
+    setInputValue(debouncedInput);
+  }, [debouncedInput, setInputValue]);
 
   return {
-    endpoint,
-    setEndpoint,
     inputValue,
     setInputValue,
+    debouncedInput,
     handleInputChange,
   };
 };

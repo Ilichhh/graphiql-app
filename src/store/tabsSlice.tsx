@@ -22,22 +22,21 @@ export type Response = {
   status?: number;
 };
 
-const initialId = new Date().getTime();
-const initialState: TabsState = {
-  selectedIdx: initialId,
-  tabs: [
-    {
-      id: initialId,
-      name: '',
-      endpoint: '',
-      query: '',
-      variables: '',
-      headers: '',
-    },
-  ],
+const emptyState = {
+  selectedIdx: 0,
+  tabs: [],
 };
 
-type NewTab = Omit<Tab, 'id'>;
+const savedTabState = localStorage.getItem('tabs');
+let initialState: TabsState;
+try {
+  initialState = savedTabState ? JSON.parse(savedTabState) : emptyState;
+} catch (error) {
+  console.error(error);
+  initialState = emptyState;
+}
+
+export type NewTab = Omit<Tab, 'id'>;
 
 const tabsSlice = createSlice({
   name: 'tabs',

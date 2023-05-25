@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 import { setError } from '../store/errorState';
 import {
+  addTab,
+  NewTab,
   Response,
   setEndpoint,
   setHeaders,
@@ -13,11 +15,18 @@ import { useAppDispatch, useAppSelector } from './reduxTypedHooks';
 export const useTabsState = () => {
   const tabId = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
   const error = useAppSelector((store) => store.error);
-  const { endpoint, query, headers, variables, name, instanceOfTemplate, response } =
-    useAppSelector(
-      ({ tabs: { tabs, selectedIdx } }) => tabs[tabs.findIndex(({ id }) => id === selectedIdx)]
-    );
+  const tab = useAppSelector(
+    ({ tabs: { tabs, selectedIdx } }) => tabs[tabs.findIndex(({ id }) => id === selectedIdx)]
+  );
   const dispatch = useAppDispatch();
+
+  const endpoint = tab?.endpoint || '';
+  const query = tab?.query || '';
+  const headers = tab?.headers || '';
+  const variables = tab?.variables || '';
+  const name = tab?.name || '';
+  const instanceOfTemplate = tab?.instanceOfTemplate || '';
+  const response = tab?.response || undefined;
 
   return {
     endpoint,
@@ -50,5 +59,6 @@ export const useTabsState = () => {
       [dispatch, tabId]
     ),
     setError: useCallback((error: string) => dispatch(setError({ error })), [dispatch]),
+    addTab: useCallback((tab: NewTab) => dispatch(addTab(tab)), [dispatch]),
   };
 };

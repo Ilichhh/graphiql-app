@@ -1,8 +1,7 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { DocsPanel } from '../components/playground/docsExplorer';
 import { usePlayground, useGraphQLSchema, useTabsState, useSidebar, useResize } from '../hooks';
-import { getDefaultQuery } from '../utils/defaultQuery';
 
 import { Modal, PlaygroundHeader, ResponseBox } from '../components/playground';
 import { Editor } from '../components/playground/requestEditor';
@@ -48,22 +47,14 @@ const Playground = styled.div<{ isSidebarOpen: boolean }>`
 `;
 
 export const PlaygroundPage = React.memo(() => {
-  const { endpoint, setEndpoint, setQuery } = useTabsState();
+  const { endpoint, tabId } = useTabsState();
   const { isOpen: isSidebarOpen, fetchQueryTemplatesData, fetchQueriesHistoryData } = useSidebar();
   const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
+
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
-  const lastEndpoint = localStorage.getItem('last-endpoint');
-  const [isModal, setIsModal] = useState(!lastEndpoint);
   const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
 
   const { size: panelWidth, handleResize } = useResize(800, 'horizontal');
-
-  useEffect(() => {
-    if (lastEndpoint && !endpoint) {
-      setEndpoint(lastEndpoint);
-      setQuery(getDefaultQuery(lastEndpoint));
-    }
-  }, [endpoint, lastEndpoint, isModal, setEndpoint, setQuery]);
 
   useEffect(() => {
     fetchQueryTemplatesData();
@@ -73,8 +64,8 @@ export const PlaygroundPage = React.memo(() => {
     fetchQueriesHistoryData();
   }, [fetchQueriesHistoryData]);
 
-  if (isModal) {
-    return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
+  if (!tabId) {
+    return ReactDOM.createPortal(<Modal />, document.body);
   }
 
   return (

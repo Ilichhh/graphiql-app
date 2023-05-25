@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useEndpointInput } from '../../hooks';
+import { useHeaderEndpointInput } from '../../hooks';
 
 import styled from 'styled-components';
 import theme from '../../theme';
@@ -59,12 +59,8 @@ interface PlaygroundHeaderProps {
 }
 
 export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) => {
-  const { inputValue, endpoint, handleInputChange } = useEndpointInput();
+  const { inputValue, handleInputChange } = useHeaderEndpointInput();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    localStorage.setItem('last-endpoint', endpoint);
-  }, [endpoint]);
 
   return (
     <Header>

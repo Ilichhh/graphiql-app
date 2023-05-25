@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import theme from '../../../theme';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
-import { useAppDispatch } from '../../../hooks';
-import { addTab, deleteTab, selectTab } from '../../../store/tabsSlice';
+import { useAppDispatch, useTabsState } from '../../../hooks';
+import { deleteTab, selectTab } from '../../../store/tabsSlice';
+import { getDefaultQuery } from '../../../utils/defaultQuery';
 
 const TabWrapper = styled.div<{ isActive?: boolean }>`
   display: flex;
@@ -80,20 +81,18 @@ export const Tab = ({ id, name, isActive, showCloseBtn }: TabProps) => {
 };
 
 export const TabPlus = () => {
-  const dispatch = useAppDispatch();
+  const { endpoint, addTab } = useTabsState();
 
   return (
     <TabWrapper
       onClick={() =>
-        dispatch(
-          addTab({
-            name: '',
-            endpoint: '',
-            query: '',
-            variables: '',
-            headers: '',
-          })
-        )
+        addTab({
+          name: '',
+          endpoint: endpoint,
+          query: getDefaultQuery(endpoint),
+          variables: '',
+          headers: '',
+        })
       }
     >
       <AddBtn fontSize="medium" />
