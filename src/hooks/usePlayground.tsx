@@ -1,14 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLazyGetResponseQuery } from '../store/apiSlice';
+import { useGetResponseMutation } from '../store/apiSlice';
+import { hashFromObject } from '../utils/hash';
 import { useTabsState } from './useTabsState';
-
-type ResponseData =
-  | {
-      data: string;
-      status: number | undefined;
-    }
-  | undefined;
 
 type ErrorObject =
   | {
@@ -20,14 +14,15 @@ type ErrorObject =
 export const usePlayground = (endpoint: string) => {
   const { t } = useTranslation();
 
-  const { query, variables, headers, setError } = useTabsState();
+  const { query, variables, headers, response, setResponse, setError, tabId } = useTabsState();
   const [parsedVariables, parsedHeaders, paramsError] = useMemo(
     () => parseParams(variables, headers),
     [variables, headers]
   );
 
-  const [trigger, { currentData: data, error, isFetching }] = useLazyGetResponseQuery();
-  const [response, setResponse] = useState<ResponseData>();
+  const [trigger, { data, error, isLoading: isFetching }] = useGetResponseMutation({
+    fixedCacheKey: hashFromObject({ tabId }),
+  });
   const [errorMessage, setErrorMessage] = useState<ErrorObject>();
 
   useEffect(() => {
@@ -57,10 +52,9 @@ export const usePlayground = (endpoint: string) => {
     }
 
     return () => {
-      setResponse(undefined);
       setErrorMessage(undefined);
     };
-  }, [data, error, setError]);
+  }, [data, error, setError, setResponse]);
 
   return {
     response,
@@ -70,15 +64,12 @@ export const usePlayground = (endpoint: string) => {
       if (paramsError) {
         setError(t('playground.paramsError'));
       } else {
-        trigger(
-          {
-            url: endpoint,
-            query,
-            variables: parsedVariables,
-            headers: parsedHeaders,
-          },
-          true
-        );
+        trigger({
+          url: endpoint,
+          query,
+          variables: parsedVariables,
+          headers: parsedHeaders,
+        });
       }
     },
   };

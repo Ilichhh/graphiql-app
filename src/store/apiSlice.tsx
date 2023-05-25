@@ -12,7 +12,7 @@ export const apiSlice = createApi({
         body: { query: getIntrospectionQuery() },
       }),
     }),
-    getResponse: builder.query({
+    getResponse: builder.mutation({
       query: ({ url, query, variables, headers }) => ({
         url,
         method: 'POST',
@@ -31,4 +31,4 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useGetSchemaQuery, useLazyGetResponseQuery } = apiSlice;
+export const { useGetSchemaQuery, useGetResponseMutation } = apiSlice;

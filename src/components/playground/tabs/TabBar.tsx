@@ -46,11 +46,11 @@ export const TabBar = () => {
         />
       )}
       <TabBarContent>
-        {tabs.map(({ name }, i) => (
+        {tabs.map(({ id, name }, i) => (
           <Tab
             key={i}
-            index={i}
-            isActive={i === selectedIdx}
+            id={id}
+            isActive={id === selectedIdx}
             name={name}
             showCloseBtn={showCloseBtn}
           />

@@ -23,7 +23,7 @@ import { SidebarTabs } from '../types';
 export const useSidebar = () => {
   const dispatch = useAppDispatch();
   const { isOpen, activeTab, queryTemplates } = useAppSelector((state) => state.sidebar);
-  const tabIdx = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
+  const tabId = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
 
   const closeSidebar = useCallback(() => {
     dispatch(setIsOpen(false));
@@ -83,12 +83,12 @@ export const useSidebar = () => {
         if (!id) return;
 
         dispatch(setQueryTemplates([...queryTemplates, { id, data: templateData }]));
-        dispatch(changeName({ name: templateData.name, index: tabIdx, templateId: id }));
+        dispatch(changeName({ name: templateData.name, id: tabId, templateId: id }));
       } catch (error) {
         console.error(error);
       }
     },
-    [dispatch, queryTemplates, tabIdx]
+    [dispatch, queryTemplates, tabId]
   );
 
   return {

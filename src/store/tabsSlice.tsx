@@ -2,12 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type Tab = {
+  id: number;
   name: string;
   instanceOfTemplate?: string;
   endpoint: string;
   query: string;
   variables: string;
   headers: string;
+  response?: Response;
 };
 
 type TabsState = {
@@ -15,10 +17,17 @@ type TabsState = {
   tabs: Tab[];
 };
 
+export type Response = {
+  data: string;
+  status?: number;
+};
+
+const initialId = new Date().getTime();
 const initialState: TabsState = {
-  selectedIdx: 0,
+  selectedIdx: initialId,
   tabs: [
     {
+      id: initialId,
       name: 'New Tab',
       endpoint: '',
       query: '',
@@ -28,33 +37,38 @@ const initialState: TabsState = {
   ],
 };
 
+type NewTab = Omit<Tab, 'id'>;
+
 const tabsSlice = createSlice({
   name: 'tabs',
   initialState: initialState,
   reducers: {
-    addTab: (state, { payload: tab }: PayloadAction<Tab>) => {
-      state.tabs.push(tab);
-      state.selectedIdx = state.tabs.length - 1;
+    addTab: (state, { payload: tab }: PayloadAction<NewTab>) => {
+      const id = new Date().getTime();
+      state.tabs.push({ id, ...tab });
+      state.selectedIdx = id;
     },
-    deleteTab: (state, { payload: index }: PayloadAction<number>) => {
-      state.tabs.splice(index, 1);
-      if (state.selectedIdx === index) {
-        state.selectedIdx = index >= state.tabs.length ? state.tabs.length - 1 : index;
-      }
-      if (state.selectedIdx >= state.tabs.length) {
-        state.selectedIdx = state.tabs.length - 1;
+    deleteTab: (state, { payload: id }: PayloadAction<number>) => {
+      const { tabs } = state;
+      const index = tabs.findIndex(({ id: tabId }) => tabId === id);
+      tabs.splice(index, 1);
+      const { length } = tabs;
+
+      if (state.selectedIdx === id) {
+        state.selectedIdx = index >= length ? tabs[length - 1].id : tabs[index].id;
       }
     },
-    selectTab: (state, { payload: index }: PayloadAction<number>) => {
-      state.selectedIdx = index;
+    selectTab: (state, { payload: id }: PayloadAction<number>) => {
+      state.selectedIdx = id;
     },
     changeName: (
       state,
       {
-        payload: { name, index, templateId },
-      }: PayloadAction<{ name: string; index?: number; templateId: string }>
+        payload: { name, id, templateId },
+      }: PayloadAction<{ name: string; id?: number; templateId: string }>
     ) => {
-      if (index) {
+      if (id) {
+        const index = state.tabs.findIndex(({ id: tabId }) => tabId === id);
         state.tabs[index].name = name;
         state.tabs[index].instanceOfTemplate = templateId;
         return;
@@ -67,27 +81,38 @@ const tabsSlice = createSlice({
     },
     setEndpoint: (
       state,
-      { payload: { tabIdx, endpoint } }: PayloadAction<{ tabIdx: number; endpoint: string }>
+      { payload: { tabId, endpoint } }: PayloadAction<{ tabId: number; endpoint: string }>
     ) => {
+      const tabIdx = state.tabs.findIndex(({ id }) => tabId === id);
       state.tabs[tabIdx].endpoint = endpoint;
     },
     setQuery: (
       state,
-      { payload: { tabIdx, query } }: PayloadAction<{ tabIdx: number; query: string }>
+      { payload: { tabId, query } }: PayloadAction<{ tabId: number; query: string }>
     ) => {
+      const tabIdx = state.tabs.findIndex(({ id }) => tabId === id);
       state.tabs[tabIdx].query = query;
     },
     setVariables: (
       state,
-      { payload: { tabIdx, variables } }: PayloadAction<{ tabIdx: number; variables: string }>
+      { payload: { tabId, variables } }: PayloadAction<{ tabId: number; variables: string }>
     ) => {
+      const tabIdx = state.tabs.findIndex(({ id }) => tabId === id);
       state.tabs[tabIdx].variables = variables;
     },
     setHeaders: (
       state,
-      { payload: { tabIdx, headers } }: PayloadAction<{ tabIdx: number; headers: string }>
+      { payload: { tabId, headers } }: PayloadAction<{ tabId: number; headers: string }>
     ) => {
+      const tabIdx = state.tabs.findIndex(({ id }) => tabId === id);
       state.tabs[tabIdx].headers = headers;
+    },
+    setResponse: (
+      state,
+      { payload: { tabId, response } }: PayloadAction<{ tabId: number; response?: Response }>
+    ) => {
+      const tabIdx = state.tabs.findIndex(({ id }) => tabId === id);
+      state.tabs[tabIdx].response = response;
     },
   },
 });
@@ -101,5 +126,6 @@ export const {
   setQuery,
   setVariables,
   setHeaders,
+  setResponse,
 } = tabsSlice.actions;
 export default tabsSlice.reducer;

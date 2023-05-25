@@ -41,7 +41,7 @@ const Playground = styled.div<{ isSidebarOpen: boolean }>`
       @media (min-width: 800px) and (max-width: 1100px) {
         flex-direction: column;
       }
-    `}
+    `};
   @media (max-width: 600px) {
     flex-direction: column;
   }

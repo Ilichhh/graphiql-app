@@ -1,13 +1,20 @@
 import { useCallback } from 'react';
 import { setError } from '../store/errorState';
-import { setEndpoint, setHeaders, setQuery, setVariables } from '../store/tabsSlice';
+import {
+  Response,
+  setEndpoint,
+  setHeaders,
+  setQuery,
+  setResponse,
+  setVariables,
+} from '../store/tabsSlice';
 import { useAppDispatch, useAppSelector } from './reduxTypedHooks';
 
 export const useTabsState = () => {
-  const tabIdx = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
+  const tabId = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
   const error = useAppSelector((store) => store.error);
-  const { endpoint, query, headers, variables } = useAppSelector(
-    ({ tabs: { tabs, selectedIdx } }) => tabs[selectedIdx]
+  const { endpoint, query, headers, variables, response } = useAppSelector(
+    ({ tabs: { tabs, selectedIdx } }) => tabs[tabs.findIndex(({ id }) => id === selectedIdx)]
   );
   const dispatch = useAppDispatch();
 
@@ -16,22 +23,28 @@ export const useTabsState = () => {
     query,
     variables,
     headers,
+    response,
     error,
+    tabId,
     setEndpoint: useCallback(
-      (endpoint: string) => dispatch(setEndpoint({ tabIdx, endpoint })),
-      [dispatch, tabIdx]
+      (endpoint: string) => dispatch(setEndpoint({ tabId, endpoint })),
+      [dispatch, tabId]
     ),
     setQuery: useCallback(
-      (query: string) => dispatch(setQuery({ tabIdx, query })),
-      [dispatch, tabIdx]
+      (query: string) => dispatch(setQuery({ tabId, query })),
+      [dispatch, tabId]
     ),
     setVariables: useCallback(
-      (variables: string) => dispatch(setVariables({ tabIdx, variables })),
-      [dispatch, tabIdx]
+      (variables: string) => dispatch(setVariables({ tabId, variables })),
+      [dispatch, tabId]
     ),
     setHeaders: useCallback(
-      (headers: string) => dispatch(setHeaders({ tabIdx, headers })),
-      [dispatch, tabIdx]
+      (headers: string) => dispatch(setHeaders({ tabId, headers })),
+      [dispatch, tabId]
+    ),
+    setResponse: useCallback(
+      (response?: Response) => dispatch(setResponse({ tabId, response })),
+      [dispatch, tabId]
     ),
     setError: useCallback((error: string) => dispatch(setError({ error })), [dispatch]),
   };
