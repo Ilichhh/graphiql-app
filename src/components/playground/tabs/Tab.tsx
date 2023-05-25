@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import theme from '../../../theme';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
-import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
+import { useAppDispatch } from '../../../hooks';
 import { addTab, deleteTab, selectTab } from '../../../store/tabsSlice';
 
 const TabWrapper = styled.div<{ isActive?: boolean }>`
@@ -51,21 +51,21 @@ const AddBtn = styled(AddIcon)`
 `;
 
 interface TabProps {
-  index: number;
+  id: number;
   name: string;
   isActive: boolean;
   showCloseBtn: boolean;
 }
-export const Tab = ({ index, name, isActive, showCloseBtn }: TabProps) => {
+export const Tab = ({ id, name, isActive, showCloseBtn }: TabProps) => {
   const dispatch = useAppDispatch();
   const handleDelete = (e: React.MouseEvent<SVGSVGElement>) => {
-    dispatch(deleteTab(index));
+    dispatch(deleteTab(id));
     e.stopPropagation();
   };
 
   return (
     <>
-      <TabWrapper isActive={isActive} onClick={() => dispatch(selectTab(index))}>
+      <TabWrapper isActive={isActive} onClick={() => dispatch(selectTab(id))}>
         <TabName isActive={isActive}>{name}</TabName>
         {showCloseBtn && (
           <CloseBtn

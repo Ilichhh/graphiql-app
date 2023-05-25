@@ -1,11 +1,8 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { DocsPanel } from '../components/playground/docsExplorer';
-import { usePlayground } from '../hooks/usePlayground';
-import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
-import { useTabsState } from '../hooks/useTabsState';
+import { usePlayground, useGraphQLSchema, useTabsState, useSidebar, useResize } from '../hooks';
 import { getDefaultQuery } from '../utils/defaultQuery';
-import { useSidebar } from '../hooks/useSidebar';
 
 import { Modal, PlaygroundHeader, ResponseBox } from '../components/playground';
 import { Editor } from '../components/playground/requestEditor';
@@ -15,12 +12,14 @@ import { Sidebar } from '../components/playground/sidebar';
 import styled, { css } from 'styled-components';
 import theme from '../theme';
 import { TabBar } from '../components/playground/tabs/TabBar';
+import { ResizeHandle } from '../components/common/ResizeHandle';
 
 const Wrapper = styled.main`
   position: relative;
   display: flex;
   width: 100%;
   min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
+  overflow: auto;
   background: ${theme.colors.bgBlack};
 `;
 
@@ -29,6 +28,7 @@ const PlaygroundWrapper = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: auto;
 `;
 
 const Playground = styled.div<{ isSidebarOpen: boolean }>`
@@ -41,7 +41,7 @@ const Playground = styled.div<{ isSidebarOpen: boolean }>`
       @media (min-width: 800px) and (max-width: 1100px) {
         flex-direction: column;
       }
-    `}
+    `};
   @media (max-width: 600px) {
     flex-direction: column;
   }
@@ -55,6 +55,8 @@ export const PlaygroundPage = React.memo(() => {
   const lastEndpoint = localStorage.getItem('last-endpoint');
   const [isModal, setIsModal] = useState(!lastEndpoint);
   const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
+
+  const { size: panelWidth, handleResize } = useResize(800, 'horizontal');
 
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
@@ -84,7 +86,13 @@ export const PlaygroundPage = React.memo(() => {
           <TabBar />
           <PlaygroundHeader isError={isSchemaError} />
           <Playground isSidebarOpen={isSidebarOpen}>
-            <Editor isFetching={isFetching} sendRequest={sendRequest} />
+            <Editor
+              isFetching={isFetching}
+              isSidebarOpen={isSidebarOpen}
+              sendRequest={sendRequest}
+              width={panelWidth}
+            />
+            <ResizeHandle onMouseDown={handleResize} />
             <ResponseBox
               isFetching={isFetching}
               response={responseText}

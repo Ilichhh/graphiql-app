@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
-import { useAppSelector } from './reduxTypedHooks';
-import { useAppDispatch } from './reduxTypedHooks';
+import { useAppSelector, useAppDispatch } from './reduxTypedHooks';
 
 import { changeName, addTab } from '../store/tabsSlice';
 import {
@@ -29,7 +28,7 @@ export const useSidebar = () => {
   const { isOpen, activeTab, queryTemplates, runHistory } = useAppSelector(
     (state) => state.sidebar
   );
-  const tabIdx = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
+  const tabId = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
 
   const closeSidebar = useCallback(() => {
     dispatch(setIsOpen(false));
@@ -89,12 +88,12 @@ export const useSidebar = () => {
         if (!id) return;
 
         dispatch(addQueryTemplate({ id, data: templateData }));
-        dispatch(changeName({ name: templateData.name, index: tabIdx, templateId: id }));
+        dispatch(changeName({ name: templateData.name, id: tabId, templateId: id }));
       } catch (error) {
         console.error(error);
       }
     },
-    [dispatch, tabIdx]
+    [dispatch, tabId]
   );
 
   const fetchQueriesHistoryData = useCallback(async () => {

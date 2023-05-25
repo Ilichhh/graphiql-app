@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePrettier } from '../../../hooks/usePrettier';
-import { useTabsState } from '../../../hooks/useTabsState';
+import { usePrettier, useTabsState } from '../../../hooks';
 
 import { EditorTools, PlayButton } from './';
 import { QueryTemplateModal } from '../sidebar';
@@ -11,14 +10,37 @@ import { PrettifyRequestButton, SaveRequestButton } from '../../../components/co
 import { TemplateModalMode } from '../../../types';
 
 import theme from '../../../theme';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Container = styled.section`
+type ContainerProps = {
+  width: number;
+  isSidebarOpen: boolean;
+};
+
+const Container = styled.section.attrs<ContainerProps>(({ width }) => ({
+  style: {
+    width: `${width}px`,
+  },
+}))<ContainerProps>`
   display: flex;
   flex-direction: column;
-  flex: 1 1 0;
-  width: 100%;
-  overflow-x: auto;
+
+  min-width: 355px;
+  min-height: 300px;
+
+  ${({ isSidebarOpen }) =>
+    isSidebarOpen &&
+    css`
+      @media (min-width: 800px) and (max-width: 1100px) {
+        min-width: 100%;
+        max-width: 100%;
+      }
+    `}
+
+  @media (max-width: 600px) {
+    min-width: 100%;
+    max-width: 100%;
+  }
 `;
 
 const EditorBox = styled.section`
@@ -64,11 +86,13 @@ const RequestEditorControls = styled.div`
 `;
 
 interface EditorProps {
+  width: number;
   isFetching: boolean;
+  isSidebarOpen: boolean;
   sendRequest: () => void;
 }
 
-export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
+export const Editor = ({ isFetching, isSidebarOpen, sendRequest, width }: EditorProps) => {
   const { query, setQuery } = useTabsState();
   const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
     null
@@ -77,7 +101,7 @@ export const Editor = ({ isFetching, sendRequest }: EditorProps) => {
   const { prettify } = usePrettier();
 
   return (
-    <Container>
+    <Container width={width} isSidebarOpen={isSidebarOpen}>
       <EditorBox>
         <RequestEditorHeader>
           {t('playground.operation')}

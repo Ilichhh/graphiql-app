@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Divider } from '@mui/material';
 import styled from 'styled-components';
-import { useTabsState } from '../../../hooks/useTabsState';
+import { useTabsState, useGraphQLSchema } from '../../../hooks';
 import { SchemaDoc } from './SchemaDoc';
 import { TypeDoc } from './TypeDoc';
 import { FieldDoc } from './FieldDoc';
@@ -10,7 +10,6 @@ import { isInputType, isNamedType } from 'graphql/type';
 import { DocsNavContext } from './docsContext';
 import { ExplorerTitleBar } from './components/ExplorerTitleBar';
 import { SearchBar } from './components/SearchBar';
-import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from '../../../muiTheme';
 

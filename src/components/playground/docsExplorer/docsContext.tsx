@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react';
 import { GraphQLField, GraphQLInputField, GraphQLNamedType } from 'graphql/type';
-import { useTabsState } from '../../../hooks/useTabsState';
+import { useTabsState } from '../../../hooks';
 
 export type StackItem = {
   name: string;

@@ -1,7 +1,7 @@
 import React, { ComponentType, useEffect } from 'react';
 import { t } from 'i18next';
 import { checkTokenExpiration } from '../api/firebaseApi';
-import { useTabsState } from '../hooks/useTabsState';
+import { useTabsState } from '../hooks';
 
 export const withTokenExpirationWrapper = <P extends object>(Component: ComponentType<P>) => {
   const message = t(`global.sessionError`);

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useTabsState } from '../../../hooks/useTabsState';
+import { useTabsState, useGraphQLSchema } from '../../../hooks';
 import { DocsNavProvider } from './docsContext';
 import styled from 'styled-components';
 import { DocsTab } from './DocsTab';
 import { Explorer } from './Explorer';
-import { useGraphQLSchema } from '../../../hooks/useGraphQLSchema';
 
 interface ExplorerWrapperProps {
   isOpen: boolean;

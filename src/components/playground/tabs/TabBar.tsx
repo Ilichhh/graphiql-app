@@ -1,8 +1,7 @@
 import React from 'react';
-import { useAppSelector } from '../../../hooks/reduxTypedHooks';
-import { useSidebar } from '../../../hooks/useSidebar';
-import { OpenSidebarButton } from '../../../components/common/IconButtons';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector, useSidebar } from '../../../hooks';
+import { OpenSidebarButton } from '../../../components/common/IconButtons';
 
 import { Tab, TabPlus } from './Tab';
 
@@ -46,11 +45,11 @@ export const TabBar = () => {
         />
       )}
       <TabBarContent>
-        {tabs.map(({ name }, i) => (
+        {tabs.map(({ id, name }, i) => (
           <Tab
             key={i}
-            index={i}
-            isActive={i === selectedIdx}
+            id={id}
+            isActive={id === selectedIdx}
             name={name || t('playground.newTab')}
             showCloseBtn={showCloseBtn}
           />

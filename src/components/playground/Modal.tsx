@@ -1,13 +1,11 @@
 import React, { FormEvent, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useEndpointInput } from '../../hooks/useEndpointInput';
-import { useGraphQLSchema } from '../../hooks/useGraphQLSchema';
+import { useEndpointInput, useGraphQLSchema, useTabsState } from '../../hooks';
 
 import EastIcon from '@mui/icons-material/East';
 import { Button, Divider, TextField } from '@mui/material';
 
 import styled from 'styled-components';
-import { useTabsState } from '../../hooks/useTabsState';
 import theme from '../../theme';
 import { getDefaultQuery } from '../../utils/defaultQuery';
 import { ENDPOINTS } from '../../constants';

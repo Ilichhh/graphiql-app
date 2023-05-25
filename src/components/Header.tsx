@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useIsAtTop } from '../hooks/useIsAtTop';
+import { useIsAtTop } from '../hooks';
 import { useTheme } from '@mui/material/styles';
 
 import { auth } from '../firebase';
