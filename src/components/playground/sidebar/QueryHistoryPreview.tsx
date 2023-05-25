@@ -1,9 +1,7 @@
 import React, { useCallback } from 'react';
-import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
 import { useSidebar } from '../../../hooks/useSidebar';
 import { useTimestamp } from '../../../hooks/useTimestamp';
 import { useTranslation } from 'react-i18next';
-import { addTab } from '../../../store/tabsSlice';
 
 import { DocumentData } from '@firebase/firestore';
 
@@ -66,27 +64,13 @@ interface QueryHistoryPreviewProps {
 
 export const QueryHistoryPreview = ({ templateId, data, timestamp }: QueryHistoryPreviewProps) => {
   const { name, endpoint } = data;
-  const { closeSidebar } = useSidebar();
-  const dispatch = useAppDispatch();
+  const { selectQuery } = useSidebar();
   const date = useTimestamp(timestamp);
   const { t } = useTranslation();
 
   const handleOpenTab = useCallback(() => {
-    const { name, endpoint, query, variables, headers } = data;
-    dispatch(
-      addTab({
-        name,
-        instanceOfTemplate: templateId,
-        endpoint,
-        query,
-        headers,
-        variables,
-      })
-    );
-    if (window.innerWidth < 800) {
-      closeSidebar();
-    }
-  }, [data, dispatch, templateId, closeSidebar]);
+    selectQuery(data, templateId);
+  }, [data, selectQuery, templateId]);
 
   return (
     <Container>

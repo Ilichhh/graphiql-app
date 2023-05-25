@@ -29,6 +29,9 @@ const sidebarSlice = createSlice({
     setQueryTemplates: (state, action: PayloadAction<QueryTemplateData[]>) => {
       state.queryTemplates = action.payload;
     },
+    addQueryTemplate: (state, action: PayloadAction<QueryTemplateData>) => {
+      state.queryTemplates.unshift(action.payload);
+    },
     renameTemplate: (state, action: PayloadAction<{ templateId: string; newName: string }>) => {
       const { templateId, newName } = action.payload;
       const template = state.queryTemplates.find((template) => template.id === templateId);
@@ -39,9 +42,19 @@ const sidebarSlice = createSlice({
     setRunHistory: (state, action: PayloadAction<RunHistoryData[]>) => {
       state.runHistory = action.payload.sort((a, b) => b.timestamp - a.timestamp);
     },
+    addQueryToRunHistory: (state, action: PayloadAction<RunHistoryData>) => {
+      state.runHistory.unshift(action.payload);
+    },
   },
 });
 
-export const { setIsOpen, setActiveTab, setQueryTemplates, renameTemplate, setRunHistory } =
-  sidebarSlice.actions;
+export const {
+  setIsOpen,
+  setActiveTab,
+  setQueryTemplates,
+  addQueryTemplate,
+  renameTemplate,
+  setRunHistory,
+  addQueryToRunHistory,
+} = sidebarSlice.actions;
 export default sidebarSlice.reducer;

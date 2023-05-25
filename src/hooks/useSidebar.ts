@@ -2,13 +2,15 @@ import { useCallback } from 'react';
 import { useAppSelector } from './reduxTypedHooks';
 import { useAppDispatch } from './reduxTypedHooks';
 
-import { changeName } from '../store/tabsSlice';
+import { changeName, addTab } from '../store/tabsSlice';
 import {
   setIsOpen,
   setActiveTab,
   setQueryTemplates,
+  addQueryTemplate,
   renameTemplate as renameTemplateAction,
   setRunHistory,
+  addQueryToRunHistory,
 } from '../store/sidebarSlice';
 import {
   getAllQueryTemplates,
@@ -86,13 +88,13 @@ export const useSidebar = () => {
         const id = await saveQueryTemplate(templateData);
         if (!id) return;
 
-        dispatch(setQueryTemplates([...queryTemplates, { id, data: templateData }]));
+        dispatch(addQueryTemplate({ id, data: templateData }));
         dispatch(changeName({ name: templateData.name, index: tabIdx, templateId: id }));
       } catch (error) {
         console.error(error);
       }
     },
-    [dispatch, queryTemplates, tabIdx]
+    [dispatch, tabIdx]
   );
 
   const fetchQueriesHistoryData = useCallback(async () => {
@@ -110,12 +112,32 @@ export const useSidebar = () => {
         const id = await saveQueryRunToHistory(queryRunData);
         if (!id) return;
 
-        dispatch(setRunHistory([...runHistory, { id, data: queryRunData, timestamp: Date.now() }]));
+        dispatch(addQueryToRunHistory({ id, data: queryRunData, timestamp: Date.now() }));
       } catch (error) {
         console.error(error);
       }
     },
-    [dispatch, runHistory]
+    [dispatch]
+  );
+
+  const selectQuery = useCallback(
+    (data: DocumentData, templateId: string) => {
+      const { name, endpoint, query, variables, headers } = data;
+      dispatch(
+        addTab({
+          name,
+          instanceOfTemplate: templateId,
+          endpoint,
+          query,
+          headers,
+          variables,
+        })
+      );
+      if (window.innerWidth < 800) {
+        closeSidebar();
+      }
+    },
+    [dispatch, closeSidebar]
   );
 
   return {
@@ -132,5 +154,6 @@ export const useSidebar = () => {
     saveQueryRun,
     fetchQueriesHistoryData,
     runHistory,
+    selectQuery,
   };
 };

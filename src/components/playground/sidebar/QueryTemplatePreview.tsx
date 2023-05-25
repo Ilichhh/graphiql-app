@@ -1,8 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../../hooks/reduxTypedHooks';
 import { useSidebar } from '../../../hooks/useSidebar';
-import { addTab } from '../../../store/tabsSlice';
 
 import { ShowOptionsButton } from '../../common/IconButtons';
 import { QueryTemplateModal } from '.';
@@ -80,9 +78,8 @@ export const QueryTemplatePreview = ({ templateId, data }: QueryTemplatePreviewP
   const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
     null
   );
-  const { closeSidebar } = useSidebar();
+  const { selectQuery } = useSidebar();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
 
   const openPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -101,21 +98,8 @@ export const QueryTemplatePreview = ({ templateId, data }: QueryTemplatePreviewP
   );
 
   const handleOpenTab = useCallback(() => {
-    const { name, endpoint, query, variables, headers } = data;
-    dispatch(
-      addTab({
-        name,
-        instanceOfTemplate: templateId,
-        endpoint,
-        query,
-        headers,
-        variables,
-      })
-    );
-    if (window.innerWidth < 800) {
-      closeSidebar();
-    }
-  }, [data, dispatch, templateId, closeSidebar]);
+    selectQuery(data, templateId);
+  }, [data, selectQuery, templateId]);
 
   return (
     <Container>
