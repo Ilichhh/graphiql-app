@@ -12,7 +12,7 @@ const Container = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   min-width: 300px;
 
   overflow: hidden;

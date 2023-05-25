@@ -23,6 +23,7 @@ const Wrapper = styled.main`
   display: flex;
   width: 100%;
   min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
+  overflow: auto;
   background: ${theme.colors.bgBlack};
 `;
 
