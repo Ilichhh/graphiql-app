@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTabsState } from '../../../hooks/useTabsState';
-import { useVerticalResize } from '../../../hooks/useVerticalResize';
+import { useResize } from '../../../hooks/useResize';
 import { MetadataEditor } from '../codemirror';
 import { Tab } from '../../../types';
 import theme from '../../../theme';
@@ -60,7 +60,7 @@ export const EditorTools = () => {
   const { headers, variables, setVariables, setHeaders } = useTabsState();
   const [activeToolsTab, setActiveToolsTab] = useState<Tab>(Tab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
-  const { panelHeight, handleResize, isDragging } = useVerticalResize(300);
+  const { size: panelHeight, handleResize, isDragging } = useResize(300, 'vertical');
   const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
 

@@ -15,12 +15,15 @@ import { Sidebar } from '../components/playground/sidebar';
 import styled, { css } from 'styled-components';
 import theme from '../theme';
 import { TabBar } from '../components/playground/tabs/TabBar';
+import { ResizeHandle } from '../components/common/ResizeHandle';
+import { useResize } from '../hooks/useResize';
 
 const Wrapper = styled.main`
   position: relative;
   display: flex;
   width: 100%;
   min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
+  overflow: auto;
   background: ${theme.colors.bgBlack};
 `;
 
@@ -29,6 +32,7 @@ const PlaygroundWrapper = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: auto;
 `;
 
 const Playground = styled.div<{ isSidebarOpen: boolean }>`
@@ -56,6 +60,8 @@ export const PlaygroundPage = React.memo(() => {
   const [isModal, setIsModal] = useState(!lastEndpoint);
   const responseText = errorMessage?.message || schemaErrorMessage?.message || response?.data;
 
+  const { size: panelWidth, handleResize } = useResize(800, 'horizontal');
+
   useEffect(() => {
     if (lastEndpoint && !endpoint) {
       setEndpoint(lastEndpoint);
@@ -80,7 +86,13 @@ export const PlaygroundPage = React.memo(() => {
           <TabBar />
           <PlaygroundHeader isError={isSchemaError} />
           <Playground isSidebarOpen={isSidebarOpen}>
-            <Editor isFetching={isFetching} sendRequest={sendRequest} />
+            <Editor
+              isFetching={isFetching}
+              isSidebarOpen={isSidebarOpen}
+              sendRequest={sendRequest}
+              width={panelWidth}
+            />
+            <ResizeHandle onMouseDown={handleResize} />
             <ResponseBox
               isFetching={isFetching}
               response={responseText}
