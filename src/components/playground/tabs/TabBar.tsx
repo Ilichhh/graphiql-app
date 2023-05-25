@@ -1,8 +1,7 @@
 import React from 'react';
-import { useAppSelector } from '../../../hooks/reduxTypedHooks';
-import { useSidebar } from '../../../hooks/useSidebar';
-import { OpenSidebarButton } from '../../../components/common/IconButtons';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector, useSidebar } from '../../../hooks';
+import { OpenSidebarButton } from '../../../components/common/IconButtons';
 
 import { Tab, TabPlus } from './Tab';
 

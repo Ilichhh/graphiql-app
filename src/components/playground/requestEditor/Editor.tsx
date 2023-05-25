@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePrettier } from '../../../hooks/usePrettier';
-import { useTabsState } from '../../../hooks/useTabsState';
+import { usePrettier, useTabsState } from '../../../hooks';
 
 import { EditorTools, PlayButton } from './';
 import { QueryTemplateModal } from '../sidebar';

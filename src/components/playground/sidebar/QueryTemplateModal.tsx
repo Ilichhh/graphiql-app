@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSidebar } from '../../../hooks/useSidebar';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
-import { useTabsState } from '../../../hooks/useTabsState';
+import { useSidebar, useTabsState } from '../../../hooks';
 
 import { Button, Modal, TextField } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';

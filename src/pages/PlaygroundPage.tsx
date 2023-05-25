@@ -1,11 +1,8 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { DocsPanel } from '../components/playground/docsExplorer';
-import { usePlayground } from '../hooks/usePlayground';
-import { useGraphQLSchema } from '../hooks/useGraphQLSchema';
-import { useTabsState } from '../hooks/useTabsState';
+import { usePlayground, useGraphQLSchema, useTabsState, useSidebar, useResize } from '../hooks';
 import { getDefaultQuery } from '../utils/defaultQuery';
-import { useSidebar } from '../hooks/useSidebar';
 
 import { Modal, PlaygroundHeader, ResponseBox } from '../components/playground';
 import { Editor } from '../components/playground/requestEditor';
@@ -16,7 +13,6 @@ import styled, { css } from 'styled-components';
 import theme from '../theme';
 import { TabBar } from '../components/playground/tabs/TabBar';
 import { ResizeHandle } from '../components/common/ResizeHandle';
-import { useResize } from '../hooks/useResize';
 
 const Wrapper = styled.main`
   position: relative;

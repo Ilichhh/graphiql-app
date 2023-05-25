@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useEndpointInput } from '../../hooks/useEndpointInput';
+import { useEndpointInput } from '../../hooks';
 
 import styled from 'styled-components';
 import theme from '../../theme';

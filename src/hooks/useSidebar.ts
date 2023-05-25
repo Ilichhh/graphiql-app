@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
-import { useAppSelector } from './reduxTypedHooks';
-import { useAppDispatch } from './reduxTypedHooks';
+import { useAppSelector, useAppDispatch } from './reduxTypedHooks';
 
 import { changeName } from '../store/tabsSlice';
 
