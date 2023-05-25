@@ -11,10 +11,11 @@ import { PrettifyRequestButton, SaveRequestButton } from '../../../components/co
 import { TemplateModalMode } from '../../../types';
 
 import theme from '../../../theme';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 type ContainerProps = {
   width: number;
+  isSidebarOpen: boolean;
 };
 
 const Container = styled.section.attrs<ContainerProps>(({ width }) => ({
@@ -25,8 +26,17 @@ const Container = styled.section.attrs<ContainerProps>(({ width }) => ({
   display: flex;
   flex-direction: column;
 
-  min-width: 380px;
+  min-width: 355px;
   min-height: 300px;
+
+  ${({ isSidebarOpen }) =>
+    isSidebarOpen &&
+    css`
+      @media (min-width: 800px) and (max-width: 1100px) {
+        min-width: 100%;
+        max-width: 100%;
+      }
+    `}
 
   @media (max-width: 600px) {
     min-width: 100%;
@@ -79,10 +89,11 @@ const RequestEditorControls = styled.div`
 interface EditorProps {
   width: number;
   isFetching: boolean;
+  isSidebarOpen: boolean;
   sendRequest: () => void;
 }
 
-export const Editor = ({ isFetching, sendRequest, width }: EditorProps) => {
+export const Editor = ({ isFetching, isSidebarOpen, sendRequest, width }: EditorProps) => {
   const { query, setQuery } = useTabsState();
   const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
     null
@@ -91,7 +102,7 @@ export const Editor = ({ isFetching, sendRequest, width }: EditorProps) => {
   const { prettify } = usePrettier();
 
   return (
-    <Container width={width}>
+    <Container width={width} isSidebarOpen={isSidebarOpen}>
       <EditorBox>
         <RequestEditorHeader>
           {t('playground.operation')}

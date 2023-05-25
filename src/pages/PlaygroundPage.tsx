@@ -32,6 +32,7 @@ const PlaygroundWrapper = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: auto;
 `;
 
 const Playground = styled.div<{ isSidebarOpen: boolean }>`
@@ -85,7 +86,12 @@ export const PlaygroundPage = React.memo(() => {
           <TabBar />
           <PlaygroundHeader isError={isSchemaError} />
           <Playground isSidebarOpen={isSidebarOpen}>
-            <Editor isFetching={isFetching} sendRequest={sendRequest} width={panelWidth} />
+            <Editor
+              isFetching={isFetching}
+              isSidebarOpen={isSidebarOpen}
+              sendRequest={sendRequest}
+              width={panelWidth}
+            />
             <ResizeHandle onMouseDown={handleResize} />
             <ResponseBox
               isFetching={isFetching}
