@@ -112,7 +112,6 @@ const tabsSlice = createSlice({
       { payload: { tabId, response } }: PayloadAction<{ tabId: number; response?: Response }>
     ) => {
       const tabIdx = state.tabs.findIndex(({ id }) => tabId === id);
-      console.log(tabIdx);
       state.tabs[tabIdx].response = response;
     },
   },
