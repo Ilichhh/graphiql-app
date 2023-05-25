@@ -5,8 +5,6 @@ import { IconButton } from '@mui/material';
 import {
   KeyboardDoubleArrowLeft,
   KeyboardDoubleArrowRightOutlined,
-  BookmarkBorderOutlined,
-  HistoryOutlined,
   SaveOutlined,
   MoreHoriz,
   SettingsOutlined,
@@ -34,22 +32,6 @@ export const OpenSidebarButton = (props: IconButtonProps) => {
   return (
     <IconButton {...props} sx={IconButtonStyle}>
       <KeyboardDoubleArrowRightOutlined />
-    </IconButton>
-  );
-};
-
-export const TemplatesTabButton = (props: IconButtonProps) => {
-  return (
-    <IconButton {...props} sx={IconButtonStyle}>
-      <BookmarkBorderOutlined />
-    </IconButton>
-  );
-};
-
-export const RequestsHistoryTabButton = (props: IconButtonProps) => {
-  return (
-    <IconButton {...props} sx={IconButtonStyle}>
-      <HistoryOutlined />
     </IconButton>
   );
 };

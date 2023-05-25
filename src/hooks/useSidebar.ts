@@ -1,19 +1,23 @@
 import { useCallback } from 'react';
 import { useAppSelector, useAppDispatch } from './reduxTypedHooks';
 
-import { changeName } from '../store/tabsSlice';
-
+import { changeName, addTab } from '../store/tabsSlice';
 import {
   setIsOpen,
   setActiveTab,
   setQueryTemplates,
+  addQueryTemplate,
   renameTemplate as renameTemplateAction,
+  setRunHistory,
+  addQueryToRunHistory,
 } from '../store/sidebarSlice';
 import {
   getAllQueryTemplates,
   deleteQueryTemplate,
   saveQueryTemplate,
   renameQueryTemplate,
+  saveQueryRunToHistory,
+  getAllQueriesHistory,
 } from '../api/firebaseApi';
 
 import { DocumentData } from '@firebase/firestore';
@@ -21,7 +25,9 @@ import { SidebarTabs } from '../types';
 
 export const useSidebar = () => {
   const dispatch = useAppDispatch();
-  const { isOpen, activeTab, queryTemplates } = useAppSelector((state) => state.sidebar);
+  const { isOpen, activeTab, queryTemplates, runHistory } = useAppSelector(
+    (state) => state.sidebar
+  );
   const tabId = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
 
   const closeSidebar = useCallback(() => {
@@ -81,13 +87,56 @@ export const useSidebar = () => {
         const id = await saveQueryTemplate(templateData);
         if (!id) return;
 
-        dispatch(setQueryTemplates([...queryTemplates, { id, data: templateData }]));
+        dispatch(addQueryTemplate({ id, data: templateData }));
         dispatch(changeName({ name: templateData.name, id: tabId, templateId: id }));
       } catch (error) {
         console.error(error);
       }
     },
-    [dispatch, queryTemplates, tabId]
+    [dispatch, tabId]
+  );
+
+  const fetchQueriesHistoryData = useCallback(async () => {
+    try {
+      const data = await getAllQueriesHistory();
+      dispatch(setRunHistory(data));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [dispatch]);
+
+  const saveQueryRun = useCallback(
+    async (queryRunData: DocumentData) => {
+      try {
+        const id = await saveQueryRunToHistory(queryRunData);
+        if (!id) return;
+
+        dispatch(addQueryToRunHistory({ id, data: queryRunData, timestamp: Date.now() }));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [dispatch]
+  );
+
+  const selectQuery = useCallback(
+    (data: DocumentData, templateId: string) => {
+      const { name, endpoint, query, variables, headers } = data;
+      dispatch(
+        addTab({
+          name,
+          instanceOfTemplate: templateId,
+          endpoint,
+          query,
+          headers,
+          variables,
+        })
+      );
+      if (window.innerWidth < 800) {
+        closeSidebar();
+      }
+    },
+    [dispatch, closeSidebar]
   );
 
   return {
@@ -101,5 +150,9 @@ export const useSidebar = () => {
     deleteTemplate,
     saveTemplate,
     renameTemplate,
+    saveQueryRun,
+    fetchQueriesHistoryData,
+    runHistory,
+    selectQuery,
   };
 };

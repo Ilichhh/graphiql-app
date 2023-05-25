@@ -1,11 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useSidebar } from '../../../hooks';
+import { useSidebar } from '../../../hooks/useSidebar';
 
-import { addTab } from '../../../store/tabsSlice';
-
-import { ShowOptionsButton } from '../../../components/common/IconButtons';
-import { QueryTemplateModal } from './';
+import { ShowOptionsButton } from '../../common/IconButtons';
+import { QueryTemplateModal } from '.';
 import Popover from '@mui/material/Popover';
 
 import { DocumentData } from '@firebase/firestore';
@@ -69,20 +67,19 @@ const DeleteOption = styled(Option)`
   color: ${theme.colors.error};
 `;
 
-interface QueryPreviewProps {
+interface QueryTemplatePreviewProps {
   templateId: string;
   data: DocumentData;
 }
 
-export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
+export const QueryTemplatePreview = ({ templateId, data }: QueryTemplatePreviewProps) => {
   const { name, endpoint } = data;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
     null
   );
-  const { closeSidebar } = useSidebar();
+  const { selectQuery } = useSidebar();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
 
   const openPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -101,21 +98,8 @@ export const QueryPreview = ({ templateId, data }: QueryPreviewProps) => {
   );
 
   const handleOpenTab = useCallback(() => {
-    const { name, endpoint, query, variables, headers } = data;
-    dispatch(
-      addTab({
-        name,
-        instanceOfTemplate: templateId,
-        endpoint,
-        query,
-        headers,
-        variables,
-      })
-    );
-    if (window.innerWidth < 800) {
-      closeSidebar();
-    }
-  }, [data, dispatch, templateId, closeSidebar]);
+    selectQuery(data, templateId);
+  }, [data, selectQuery, templateId]);
 
   return (
     <Container>

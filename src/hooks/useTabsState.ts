@@ -13,9 +13,10 @@ import { useAppDispatch, useAppSelector } from './reduxTypedHooks';
 export const useTabsState = () => {
   const tabId = useAppSelector(({ tabs: { selectedIdx } }) => selectedIdx);
   const error = useAppSelector((store) => store.error);
-  const { endpoint, query, headers, variables, response } = useAppSelector(
-    ({ tabs: { tabs, selectedIdx } }) => tabs[tabs.findIndex(({ id }) => id === selectedIdx)]
-  );
+  const { endpoint, query, headers, variables, name, instanceOfTemplate, response } =
+    useAppSelector(
+      ({ tabs: { tabs, selectedIdx } }) => tabs[tabs.findIndex(({ id }) => id === selectedIdx)]
+    );
   const dispatch = useAppDispatch();
 
   return {
@@ -24,8 +25,10 @@ export const useTabsState = () => {
     variables,
     headers,
     response,
+    name,
     error,
     tabId,
+    instanceOfTemplate,
     setEndpoint: useCallback(
       (endpoint: string) => dispatch(setEndpoint({ tabId, endpoint })),
       [dispatch, tabId]

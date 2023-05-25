@@ -51,7 +51,11 @@
     "renameQuery": "Переименовать запрос",
     "deleteQuery": "Удалить",
     "queriesCollection": "Коллекция запросов",
+    "runHistory": "История запросов",
     "emptyCollectionMessage": "У вас нет сохраненных запросов. Сохраните запрос, чтобы увидеть его в коллекции.",
+    "emptyHistoryMessage": "История запросов пуста.",
+    "unnamedQuery": "(без имени)",
+    "newTab": "Новая вкладка",
     "modal": {
       "save": {
         "header": "Сохранить запрос",

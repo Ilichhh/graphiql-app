@@ -28,7 +28,7 @@ const initialState: TabsState = {
   tabs: [
     {
       id: initialId,
-      name: 'New Tab',
+      name: '',
       endpoint: '',
       query: '',
       variables: '',

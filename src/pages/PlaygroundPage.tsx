@@ -49,7 +49,7 @@ const Playground = styled.div<{ isSidebarOpen: boolean }>`
 
 export const PlaygroundPage = React.memo(() => {
   const { endpoint, setEndpoint, setQuery } = useTabsState();
-  const { isOpen: isSidebarOpen, fetchQueryTemplatesData } = useSidebar();
+  const { isOpen: isSidebarOpen, fetchQueryTemplatesData, fetchQueriesHistoryData } = useSidebar();
   const { isSchemaError, schemaErrorMessage } = useGraphQLSchema(endpoint);
   const { response, errorMessage, isFetching, sendRequest } = usePlayground(endpoint);
   const lastEndpoint = localStorage.getItem('last-endpoint');
@@ -68,6 +68,10 @@ export const PlaygroundPage = React.memo(() => {
   useEffect(() => {
     fetchQueryTemplatesData();
   }, [fetchQueryTemplatesData]);
+
+  useEffect(() => {
+    fetchQueriesHistoryData();
+  }, [fetchQueriesHistoryData]);
 
   if (isModal) {
     return ReactDOM.createPortal(<Modal setIsModal={setIsModal} />, document.body);
