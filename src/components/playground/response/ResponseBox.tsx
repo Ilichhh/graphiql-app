@@ -78,8 +78,8 @@ export const ResponseBox = ({ isFetching, response, status }: ResponseBoxProps) 
 
   return (
     <Container>
+      <ResponseHeader statusCode={status} />
       <ResponseSection>
-        <ResponseHeader statusCode={status} />
         {isFetching ? (
           <ProgressWrapper>
             <CircularProgress />
