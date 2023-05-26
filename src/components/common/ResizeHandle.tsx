@@ -17,7 +17,7 @@ const Container = styled.div`
 const Handle = styled.div`
   width: 5px;
   height: 40%;
-  margin-left: 2px;
+  margin: 0 2px;
 
   border-radius: 12px;
 
