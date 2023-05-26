@@ -109,6 +109,7 @@
     "toHome": "Home"
   },
   "global": {
-    "sessionError": "Your session has expired. Please sign in again"
+    "sessionError": "Your session has expired. Please sign in again",
+    "errorBoundaryMessage": "Something went wrong. Try to reload the page"
   }
 }
