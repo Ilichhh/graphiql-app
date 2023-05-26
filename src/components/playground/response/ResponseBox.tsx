@@ -14,7 +14,7 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   flex: 1 1 0;
-  min-width: 240px;
+  min-width: 230px;
 
   overflow: hidden;
   background: ${theme.colors.bgDarkBlue};
