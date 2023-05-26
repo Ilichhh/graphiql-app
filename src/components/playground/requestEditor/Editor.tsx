@@ -5,7 +5,7 @@ import { usePrettier, useTabsState } from '../../../hooks';
 import { EditorTools, PlayButton } from './';
 import { QueryTemplateModal } from '../sidebar';
 import { RequestEditor } from '../codemirror';
-import { PrettifyRequestButton, SaveRequestButton } from '../../../components/common/IconButtons';
+import { PrettifyRequestButton, SaveRequestButton } from '../../common/IconButtons';
 
 import { TemplateModalMode } from '../../../types';
 
@@ -35,7 +35,7 @@ const Container = styled.section.attrs<ContainerProps>(({ width }) => ({
         min-width: 100%;
         max-width: 100%;
       }
-    `}
+    `};
 
   @media (max-width: 600px) {
     min-width: 100%;

@@ -1,6 +1,7 @@
 export { useAppDispatch, useAppSelector } from './reduxTypedHooks';
 export { useDebouncedInput } from './useDebouncedInput';
-export { useEndpointInput } from './useEndpointInput';
+export { useHeaderEndpointInput } from './useHeaderEndpointInput';
+export { useModalEndpointInput } from './useModalEndpointInput';
 export { useGraphQLSchema } from './useGraphQLSchema';
 export { useIsAtTop } from './useIsAtTop';
 export { usePlayground } from './usePlayground';

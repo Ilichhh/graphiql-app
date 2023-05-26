@@ -1,6 +1,6 @@
 import React, { FormEvent, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useEndpointInput, useGraphQLSchema, useTabsState } from '../../hooks';
+import { useGraphQLSchema, useTabsState, useModalEndpointInput } from '../../hooks';
 
 import EastIcon from '@mui/icons-material/East';
 import { Button, Divider, TextField } from '@mui/material';
@@ -76,27 +76,26 @@ const SubmitButton = styled(Button)`
   white-space: nowrap;
 `;
 
-interface ModalProps {
-  setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const Modal = ({ setIsModal }: ModalProps) => {
-  const { endpoint, setEndpoint, inputValue, setInputValue, handleInputChange } =
-    useEndpointInput();
-  const { setQuery } = useTabsState();
-  const { isSchemaError } = useGraphQLSchema(endpoint);
+export const Modal = () => {
+  const { inputValue, setInputValue, debouncedInput, handleInputChange } = useModalEndpointInput();
+  const { addTab } = useTabsState();
+  const { isSchemaError } = useGraphQLSchema(debouncedInput);
   const { t } = useTranslation();
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (isSchemaError) return;
-      setEndpoint(endpoint);
-      setQuery(getDefaultQuery(endpoint));
-      localStorage.setItem('last-endpoint', endpoint);
-      setIsModal(false);
+
+      addTab({
+        name: '',
+        endpoint: debouncedInput,
+        query: getDefaultQuery(debouncedInput),
+        variables: '',
+        headers: '',
+      });
     },
-    [isSchemaError, setEndpoint, endpoint, setQuery, setIsModal]
+    [isSchemaError, addTab, debouncedInput]
   );
 
   const handleSelectEndpoint = useCallback(
@@ -129,7 +128,7 @@ export const Modal = ({ setIsModal }: ModalProps) => {
             variant="filled"
             onChange={handleInputChange}
           />
-          {endpoint && !isSchemaError && (
+          {debouncedInput && !isSchemaError && (
             <SubmitButton type="submit" variant="contained" size="large" endIcon={<EastIcon />}>
               {t(`playground.endpointSubmit`)}
             </SubmitButton>
