@@ -6,6 +6,7 @@ import { EditorTools, PlayButton } from './';
 import { QueryTemplateModal } from '../sidebar';
 import { RequestEditor } from '../codemirror';
 import { PrettifyRequestButton, SaveRequestButton } from '../../common/IconButtons';
+import { ErrorBoundary } from '../../';
 
 import { TemplateModalMode } from '../../../types';
 
@@ -103,18 +104,23 @@ export const Editor = ({ isFetching, isSidebarOpen, sendRequest, width }: Editor
   return (
     <Container width={width} isSidebarOpen={isSidebarOpen}>
       <EditorBox>
-        <RequestEditorHeader>
-          {t('playground.operation')}
-          <RequestEditorControls>
-            <SaveRequestButton
-              title={t('playground.saveOperation') as string}
-              onClick={() => setQueryTemplateModalMode(TemplateModalMode.Save)}
-            />
-            <PrettifyRequestButton title={t('playground.prettify') as string} onClick={prettify} />
-            <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
-          </RequestEditorControls>
-        </RequestEditorHeader>
-        <RequestEditor value={query} onChange={(value) => setQuery(value)} />
+        <ErrorBoundary>
+          <RequestEditorHeader>
+            {t('playground.operation')}
+            <RequestEditorControls>
+              <SaveRequestButton
+                title={t('playground.saveOperation') as string}
+                onClick={() => setQueryTemplateModalMode(TemplateModalMode.Save)}
+              />
+              <PrettifyRequestButton
+                title={t('playground.prettify') as string}
+                onClick={prettify}
+              />
+              <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
+            </RequestEditorControls>
+          </RequestEditorHeader>
+          <RequestEditor value={query} onChange={(value) => setQuery(value)} />
+        </ErrorBoundary>
       </EditorBox>
       <EditorTools />
       {queryTemplateModalMode && (

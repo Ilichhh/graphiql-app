@@ -12,6 +12,7 @@ import { ExplorerTitleBar } from './components/ExplorerTitleBar';
 import { SearchBar } from './components/SearchBar';
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from '../../../muiTheme';
+import { ErrorBoundary } from '../../';
 
 const ExplorerWrapper = styled.div`
   position: absolute;
@@ -79,12 +80,14 @@ export const Explorer = () => {
   return (
     <ThemeProvider theme={lightTheme}>
       <ExplorerWrapper>
-        <ExplorerContent>
-          <ExplorerTitleBar />
-          <Divider />
-          <SearchBar />
-          {content}
-        </ExplorerContent>
+        <ErrorBoundary>
+          <ExplorerContent>
+            <ExplorerTitleBar />
+            <Divider />
+            <SearchBar />
+            {content}
+          </ExplorerContent>
+        </ErrorBoundary>
       </ExplorerWrapper>
     </ThemeProvider>
   );

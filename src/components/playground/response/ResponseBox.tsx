@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ResponseWindow } from '../codemirror';
 import { ResponseHeader } from './ResponseHeader';
 import CircularProgress from '@mui/material/CircularProgress';
+import { ErrorBoundary } from '../../';
 
 import styled from 'styled-components';
 import theme from '../../../theme';
@@ -13,7 +14,7 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   flex: 1 1 0;
-  min-width: 240px;
+  min-width: 230px;
 
   overflow: hidden;
   background: ${theme.colors.bgDarkBlue};
@@ -78,21 +79,23 @@ export const ResponseBox = ({ isFetching, response, status }: ResponseBoxProps) 
 
   return (
     <Container>
-      <ResponseHeader statusCode={status} />
-      <ResponseSection>
-        {isFetching ? (
-          <ProgressWrapper>
-            <CircularProgress />
-          </ProgressWrapper>
-        ) : (
-          <>
-            <ResponseWindow value={response}></ResponseWindow>
-          </>
+      <ErrorBoundary>
+        <ResponseHeader statusCode={status} />
+        <ResponseSection>
+          {isFetching ? (
+            <ProgressWrapper>
+              <CircularProgress />
+            </ProgressWrapper>
+          ) : (
+            <>
+              <ResponseWindow value={response}></ResponseWindow>
+            </>
+          )}
+        </ResponseSection>
+        {!response && !isFetching && (
+          <StartMessage>{t('playground.responsePlaceholder')}</StartMessage>
         )}
-      </ResponseSection>
-      {!response && !isFetching && (
-        <StartMessage>{t('playground.responsePlaceholder')}</StartMessage>
-      )}
+      </ErrorBoundary>
     </Container>
   );
 };

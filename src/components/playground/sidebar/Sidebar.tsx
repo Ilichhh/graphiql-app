@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSidebar } from '../../../hooks';
+import { ErrorBoundary } from '../../';
 
 import { QueryTemplatePreview, QueryHistoryPreview } from './';
 import { CloseSidebarButton } from '../../../components/common/IconButtons';
@@ -174,7 +175,7 @@ export const Sidebar = React.memo(() => {
           onClick={closeSidebar}
         />
       </Nav>
-      {tabContent}
+      <ErrorBoundary>{tabContent}</ErrorBoundary>
     </Container>
   );
 });

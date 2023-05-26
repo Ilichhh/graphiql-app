@@ -5,6 +5,7 @@ import { MetadataEditor } from '../codemirror';
 import { EditorToolsTab } from '../../../types';
 import theme from '../../../theme';
 import styled from 'styled-components';
+import { ErrorBoundary } from '../../';
 
 const EditorBox = styled.section`
   position: relative;
@@ -110,12 +111,14 @@ export const EditorTools = () => {
         </ToolsTab>
       </ToolsBar>
       <EditorBox>
-        <MetadataEditor
-          value={activeToolsTab === 'variables' ? variables : headers}
-          onChange={(value) =>
-            activeToolsTab === 'variables' ? setVariables(value) : setHeaders(value)
-          }
-        />
+        <ErrorBoundary>
+          <MetadataEditor
+            value={activeToolsTab === 'variables' ? variables : headers}
+            onChange={(value) =>
+              activeToolsTab === 'variables' ? setVariables(value) : setHeaders(value)
+            }
+          />
+        </ErrorBoundary>
       </EditorBox>
     </Container>
   );
