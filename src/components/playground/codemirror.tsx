@@ -40,7 +40,14 @@ const RequestEditor = React.memo((props: CodeMirrorProps) => {
     updateSchema(view, schema);
   }, [refs, schema]);
 
-  return <CodeMirror ref={refs} extensions={[graphql()]} theme={requestEditorTheme} {...props} />;
+  return (
+    <CodeMirror
+      ref={refs}
+      extensions={[graphql(schema || undefined)]}
+      theme={requestEditorTheme}
+      {...props}
+    />
+  );
 });
 
 const MetadataEditor = React.memo((props: CodeMirrorProps) => {
