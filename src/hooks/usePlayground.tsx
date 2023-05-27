@@ -26,9 +26,6 @@ export const usePlayground = (endpoint: string) => {
   const [errorMessage, setErrorMessage] = useState<ErrorObject>();
 
   useEffect(() => {
-    if (!data) {
-      return;
-    }
     try {
       setResponse(data);
     } catch (e) {

@@ -177,7 +177,7 @@ export const getAllQueriesHistory = async () => {
     const querySnapshot = await getDocs(queriesHistoryRef);
     const history = querySnapshot.docs.map((doc) => ({
       id: doc.id,
-      timestamp: doc.data().timestamp.toMillis(),
+      timestamp: doc.data().timestamp?.toMillis(),
       data: doc.data().data,
     }));
 
