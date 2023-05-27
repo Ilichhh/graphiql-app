@@ -54,13 +54,16 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
   flex-shrink: 0;
   cursor: pointer;
   color: ${({ isActive }) => (isActive ? theme.colors.textGrey : theme.colors.textInactive)};
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 export const EditorTools = () => {
   const { headers, variables, setVariables, setHeaders } = useTabsState();
   const [activeToolsTab, setActiveToolsTab] = useState<EditorToolsTab>(EditorToolsTab.Variables);
   const [isEditorToolsOpen, setIsEditorToolsOpen] = useState(false);
-  const { size: panelHeight, handleResize, isDragging } = useResize(300, 'vertical');
+  const { size: panelHeight, handleResize, isDragging } = useResize(200, 'vertical');
   const [headersLength, setHeadersLength] = useState(0);
   const { t } = useTranslation();
 

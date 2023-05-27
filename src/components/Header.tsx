@@ -56,6 +56,7 @@ const Logo = styled(Link)<{ color: string }>`
   text-decoration: none;
   font-size: 20px;
   color: ${({ color }) => color};
+  user-select: none;
   transition: 0.2s all;
   &:hover {
     color: ${theme.colors.accent};

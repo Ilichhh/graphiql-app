@@ -1,6 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useHeaderEndpointInput } from '../../hooks';
+
+import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 
 import styled from 'styled-components';
 import theme from '../../theme';
@@ -14,24 +15,15 @@ const Header = styled.header`
   background: ${theme.colors.bgBlue};
 `;
 
-const HeaderEndpoint = styled.span`
-  flex: 0 0 auto;
-  padding: 7px 10px;
-  height: 32px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
-  color: ${theme.colors.textGrey};
-  background: ${theme.colors.bgDarkBlue};
-`;
-
 const InputContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
   flex: 1 1 0;
+  padding-left: 8px;
+  background: ${theme.colors.bgDarkBlue};
+  border-radius: 0.4rem;
+  border: 1px solid ${theme.colors.bgBlack};
 `;
 
 const Input = styled.input.attrs(() => ({
@@ -43,15 +35,17 @@ const Input = styled.input.attrs(() => ({
   font-size: 0.9rem;
   background: ${theme.colors.bgDarkBlue};
   color: ${theme.colors.textGrey};
-  border-radius: 0.4rem;
-  border: 1px solid ${theme.colors.bgBlack};
+  border: none;
   outline: none;
 `;
 
 const ErrorBadge = styled.span`
   position: absolute;
-  right: 15px;
-  color: ${theme.colors.error};
+  right: 10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background-color: ${theme.colors.error};
 `;
 
 interface PlaygroundHeaderProps {
@@ -60,14 +54,13 @@ interface PlaygroundHeaderProps {
 
 export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) => {
   const { inputValue, handleInputChange } = useHeaderEndpointInput();
-  const { t } = useTranslation();
 
   return (
     <Header>
-      <HeaderEndpoint>ENDPOINT</HeaderEndpoint>
       <InputContainer>
+        <LanguageOutlinedIcon />
         <Input autoFocus value={inputValue} onChange={handleInputChange} />
-        {isError && <ErrorBadge>{t(`playground.serverError`)}</ErrorBadge>}
+        {isError && <ErrorBadge />}
       </InputContainer>
     </Header>
   );

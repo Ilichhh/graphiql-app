@@ -11,7 +11,7 @@ const Tab = styled.div<TabProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 110px;
+  margin-top: 240px;
   padding: 8px 13px;
   border-radius: 2px 2px 0 0;
   font-size: 0.9rem;

@@ -18,6 +18,7 @@ const Container = styled.footer<{ color: string }>`
   margin: 0 auto;
   padding: 0 40px;
   background-color: ${({ color }) => color};
+  user-select: none;
   @media (max-width: 600px) {
     padding: 0 12px;
   }
@@ -59,9 +60,12 @@ const Name = styled.span`
 
 const Year = styled.span<{ color: string }>`
   font-weight: 500;
-  font-size: 24px;
+  font-size: 1.2rem;
   line-height: 33px;
   color: ${({ color }) => color};
+  @media (max-width: 650px) {
+    font-size: 1rem;
+  }
 `;
 
 export const Footer = React.memo(() => {

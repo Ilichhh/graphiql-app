@@ -25,6 +25,7 @@ const FormWrapper = styled.form`
   width: 90%;
   max-width: 500px;
   min-height: calc(100vh - ${theme.headerHeight} - ${theme.footerHeight});
+  user-select: none;
 `;
 
 const FormHeader = styled.h1`
