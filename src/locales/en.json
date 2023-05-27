@@ -110,5 +110,18 @@
   "global": {
     "sessionError": "Your session has expired. Please sign in again",
     "errorBoundaryMessage": "Something went wrong. Try to reload the page"
+  },
+  "sidebar": {
+    "fetchTemplatesError": "Failed to fetch saved query templates",
+    "deleteTemplateError": "Failed to delete query template",
+    "renameTemplateError": "Failed to rename query template",
+    "saveTemplateError": "Failed to save query template",
+    "fetchHistoryError": "Failed to fetch query history",
+    "saveHistoryError": "Failed to save query to history"
+  },
+  "firebase": {
+    "signUpError": "Failed to sign up. Please, try again later",
+    "signInError": "Failed to sign in. Please, try again later",
+    "logOutError": "Failed to log out. Please, try again later"
   }
 }
