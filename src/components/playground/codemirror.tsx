@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import CodeMirror, { ReactCodeMirrorRef } from '@uiw/react-codemirror';
+import { json } from '@codemirror/lang-json';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { graphql, updateSchema } from 'cm6-graphql';
 import { useTabsState, useGraphQLSchema } from '../../hooks';
@@ -7,7 +8,7 @@ import { useTabsState, useGraphQLSchema } from '../../hooks';
 import theme from '../../theme';
 
 const requestEditorTheme = vscodeDarkInit({
-  settings: { background: theme.colors.bgDarkBlue, gutterBackground: '#0f202d' },
+  settings: { background: theme.colors.bgDarkBlue, gutterBackground: theme.colors.bgDarkBlue },
 });
 
 const metadataEditorTheme = vscodeDarkInit({
@@ -19,7 +20,10 @@ const metadataEditorTheme = vscodeDarkInit({
 });
 
 const responseTheme = vscodeDarkInit({
-  settings: { background: theme.colors.bgBlue },
+  settings: {
+    background: theme.colors.bgBlue,
+    gutterBackground: theme.colors.bgBlue,
+  },
 });
 
 type CodeMirrorProps = React.ComponentProps<typeof CodeMirror>;
@@ -46,9 +50,13 @@ const MetadataEditor = React.memo((props: CodeMirrorProps) => {
 const ResponseWindow = React.memo((props: CodeMirrorProps) => {
   return (
     <CodeMirror
-      extensions={[graphql()]}
+      extensions={[json()]}
       theme={responseTheme}
-      basicSetup={{ lineNumbers: false, foldGutter: false, highlightActiveLine: false }}
+      basicSetup={{
+        lineNumbers: false,
+        highlightActiveLine: false,
+        highlightActiveLineGutter: false,
+      }}
       editable={false}
       {...props}
     />

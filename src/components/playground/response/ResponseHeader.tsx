@@ -13,7 +13,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px 6px;
+  padding: 10px 15px 6px 5px;
   color: ${theme.colors.textGrey};
   background: ${theme.colors.bgBlue};
   border-radius: 5px 5px 0 0;
