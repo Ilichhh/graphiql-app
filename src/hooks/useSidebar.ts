@@ -23,9 +23,13 @@ import {
 
 import { DocumentData } from '@firebase/firestore';
 import { SidebarTabs } from '../types';
+import { useTabsState } from './useTabsState';
+import { useTranslation } from 'react-i18next';
 
 export const useSidebar = () => {
   const dispatch = useAppDispatch();
+  const { setError } = useTabsState();
+  const { t } = useTranslation();
   const { isOpen, activeTab, queryTemplates, runHistory } = useAppSelector(
     (state) => state.sidebar
   );
@@ -51,9 +55,9 @@ export const useSidebar = () => {
       const data = await getAllQueryTemplates();
       dispatch(setQueryTemplates(data));
     } catch (error) {
-      console.error(error);
+      dispatch(setError(t('sidebar.fetchTemplatesError')));
     }
-  }, [dispatch]);
+  }, [dispatch, setError, t]);
 
   const deleteTemplate = useCallback(
     async (templateId: string) => {
@@ -63,10 +67,10 @@ export const useSidebar = () => {
           setQueryTemplates(queryTemplates.filter((template) => template.id !== templateId))
         );
       } catch (error) {
-        console.error(error);
+        dispatch(setError(t('sidebar.deleteTemplateError')));
       }
     },
-    [dispatch, queryTemplates]
+    [dispatch, setError, t, queryTemplates]
   );
 
   const renameTemplate = useCallback(
@@ -76,10 +80,10 @@ export const useSidebar = () => {
         dispatch(renameTemplateAction({ templateId, newName }));
         dispatch(changeName({ name: newName, templateId }));
       } catch (error) {
-        console.error(error);
+        dispatch(setError(t('sidebar.renameTemplateError')));
       }
     },
-    [dispatch]
+    [dispatch, setError, t]
   );
 
   const saveTemplate = useCallback(
@@ -91,10 +95,10 @@ export const useSidebar = () => {
         dispatch(addQueryTemplate({ id, data: templateData }));
         dispatch(changeName({ name: templateData.name, id: tabId, templateId: id }));
       } catch (error) {
-        console.error(error);
+        dispatch(setError(t('sidebar.saveTemplateError')));
       }
     },
-    [dispatch, tabId]
+    [dispatch, setError, t, tabId]
   );
 
   const fetchQueriesHistoryData = useCallback(async () => {
@@ -102,9 +106,9 @@ export const useSidebar = () => {
       const data = await getAllQueriesHistory();
       dispatch(setRunHistory(data));
     } catch (error) {
-      console.error(error);
+      dispatch(setError(t('sidebar.fetchHistoryError')));
     }
-  }, [dispatch]);
+  }, [dispatch, setError, t]);
 
   const saveQueryRun = useCallback(
     async (queryRunData: DocumentData) => {
@@ -114,10 +118,10 @@ export const useSidebar = () => {
 
         dispatch(addQueryToRunHistory({ id, data: queryRunData, timestamp: Date.now() }));
       } catch (error) {
-        console.error(error);
+        dispatch(setError(t('sidebar.saveHistoryError')));
       }
     },
-    [dispatch]
+    [dispatch, setError, t]
   );
 
   const clearRunHistory = useCallback(async () => {

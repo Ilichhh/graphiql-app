@@ -16,6 +16,9 @@ import { auth, db } from '../firebase';
 
 import { DocumentData } from '@firebase/firestore';
 
+import { store } from '../store/store';
+import { setError as setToastError } from '../store/errorState';
+
 import i18n from '../i18n';
 
 export const signUp = async (
@@ -38,7 +41,7 @@ export const signUp = async (
         message: i18n.t('form.emailInUse') as string,
       });
     } else {
-      console.error(error);
+      store.dispatch(setToastError({ error: i18n.t('firebase.signUpError') as string }));
     }
   }
 };
@@ -63,7 +66,7 @@ export const signIn = async (
         message: i18n.t('form.userNotFound') as string,
       });
     } else {
-      console.error(error);
+      store.dispatch(setToastError({ error: i18n.t('firebase.signInError') as string }));
     }
   }
 };
@@ -72,7 +75,7 @@ export const logOut = async () => {
   try {
     signOut(auth);
   } catch (error) {
-    console.error(error);
+    store.dispatch(setToastError({ error: i18n.t('firebase.logOutError') as string }));
   }
 };
 
@@ -93,7 +96,6 @@ export const checkTokenExpiration = async () => {
 
     return false;
   } catch (error) {
-    console.error('Error getting token:', error);
     return false;
   }
 };
@@ -108,7 +110,7 @@ export const saveQueryTemplate = async (templateData: DocumentData) => {
 
     return docRef.id;
   } catch (error) {
-    console.error(error);
+    store.dispatch(setToastError({ error: i18n.t('sidebar.saveTemplateError') as string }));
   }
 };
 
@@ -126,7 +128,8 @@ export const getAllQueryTemplates = async () => {
 
     return templates;
   } catch (error) {
-    console.error(error);
+    store.dispatch(setToastError({ error: i18n.t('sidebar.fetchTemplatesError') as string }));
+
     return [];
   }
 };
@@ -139,7 +142,7 @@ export const deleteQueryTemplate = async (templateId: string) => {
     const templateRef = doc(db, 'users', userUid, 'queryTemplates', templateId);
     await deleteDoc(templateRef);
   } catch (error) {
-    console.error(error);
+    store.dispatch(setToastError({ error: i18n.t('sidebar.deleteTemplateError') as string }));
   }
 };
 
@@ -151,7 +154,7 @@ export const renameQueryTemplate = async (templateId: string, newName: string) =
     const templateRef = doc(db, 'users', userUid, 'queryTemplates', templateId);
     await updateDoc(templateRef, { name: newName });
   } catch (error) {
-    console.error(error);
+    store.dispatch(setToastError({ error: i18n.t('sidebar.renameTemplateError') as string }));
   }
 };
 
@@ -165,7 +168,7 @@ export const saveQueryRunToHistory = async (queryRunData: DocumentData) => {
 
     return docRef.id;
   } catch (error) {
-    console.error(error);
+    store.dispatch(setToastError({ error: i18n.t('sidebar.saveHistoryError') as string }));
   }
 };
 
@@ -178,13 +181,14 @@ export const getAllQueriesHistory = async () => {
     const querySnapshot = await getDocs(queriesHistoryRef);
     const history = querySnapshot.docs.map((doc) => ({
       id: doc.id,
-      timestamp: doc.data().timestamp.toMillis(),
+      timestamp: doc.data().timestamp?.toMillis(),
       data: doc.data().data,
     }));
 
     return history;
   } catch (error) {
-    console.error(error);
+    store.dispatch(setToastError({ error: i18n.t('sidebar.fetchHistoryError') as string }));
+
     return [];
   }
 };
