@@ -10,6 +10,7 @@ import {
   updateDoc,
   collection,
   serverTimestamp,
+  writeBatch,
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
@@ -185,5 +186,24 @@ export const getAllQueriesHistory = async () => {
   } catch (error) {
     console.error(error);
     return [];
+  }
+};
+
+export const deleteAllQueriesHistory = async () => {
+  try {
+    const userUid = auth.currentUser?.uid;
+    if (!userUid) return;
+
+    const queriesHistoryRef = collection(doc(db, 'users', userUid), 'runHistory');
+    const querySnapshot = await getDocs(queriesHistoryRef);
+
+    const batch = writeBatch(db);
+    querySnapshot.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+
+    await batch.commit();
+  } catch (error) {
+    console.error(error);
   }
 };

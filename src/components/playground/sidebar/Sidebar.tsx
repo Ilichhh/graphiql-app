@@ -4,7 +4,7 @@ import { useSidebar } from '../../../hooks';
 import { ErrorBoundary } from '../../';
 
 import { QueryTemplatePreview, QueryHistoryPreview } from './';
-import { CloseSidebarButton } from '../../../components/common/IconButtons';
+import { CloseSidebarButton, ClearHistoryButton } from '../../../components/common/IconButtons';
 import { BookmarkBorderOutlined, HistoryOutlined } from '@mui/icons-material';
 
 import { SidebarTabs } from '../../../types';
@@ -62,7 +62,8 @@ const SidebarTab = styled.div<{ isActive?: boolean }>`
 const Header = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  justify-content: space-between;
+  padding: 10px 8px 10px 20px;
   height: 52px;
   font-size: 18px;
 `;
@@ -97,7 +98,8 @@ const EmptyCollectionMessage = styled.div`
 `;
 
 export const Sidebar = React.memo(() => {
-  const { closeSidebar, queryTemplates, activeTab, changeTab, runHistory } = useSidebar();
+  const { closeSidebar, queryTemplates, activeTab, changeTab, runHistory, clearRunHistory } =
+    useSidebar();
   const [templatesArray, setTemplatesArray] = useState<React.ReactNode[]>([]);
   const [runHistoryArray, setRunHistoryArray] = useState<React.ReactNode[]>([]);
   const { t } = useTranslation();
@@ -141,7 +143,10 @@ export const Sidebar = React.memo(() => {
   if (activeTab === 'history') {
     tabContent = (
       <>
-        <Header>{t('playground.runHistory')}</Header>
+        <Header>
+          {t('playground.runHistory')}
+          <ClearHistoryButton onClick={clearRunHistory} />
+        </Header>
         <ContentBox>
           {runHistoryArray.length ? (
             runHistoryArray

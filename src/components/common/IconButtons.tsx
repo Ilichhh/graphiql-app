@@ -9,6 +9,7 @@ import {
   MoreHoriz,
   SettingsOutlined,
   AutoFixHighOutlined,
+  DeleteOutlineOutlined,
 } from '@mui/icons-material';
 
 import theme from '../../theme';
@@ -64,6 +65,14 @@ export const ShowOptionsButton = (props: IconButtonProps) => {
   return (
     <IconButton {...props} sx={IconButtonStyle}>
       <MoreHoriz />
+    </IconButton>
+  );
+};
+
+export const ClearHistoryButton = (props: IconButtonProps) => {
+  return (
+    <IconButton {...props} sx={IconButtonStyle}>
+      <DeleteOutlineOutlined />
     </IconButton>
   );
 };
