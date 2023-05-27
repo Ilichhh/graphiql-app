@@ -65,6 +65,7 @@ const StartMessage = styled.div`
   line-height: 24px;
   font-weight: 400;
   color: ${theme.colors.textInactive};
+  user-select: none;
   transform: translate(-50%, -50%);
 `;
 

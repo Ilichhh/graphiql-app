@@ -17,6 +17,7 @@ const Container = styled.aside`
   flex-direction: column;
   color: ${theme.colors.textGrey};
   background-color: ${theme.colors.bgBlue};
+  user-select: none;
   @media (max-width: 800px) {
     position: absolute;
     z-index: 100;
