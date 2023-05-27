@@ -31,7 +31,7 @@ const Title = styled.h1`
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.3px;
-  overflow-x: hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
 `;
 
