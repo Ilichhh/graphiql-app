@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import { ResponseWindow } from '../codemirror';
 import { ResponseHeader } from './ResponseHeader';
-import CircularProgress from '@mui/material/CircularProgress';
 import { ErrorBoundary } from '../../';
+import { Loader } from '../../../components/common';
 
 import styled from 'styled-components';
 import theme from '../../../theme';
@@ -15,7 +15,7 @@ const Container = styled.section`
   flex-direction: column;
   flex: 1 1 0;
   min-width: 230px;
-
+  min-height: 300px;
   overflow: hidden;
   background: ${theme.colors.bgDarkBlue};
 `;
@@ -44,13 +44,6 @@ const ResponseSection = styled.section`
   @media (max-width: 1100px) {
     padding: 0 15px 20px;
   }
-`;
-
-const ProgressWrapper = styled.div`
-  display: flex;
-  flex: 1 1 0;
-  justify-content: center;
-  align-items: center;
 `;
 
 const StartMessage = styled.div`
@@ -84,9 +77,7 @@ export const ResponseBox = ({ isFetching, response, status }: ResponseBoxProps) 
         <ResponseHeader statusCode={status} />
         <ResponseSection>
           {isFetching ? (
-            <ProgressWrapper>
-              <CircularProgress />
-            </ProgressWrapper>
+            <Loader />
           ) : (
             <>
               <ResponseWindow value={response}></ResponseWindow>
