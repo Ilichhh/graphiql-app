@@ -108,7 +108,9 @@ export const saveQueryTemplate = async (templateData: DocumentData) => {
     const docRef = await addDoc(templatesRef, templateData);
 
     return docRef.id;
-  } catch (error) {}
+  } catch (error) {
+    store.dispatch(setToastError({ error: i18n.t('sidebar.saveTemplateError') as string }));
+  }
 };
 
 export const getAllQueryTemplates = async () => {
@@ -125,6 +127,8 @@ export const getAllQueryTemplates = async () => {
 
     return templates;
   } catch (error) {
+    store.dispatch(setToastError({ error: i18n.t('sidebar.fetchTemplatesError') as string }));
+
     return [];
   }
 };
@@ -136,7 +140,9 @@ export const deleteQueryTemplate = async (templateId: string) => {
 
     const templateRef = doc(db, 'users', userUid, 'queryTemplates', templateId);
     await deleteDoc(templateRef);
-  } catch (error) {}
+  } catch (error) {
+    store.dispatch(setToastError({ error: i18n.t('sidebar.deleteTemplateError') as string }));
+  }
 };
 
 export const renameQueryTemplate = async (templateId: string, newName: string) => {
@@ -146,7 +152,9 @@ export const renameQueryTemplate = async (templateId: string, newName: string) =
 
     const templateRef = doc(db, 'users', userUid, 'queryTemplates', templateId);
     await updateDoc(templateRef, { name: newName });
-  } catch (error) {}
+  } catch (error) {
+    store.dispatch(setToastError({ error: i18n.t('sidebar.renameTemplateError') as string }));
+  }
 };
 
 export const saveQueryRunToHistory = async (queryRunData: DocumentData) => {
@@ -158,7 +166,9 @@ export const saveQueryRunToHistory = async (queryRunData: DocumentData) => {
     const docRef = await addDoc(queryRunRef, { data: queryRunData, timestamp: serverTimestamp() });
 
     return docRef.id;
-  } catch (error) {}
+  } catch (error) {
+    store.dispatch(setToastError({ error: i18n.t('sidebar.saveHistoryError') as string }));
+  }
 };
 
 export const getAllQueriesHistory = async () => {
@@ -176,6 +186,8 @@ export const getAllQueriesHistory = async () => {
 
     return history;
   } catch (error) {
+    store.dispatch(setToastError({ error: i18n.t('sidebar.fetchHistoryError') as string }));
+
     return [];
   }
 };
