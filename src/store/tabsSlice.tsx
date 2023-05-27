@@ -29,10 +29,10 @@ const emptyState = {
 
 const savedTabState = localStorage.getItem('tabs');
 let initialState: TabsState;
+
 try {
   initialState = savedTabState ? JSON.parse(savedTabState) : emptyState;
 } catch (error) {
-  console.error(error);
   initialState = emptyState;
 }
 

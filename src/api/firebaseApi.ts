@@ -15,6 +15,9 @@ import { auth, db } from '../firebase';
 
 import { DocumentData } from '@firebase/firestore';
 
+import { store } from '../store/store';
+import { setError as setToastError } from '../store/errorState';
+
 import i18n from '../i18n';
 
 export const signUp = async (
@@ -37,7 +40,7 @@ export const signUp = async (
         message: i18n.t('form.emailInUse') as string,
       });
     } else {
-      console.error(error);
+      store.dispatch(setToastError({ error: i18n.t('firebase.signUpError') as string }));
     }
   }
 };
@@ -62,7 +65,7 @@ export const signIn = async (
         message: i18n.t('form.userNotFound') as string,
       });
     } else {
-      console.error(error);
+      store.dispatch(setToastError({ error: i18n.t('firebase.signInError') as string }));
     }
   }
 };
@@ -71,7 +74,7 @@ export const logOut = async () => {
   try {
     signOut(auth);
   } catch (error) {
-    console.error(error);
+    store.dispatch(setToastError({ error: i18n.t('firebase.logOutError') as string }));
   }
 };
 
@@ -92,7 +95,6 @@ export const checkTokenExpiration = async () => {
 
     return false;
   } catch (error) {
-    console.error('Error getting token:', error);
     return false;
   }
 };
@@ -106,9 +108,7 @@ export const saveQueryTemplate = async (templateData: DocumentData) => {
     const docRef = await addDoc(templatesRef, templateData);
 
     return docRef.id;
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
 };
 
 export const getAllQueryTemplates = async () => {
@@ -125,7 +125,6 @@ export const getAllQueryTemplates = async () => {
 
     return templates;
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
@@ -137,9 +136,7 @@ export const deleteQueryTemplate = async (templateId: string) => {
 
     const templateRef = doc(db, 'users', userUid, 'queryTemplates', templateId);
     await deleteDoc(templateRef);
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
 };
 
 export const renameQueryTemplate = async (templateId: string, newName: string) => {
@@ -149,9 +146,7 @@ export const renameQueryTemplate = async (templateId: string, newName: string) =
 
     const templateRef = doc(db, 'users', userUid, 'queryTemplates', templateId);
     await updateDoc(templateRef, { name: newName });
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
 };
 
 export const saveQueryRunToHistory = async (queryRunData: DocumentData) => {
@@ -163,9 +158,7 @@ export const saveQueryRunToHistory = async (queryRunData: DocumentData) => {
     const docRef = await addDoc(queryRunRef, { data: queryRunData, timestamp: serverTimestamp() });
 
     return docRef.id;
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
 };
 
 export const getAllQueriesHistory = async () => {
@@ -183,7 +176,6 @@ export const getAllQueriesHistory = async () => {
 
     return history;
   } catch (error) {
-    console.error(error);
     return [];
   }
 };
