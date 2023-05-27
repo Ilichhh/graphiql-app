@@ -16,10 +16,11 @@ export enum SidebarTabs {
   Settings = 'settings',
 }
 
-export enum TemplateModalMode {
+export enum SidebarModalMode {
   Save = 'save',
   Rename = 'rename',
   Delete = 'delete',
+  ClearHistory = 'clearHistory',
 }
 
 export interface QueryTemplateData {

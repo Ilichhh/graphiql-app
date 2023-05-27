@@ -1,4 +1,4 @@
 export { Sidebar } from './Sidebar';
-export { QueryTemplateModal } from './QueryTemplateModal';
+export { SidebarModal } from './SidebarModal';
 export { QueryTemplatePreview } from './QueryTemplatePreview';
 export { QueryHistoryPreview } from './QueryHistoryPreview';

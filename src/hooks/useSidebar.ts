@@ -18,6 +18,7 @@ import {
   renameQueryTemplate,
   saveQueryRunToHistory,
   getAllQueriesHistory,
+  deleteAllQueriesHistory,
 } from '../api/firebaseApi';
 
 import { DocumentData } from '@firebase/firestore';
@@ -123,6 +124,15 @@ export const useSidebar = () => {
     [dispatch, setError, t]
   );
 
+  const clearRunHistory = useCallback(async () => {
+    try {
+      await deleteAllQueriesHistory();
+      dispatch(setRunHistory([]));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [dispatch]);
+
   const selectQuery = useCallback(
     (data: DocumentData, templateId: string) => {
       const { name, endpoint, query, variables, headers } = data;
@@ -158,5 +168,6 @@ export const useSidebar = () => {
     fetchQueriesHistoryData,
     runHistory,
     selectQuery,
+    clearRunHistory,
   };
 };

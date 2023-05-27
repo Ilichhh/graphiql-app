@@ -6,7 +6,7 @@ import { useSidebar, useTabsState } from '../../../hooks';
 import { Button, Modal, TextField } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import { TemplateModalMode } from '../../../types';
+import { SidebarModalMode } from '../../../types';
 
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from '../../../muiTheme';
@@ -42,17 +42,17 @@ const Buttons = styled.div`
   gap: 20px;
 `;
 
-interface QueryTemplateModalProps {
-  setMode: React.Dispatch<React.SetStateAction<TemplateModalMode | null>>;
-  mode: TemplateModalMode;
+interface SidebarModalProps {
+  setMode: React.Dispatch<React.SetStateAction<SidebarModalMode | null>>;
+  mode: SidebarModalMode;
   templateId?: string;
-  prevName: string;
+  prevName?: string;
 }
 
-export const QueryTemplateModal = React.memo(
-  ({ setMode, mode, templateId, prevName }: QueryTemplateModalProps) => {
+export const SidebarModal = React.memo(
+  ({ setMode, mode, templateId, prevName }: SidebarModalProps) => {
     const { endpoint, query, variables, headers } = useTabsState();
-    const { saveTemplate, renameTemplate, deleteTemplate } = useSidebar();
+    const { saveTemplate, renameTemplate, deleteTemplate, clearRunHistory } = useSidebar();
     const { t } = useTranslation();
     const {
       register,
@@ -77,26 +77,36 @@ export const QueryTemplateModal = React.memo(
       if (mode === 'delete' && templateId) {
         await deleteTemplate(templateId);
       }
+      if (mode === 'clearHistory') {
+        await clearRunHistory();
+      }
       handleClose();
     };
+
+    let content;
+    if (mode === 'delete') {
+      content = <Subheader>{t(`playground.modal.${mode}.title`, { name: prevName })}</Subheader>;
+    } else if (mode === 'clearHistory') {
+      content = <Subheader>{t(`playground.modal.${mode}.title`)}</Subheader>;
+    } else {
+      content = (
+        <TextField
+          fullWidth
+          autoFocus
+          label={t(`playground.modal.${mode}.title`)}
+          variant="outlined"
+          defaultValue={prevName}
+          {...register('newName', { required: true })}
+        />
+      );
+    }
 
     return (
       <ThemeProvider theme={lightTheme}>
         <Modal open={!!mode} onClose={handleClose}>
           <Container onSubmit={handleSubmit(onSubmit)}>
             <Header>{t(`playground.modal.${mode}.header`)}</Header>
-            {mode === 'delete' ? (
-              <Subheader>{t(`playground.modal.${mode}.title`, { name: prevName })}</Subheader>
-            ) : (
-              <TextField
-                fullWidth
-                autoFocus
-                label={t(`playground.modal.${mode}.title`)}
-                variant="outlined"
-                defaultValue={prevName}
-                {...register('newName', { required: true })}
-              />
-            )}
+            {content}
             <Buttons>
               <Button variant="outlined" onClick={handleClose}>
                 {t('playground.cancel')}
@@ -104,7 +114,7 @@ export const QueryTemplateModal = React.memo(
               <LoadingButton
                 type="submit"
                 variant="contained"
-                disabled={!newName && !prevName}
+                disabled={!newName && !prevName && mode !== 'clearHistory'}
                 loading={isSubmitting}
               >
                 {t(`playground.modal.${mode}.submit`)}

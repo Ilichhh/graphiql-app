@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSidebar } from '../../../hooks';
 import { ErrorBoundary } from '../../';
 
-import { QueryTemplatePreview, QueryHistoryPreview } from './';
-import { CloseSidebarButton } from '../../../components/common/IconButtons';
+import { QueryTemplatePreview, QueryHistoryPreview, SidebarModal } from './';
+import { CloseSidebarButton, ClearHistoryButton } from '../../../components/common/IconButtons';
 import { BookmarkBorderOutlined, HistoryOutlined } from '@mui/icons-material';
 
-import { SidebarTabs } from '../../../types';
+import { SidebarTabs, SidebarModalMode } from '../../../types';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -62,7 +62,8 @@ const SidebarTab = styled.div<{ isActive?: boolean }>`
 const Header = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  justify-content: space-between;
+  padding: 10px 8px 10px 20px;
   height: 52px;
   font-size: 18px;
 `;
@@ -100,6 +101,7 @@ export const Sidebar = React.memo(() => {
   const { closeSidebar, queryTemplates, activeTab, changeTab, runHistory } = useSidebar();
   const [templatesArray, setTemplatesArray] = useState<React.ReactNode[]>([]);
   const [runHistoryArray, setRunHistoryArray] = useState<React.ReactNode[]>([]);
+  const [sidebarModalMode, setSidebarModalMode] = useState<SidebarModalMode | null>(null);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -141,7 +143,13 @@ export const Sidebar = React.memo(() => {
   if (activeTab === 'history') {
     tabContent = (
       <>
-        <Header>{t('playground.runHistory')}</Header>
+        <Header>
+          {t('playground.runHistory')}
+          <ClearHistoryButton
+            title={t('playground.clearHistory') as string}
+            onClick={() => setSidebarModalMode(SidebarModalMode.ClearHistory)}
+          />
+        </Header>
         <ContentBox>
           {runHistoryArray.length ? (
             runHistoryArray
@@ -149,6 +157,7 @@ export const Sidebar = React.memo(() => {
             <EmptyCollectionMessage>{t('playground.emptyHistoryMessage')}</EmptyCollectionMessage>
           )}
         </ContentBox>
+        {sidebarModalMode && <SidebarModal mode={sidebarModalMode} setMode={setSidebarModalMode} />}
       </>
     );
   }

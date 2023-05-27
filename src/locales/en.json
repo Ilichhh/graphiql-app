@@ -55,6 +55,7 @@
     "emptyHistoryMessage": "Request history is empty.",
     "unnamedQuery": "(unnamed query)",
     "newTab": "New Tab",
+    "clearHistory": "Clear history",
     "modal": {
       "save": {
         "header": "Save Query",
@@ -70,6 +71,11 @@
         "header": "Delete Query",
         "title": "Are you sure you want to delete the {{name}} query?",
         "submit": "Delete"
+      },
+      "clearHistory": {
+        "header": "Clear run history",
+        "title": "Are you sure you want to clear the entire run history? This action cannot be undone.",
+        "submit": "Clear History"
       }
     }
   },
@@ -117,7 +123,8 @@
     "renameTemplateError": "Failed to rename query template",
     "saveTemplateError": "Failed to save query template",
     "fetchHistoryError": "Failed to fetch query history",
-    "saveHistoryError": "Failed to save query to history"
+    "saveHistoryError": "Failed to save query to history",
+    "clearHistoryError": "Failed to clear query run history"
   },
   "firebase": {
     "signUpError": "Failed to sign up. Please, try again later",
