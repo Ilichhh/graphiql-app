@@ -27,7 +27,9 @@ export const usePlayground = (endpoint: string) => {
 
   useEffect(() => {
     try {
-      setResponse(data);
+      if (tabId) {
+        setResponse(data);
+      }
     } catch (e) {
       if (typeof e === 'string') {
         setError(e);
@@ -54,7 +56,7 @@ export const usePlayground = (endpoint: string) => {
     return () => {
       setErrorMessage(undefined);
     };
-  }, [data, error, setError, setResponse]);
+  }, [data, error, setError, setResponse, tabId]);
 
   return {
     response,
