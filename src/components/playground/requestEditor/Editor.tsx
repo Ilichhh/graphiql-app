@@ -49,8 +49,15 @@ const EditorBox = styled.section`
   display: flex;
   flex: 1 1 0;
   flex-flow: column;
-  overflow-y: auto;
   background-color: ${theme.colors.bgDarkBlue};
+`;
+
+const EditorWrapper = styled.section`
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  flex-flow: column;
+  overflow-y: auto;
   &::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -119,7 +126,9 @@ export const Editor = ({ isFetching, isSidebarOpen, sendRequest, width }: Editor
               <PlayButton isFetching={isFetching} sendRequest={sendRequest} />
             </RequestEditorControls>
           </RequestEditorHeader>
-          <RequestEditor value={query} onChange={(value) => setQuery(value)} />
+          <EditorWrapper>
+            <RequestEditor value={query} onChange={(value) => setQuery(value)} />
+          </EditorWrapper>
         </ErrorBoundary>
       </EditorBox>
       <EditorTools />
