@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { usePrettier, useTabsState } from '../../../hooks';
 
 import { EditorTools, PlayButton } from './';
-import { QueryTemplateModal } from '../sidebar';
+import { SidebarModal } from '../sidebar';
 import { RequestEditor } from '../codemirror';
 import { PrettifyRequestButton, SaveRequestButton } from '../../common/IconButtons';
 import { ErrorBoundary } from '../../';
 
-import { TemplateModalMode } from '../../../types';
+import { SidebarModalMode } from '../../../types';
 
 import theme from '../../../theme';
 import styled, { css } from 'styled-components';
@@ -102,9 +102,7 @@ interface EditorProps {
 
 export const Editor = ({ isFetching, isSidebarOpen, sendRequest, width }: EditorProps) => {
   const { query, setQuery } = useTabsState();
-  const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
-    null
-  );
+  const [sidebarModalMode, setSidebarModalMode] = useState<SidebarModalMode | null>(null);
   const { t } = useTranslation();
   const { prettify } = usePrettier();
 
@@ -117,7 +115,7 @@ export const Editor = ({ isFetching, isSidebarOpen, sendRequest, width }: Editor
             <RequestEditorControls>
               <SaveRequestButton
                 title={t('playground.saveOperation') as string}
-                onClick={() => setQueryTemplateModalMode(TemplateModalMode.Save)}
+                onClick={() => setSidebarModalMode(SidebarModalMode.Save)}
               />
               <PrettifyRequestButton
                 title={t('playground.prettify') as string}
@@ -132,12 +130,8 @@ export const Editor = ({ isFetching, isSidebarOpen, sendRequest, width }: Editor
         </ErrorBoundary>
       </EditorBox>
       <EditorTools />
-      {queryTemplateModalMode && (
-        <QueryTemplateModal
-          mode={TemplateModalMode.Save}
-          prevName=""
-          setMode={setQueryTemplateModalMode}
-        />
+      {sidebarModalMode && (
+        <SidebarModal mode={SidebarModalMode.Save} prevName="" setMode={setSidebarModalMode} />
       )}
     </Container>
   );

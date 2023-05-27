@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSidebar } from '../../../hooks/useSidebar';
 
 import { ShowOptionsButton } from '../../common/IconButtons';
-import { QueryTemplateModal } from '.';
+import { SidebarModal } from '.';
 import Popover from '@mui/material/Popover';
 
 import { DocumentData } from '@firebase/firestore';
-import { TemplateModalMode } from '../../../types';
+import { SidebarModalMode } from '../../../types';
 
 import theme from '../../../theme';
 import styled from 'styled-components';
@@ -75,9 +75,7 @@ interface QueryTemplatePreviewProps {
 export const QueryTemplatePreview = ({ templateId, data }: QueryTemplatePreviewProps) => {
   const { name, endpoint } = data;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [queryTemplateModalMode, setQueryTemplateModalMode] = useState<TemplateModalMode | null>(
-    null
-  );
+  const [sidebarModalMode, setSidebarModalMode] = useState<SidebarModalMode | null>(null);
   const { selectQuery } = useSidebar();
   const { t } = useTranslation();
 
@@ -90,9 +88,9 @@ export const QueryTemplatePreview = ({ templateId, data }: QueryTemplatePreviewP
   }, []);
 
   const handleOpenModal = useCallback(
-    (mode: TemplateModalMode) => {
+    (mode: SidebarModalMode) => {
       handleClosePopover();
-      setQueryTemplateModalMode(mode);
+      setSidebarModalMode(mode);
     },
     [handleClosePopover]
   );
@@ -119,18 +117,18 @@ export const QueryTemplatePreview = ({ templateId, data }: QueryTemplatePreviewP
             horizontal: 'left',
           }}
         >
-          <Option onClick={() => handleOpenModal(TemplateModalMode.Rename)}>
+          <Option onClick={() => handleOpenModal(SidebarModalMode.Rename)}>
             {t('playground.renameQuery')}
           </Option>
-          <DeleteOption onClick={() => handleOpenModal(TemplateModalMode.Delete)}>
+          <DeleteOption onClick={() => handleOpenModal(SidebarModalMode.Delete)}>
             {t('playground.deleteQuery')}
           </DeleteOption>
         </Popover>
       </div>
-      {queryTemplateModalMode && (
-        <QueryTemplateModal
-          mode={queryTemplateModalMode}
-          setMode={setQueryTemplateModalMode}
+      {sidebarModalMode && (
+        <SidebarModal
+          mode={sidebarModalMode}
+          setMode={setSidebarModalMode}
           templateId={templateId}
           prevName={name}
         />
