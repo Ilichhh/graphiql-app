@@ -54,6 +54,9 @@ const ToolsTab = styled.span<{ isActive: boolean }>`
   flex-shrink: 0;
   cursor: pointer;
   color: ${({ isActive }) => (isActive ? theme.colors.textGrey : theme.colors.textInactive)};
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 export const EditorTools = () => {

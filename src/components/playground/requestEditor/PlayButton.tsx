@@ -7,6 +7,23 @@ import { Button, CircularProgress } from '@mui/material';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 
 import theme from '../../../theme';
+import styled from 'styled-components';
+
+const CustomButton = styled(Button)`
+  && {
+    min-width: 37px;
+    height: 37px;
+    @media (max-width: 600px) {
+      padding-right: 5px;
+    }
+  }
+`;
+
+const ButtonText = styled.span`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
 
 interface PlayButtonProps {
   isFetching: boolean;
@@ -29,7 +46,7 @@ export const PlayButton = ({ isFetching, sendRequest }: PlayButtonProps) => {
   }, [sendRequest, saveQueryRun, query, variables, headers, endpoint, name, instanceOfTemplate]);
 
   return (
-    <Button
+    <CustomButton
       onClick={handleClick}
       variant="contained"
       size="medium"
@@ -41,7 +58,7 @@ export const PlayButton = ({ isFetching, sendRequest }: PlayButtonProps) => {
         )
       }
     >
-      {t('playground.playBtn')}
-    </Button>
+      <ButtonText>{t('playground.playBtn')}</ButtonText>
+    </CustomButton>
   );
 };

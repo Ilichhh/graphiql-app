@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useHeaderEndpointInput } from '../../hooks';
 
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
@@ -42,8 +41,11 @@ const Input = styled.input.attrs(() => ({
 
 const ErrorBadge = styled.span`
   position: absolute;
-  right: 15px;
-  color: ${theme.colors.error};
+  right: 10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background-color: ${theme.colors.error};
 `;
 
 interface PlaygroundHeaderProps {
@@ -52,14 +54,13 @@ interface PlaygroundHeaderProps {
 
 export const PlaygroundHeader = React.memo(({ isError }: PlaygroundHeaderProps) => {
   const { inputValue, handleInputChange } = useHeaderEndpointInput();
-  const { t } = useTranslation();
 
   return (
     <Header>
       <InputContainer>
         <LanguageOutlinedIcon />
         <Input autoFocus value={inputValue} onChange={handleInputChange} />
-        {isError && <ErrorBadge>{t(`playground.serverError`)}</ErrorBadge>}
+        {isError && <ErrorBadge />}
       </InputContainer>
     </Header>
   );

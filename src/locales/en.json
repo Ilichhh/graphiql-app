@@ -37,7 +37,6 @@
     "endpointPlaceholder": "Enter an endpoint url...",
     "endpointSubmit": "Use endpoint",
     "chooseEndpoint": "or choose one of the following",
-    "serverError": "Server cannot be reached",
     "operation": "Query",
     "response": "Response",
     "playBtn": "Run",
