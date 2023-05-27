@@ -123,7 +123,8 @@
     "renameTemplateError": "Failed to rename query template",
     "saveTemplateError": "Failed to save query template",
     "fetchHistoryError": "Failed to fetch query history",
-    "saveHistoryError": "Failed to save query to history"
+    "saveHistoryError": "Failed to save query to history",
+    "clearHistoryError": "Failed to clear query run history"
   },
   "firebase": {
     "signUpError": "Failed to sign up. Please, try again later",

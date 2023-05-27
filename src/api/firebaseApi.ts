@@ -208,6 +208,6 @@ export const deleteAllQueriesHistory = async () => {
 
     await batch.commit();
   } catch (error) {
-    console.error(error);
+    store.dispatch(setToastError({ error: i18n.t('sidebar.clearHistoryError') as string }));
   }
 };
