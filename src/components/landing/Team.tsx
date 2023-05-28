@@ -36,6 +36,7 @@ export const Team = React.memo(() => {
   const cardContent = devs.map((dev) => ({
     id: dev.id,
     name: `${t(`developers.${dev.name}.firstName`)} ${t(`developers.${dev.name}.secondName`)}`,
+    role: `${t(`developers.${dev.name}.role`)}`,
     text: `${t(`developers.${dev.name}.info`)}`,
     image: `${dev.id}.jpg`,
   }));
