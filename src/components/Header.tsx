@@ -38,9 +38,10 @@ const HeaderContainer = styled.header<{ sticky: boolean; color: string }>`
     padding: 0 20px;
   }
 
-  @media (max-width: 600px) {
-    padding: 0 12px;
+  @media (max-width: ${theme.mobile}) {
+    padding: 0 10px;
   }
+
   @media (max-width: 400px) {
     padding: 0 6px;
   }

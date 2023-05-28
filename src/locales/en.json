@@ -103,7 +103,7 @@
       "firstName": "Artyom",
       "secondName": "Bagaev",
       "role": "Frontend developer",
-      "info": "• Made landing page utilising responsive design principles\n• Using codemirror library, implemented query, variables / headers editors and response window, with syntax highlighting and autocomplete\n• Set up Redux for state management and RTK Query for data fetching\n• Was in charge of error handling, set up error boundaries, made errors to appear as toast notifications\n• Bound prettier to 'Prettify' button, to be able to make pretty\n• Pushed straight to 'develop' branch once"
+      "info": "• Created the landing page utilising responsive design principles\n• Using codemirror library, implemented query, variables / headers editors and response viewer, with syntax highlighting and autocomplete\n• Set up Redux for state management and RTK Query for data fetching\n• Was in charge of error handling, set up error boundaries, made errors to appear as toast notifications\n• Bound prettier to 'Prettify' button to prettify queries\n• Fun fact: Pushed straight to 'develop' branch once"
     },
     "alena": {
       "firstName": "Alena",

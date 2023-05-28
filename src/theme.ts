@@ -37,7 +37,10 @@ const theme = {
   footerHeight: '58px',
   laptop: '1024px',
   tablet: '900px',
-  mediaContentSmallWidth: '350px',
+  mobile: '650px',
+  mediaContentMediumWidth: '350px',
+  mediaContentMediumHeight: '200px',
+  mediaContentSmallWidth: '300px',
   mediaContentSmallHeight: '200px',
 };
 

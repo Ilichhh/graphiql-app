@@ -20,6 +20,11 @@ const Grid = styled.div`
     grid-template-columns: 1fr;
     padding: 20px 20px;
   }
+
+  @media (max-width: ${theme.mobile}) {
+    grid-template-columns: 1fr;
+    padding: 10px 10px;
+  }
 `;
 
 const Title = styled.h2`
@@ -80,7 +85,7 @@ const Video = styled.div`
     grid-column: 1 / 3;
     grid-row: 3 / 4;
 
-    padding: 10px;
+    padding: 10px 0;
   }
 `;
 
@@ -88,7 +93,12 @@ const IFrame = styled.iframe<{ width: string; height: string }>`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
 
-  @media (max-width: 650px) {
+  @media (max-width: ${theme.mobile}) {
+    width: ${theme.mediaContentMediumWidth};
+    height: ${theme.mediaContentMediumHeight};
+  }
+
+  @media (max-width: 390px) {
     width: ${theme.mediaContentSmallWidth};
     height: ${theme.mediaContentSmallHeight};
   }

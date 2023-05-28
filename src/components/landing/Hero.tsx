@@ -16,6 +16,10 @@ const Container = styled.section`
     grid-template-columns: 1fr;
     padding: 0 20px;
   }
+
+  @media (max-width: ${theme.mobile}) {
+    padding: 0 10px;
+  }
 `;
 
 const Title = styled.h1`
@@ -75,7 +79,12 @@ const Img = styled.img<{ width: string; height: string }>`
     grid-row: 3 / 4;
   }
 
-  @media (max-width: 650px) {
+  @media (max-width: ${theme.mobile}) {
+    width: ${theme.mediaContentMediumWidth};
+    height: ${theme.mediaContentMediumHeight};
+  }
+
+  @media (max-width: 390px) {
     width: ${theme.mediaContentSmallWidth};
     height: ${theme.mediaContentSmallHeight};
   }

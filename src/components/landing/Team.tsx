@@ -12,8 +12,12 @@ const Container = styled.section`
   margin: 100px auto 50px;
   padding: 0 40px;
 
-  @media (max-width: ${theme.laptop}) {
+  @media (max-width: ${theme.tablet}) {
     padding: 0 20px;
+  }
+
+  @media (max-width: ${theme.mobile}) {
+    padding: 0 10px;
   }
 `;
 
@@ -43,6 +47,7 @@ const List = styled.ul`
     flex-direction: row;
     justify-content: center;
     gap: 20px;
+    flex-wrap: wrap;
   }
 `;
 
