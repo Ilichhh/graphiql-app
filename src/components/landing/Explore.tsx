@@ -86,7 +86,7 @@ const Video = styled.div`
   grid-column: 2 / 3;
   grid-row: 1 / 3;
 
-  padding: 50px 0 50px;
+  padding: 120px 0 120px;
   margin: 0 auto;
 
   @media (max-width: ${theme.tablet}) {
