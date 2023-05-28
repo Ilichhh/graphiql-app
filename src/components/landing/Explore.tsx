@@ -14,6 +14,7 @@ const Grid = styled.div`
   max-width: ${theme.contentWidth};
 
   margin: 0 auto;
+  padding: 0 40px;
 `;
 
 const Title = styled.h2`

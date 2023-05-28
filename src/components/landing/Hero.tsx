@@ -10,6 +10,7 @@ const Container = styled.section`
   max-width: ${theme.contentWidth};
 
   margin: 120px auto;
+  padding: 0 40px;
 `;
 
 const Title = styled.h1`
