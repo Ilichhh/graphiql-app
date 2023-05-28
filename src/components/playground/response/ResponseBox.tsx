@@ -16,6 +16,7 @@ const Container = styled.section`
   flex: 1 1 0;
   min-width: 230px;
   min-height: 300px;
+  margin-left: 5px;
   overflow: hidden;
   background: ${theme.colors.bgDarkBlue};
 `;
@@ -25,7 +26,7 @@ const ResponseSection = styled.section`
   display: flex;
   flex-direction: column;
   flex: 1 1 0;
-  padding: 0 50px 20px;
+  padding: 0 0 20px;
   white-space: pre;
   overflow-y: auto;
   background: ${theme.colors.bgBlue};
@@ -40,9 +41,6 @@ const ResponseSection = styled.section`
   }
   &::-webkit-scrollbar-corner {
     background-color: ${theme.colors.bgBlue};
-  }
-  @media (max-width: 1100px) {
-    padding: 0 15px 20px;
   }
 `;
 
