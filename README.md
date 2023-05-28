@@ -52,10 +52,10 @@ To build and start the development environment locally, follow these steps:
    ```bash
    npm install
    ```
-4. Replace data in `firebase.ts` file with the configuration data from your project and add the following key for firebase auth in `.env` file:
+4. Replace data in `firebase.ts` file with the configuration data from your project and add your key for firebase auth in `.env` file:
 
     ```bash
-    VITE_FIREBASE_API_KEY=
+    VITE_FIREBASE_API_KEY=<your-api-key>
     ```
 
 5. Start the development server:
