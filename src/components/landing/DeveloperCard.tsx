@@ -59,6 +59,8 @@ const Title = styled.h4`
   font-weight: 500;
   font-size: 20px;
   line-height: 23px;
+
+  color: #444;
 `;
 
 const Role = styled.p`
@@ -84,6 +86,7 @@ const Info = styled.pre`
   line-height: 21px;
 
   white-space: pre-wrap;
+  color: #444;
 
   @media (max-width: ${theme.laptop}) {
     font-size: 14px;

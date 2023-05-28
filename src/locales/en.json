@@ -109,7 +109,7 @@
       "firstName": "Alena",
       "secondName": "Deviatova",
       "role": "Frontend developer",
-      "info": "• Implemented logic for getting GraphQL Schema through Introspection request\n• Was in charge of creating an easily navigable Documentation Explorer that supports various APIs\n• Added a search functionality within documentation for quick and convenient searching of specific terms\n• In the Query Editor, incorporated tab switching capabilities with default queries\n• Implemented state persistence by storing the application's state in local storage\n• Contributed to design and layout of the application\n• Fun fact: loves cat gifs so much that even made the team mates react to the them in the chat! Spoiler: they were not so passionate about it, lol!"
+      "info": "• Implemented logic for getting GraphQL Schema through Introspection request\n• Was in charge of creating an easily navigable Documentation Explorer that supports various APIs\n• Added a search functionality within documentation for quick and convenient searching of specific terms\n• In the Query Editor, incorporated tab switching capabilities with default queries\n• Implemented state persistence by storing the application's state in local storage\n• Contributed to design and layout of the application\n• Fun fact: loves cat gifs so much that even made the team mates react to them in the chat! Spoiler: they were not so passionate about it, lol!"
     }
   },
   "404": {
