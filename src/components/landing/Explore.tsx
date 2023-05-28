@@ -38,7 +38,7 @@ const Title = styled.h2`
   color: ${theme.colors.textWhite};
 
   @media (max-width: ${theme.laptop}) {
-    font-size: 32px;
+    font-size: 28px;
   }
 
   @media (max-width: ${theme.tablet}) {
@@ -89,8 +89,8 @@ const IFrame = styled.iframe<{ width: string; height: string }>`
   height: ${({ height }) => height}px;
 
   @media (max-width: 650px) {
-    width: 350px;
-    height: 200px;
+    width: ${theme.mediaContentSmallWidth};
+    height: ${theme.mediaContentSmallHeight};
   }
 `;
 

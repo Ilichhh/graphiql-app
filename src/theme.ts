@@ -36,7 +36,9 @@ const theme = {
   headerHeight: '68px',
   footerHeight: '58px',
   laptop: '1024px',
-  tablet: '876px',
+  tablet: '900px',
+  mediaContentSmallWidth: '350px',
+  mediaContentSmallHeight: '200px',
 };
 
 export default theme;

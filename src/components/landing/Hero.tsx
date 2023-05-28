@@ -61,7 +61,10 @@ const Subtitle = styled.h3`
   }
 `;
 
-const Img = styled.img`
+const Img = styled.img<{ width: string; height: string }>`
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+
   grid-column: 2 / 3;
   grid-row: 1 / 3;
   margin: 0 auto;
@@ -70,6 +73,11 @@ const Img = styled.img`
     grid-column: 1 / 3;
 
     grid-row: 3 / 4;
+  }
+
+  @media (max-width: 650px) {
+    width: ${theme.mediaContentSmallWidth};
+    height: ${theme.mediaContentSmallHeight};
   }
 `;
 
