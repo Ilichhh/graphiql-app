@@ -11,6 +11,10 @@ const Container = styled.section`
 
   margin: 100px auto 50px;
   padding: 0 40px;
+
+  @media (max-width: ${theme.laptop}) {
+    padding: 0 20px;
+  }
 `;
 
 const Title = styled.h2`
@@ -21,10 +25,25 @@ const Title = styled.h2`
   font-weight: 500;
   font-size: 40px;
   line-height: 47px;
+
+  @media (max-width: ${theme.laptop}) {
+    font-size: 32px;
+  }
 `;
 
 const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+
   list-style: none;
+
+  @media (max-width: ${theme.tablet}) {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
 `;
 
 const ListItem = styled.li`

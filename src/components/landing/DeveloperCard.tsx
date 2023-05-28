@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import theme from '../../theme';
 
 type DeveloperCardProps = {
   name: string;
@@ -19,6 +20,7 @@ const Card = styled.div`
   box-shadow: 0px 4px 4px #172a3a;
   border-radius: 10px;
 `;
+
 const ImageBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,6 +33,10 @@ const ImageBox = styled.div`
   background-color: #ebebeb;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+
+  @media (max-width: ${theme.tablet}) {
+    border-radius: 10px;
+  }
 `;
 
 const Image = styled.img`
@@ -78,6 +84,14 @@ const Info = styled.pre`
   line-height: 21px;
 
   white-space: pre-wrap;
+
+  @media (max-width: ${theme.laptop}) {
+    font-size: 14px;
+  }
+
+  @media (max-width: ${theme.tablet}) {
+    display: none;
+  }
 `;
 
 export const DeveloperCard = React.memo(({ name, role, text, image }: DeveloperCardProps) => {

@@ -33,6 +33,11 @@ const HeaderContainer = styled.header<{ sticky: boolean; color: string }>`
       height: calc(${theme.headerHeight} - 12px);
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
     `}
+
+  @media (max-width: ${theme.tablet}) {
+    padding: 0 20px;
+  }
+
   @media (max-width: 600px) {
     padding: 0 12px;
   }

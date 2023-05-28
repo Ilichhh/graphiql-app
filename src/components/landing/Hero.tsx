@@ -11,6 +11,11 @@ const Container = styled.section`
 
   margin: 120px auto;
   padding: 0 40px;
+
+  @media (max-width: ${theme.tablet}) {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
 `;
 
 const Title = styled.h1`
@@ -23,6 +28,14 @@ const Title = styled.h1`
   font-size: 50px;
   font-weight: 500;
   line-height: 59px;
+
+  @media (max-width: ${theme.laptop}) {
+    font-size: 42px;
+  }
+
+  @media (max-width: ${theme.tablet}) {
+    margin-bottom: 0;
+  }
 `;
 
 const Subtitle = styled.h3`
@@ -35,11 +48,29 @@ const Subtitle = styled.h3`
   font-size: 24px;
   font-weight: 400;
   line-height: 28px;
+
+  @media (max-width: ${theme.laptop}) {
+    font-size: 16px;
+  }
+
+  @media (max-width: ${theme.tablet}) {
+    max-width: 100%;
+    width: 100%;
+
+    margin-bottom: 10px;
+  }
 `;
 
 const Img = styled.img`
   grid-column: 2 / 3;
   grid-row: 1 / 3;
+  margin: 0 auto;
+
+  @media (max-width: ${theme.tablet}) {
+    grid-column: 1 / 3;
+
+    grid-row: 3 / 4;
+  }
 `;
 
 export const Hero = React.memo(() => {
