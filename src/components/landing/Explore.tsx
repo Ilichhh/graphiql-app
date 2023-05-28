@@ -25,6 +25,7 @@ const Title = styled.h2`
   justify-self: center;
   align-self: end;
   margin-bottom: 24px;
+  padding: 0 10px;
 
   font-weight: 500;
   font-size: 40px;
@@ -35,6 +36,7 @@ const Title = styled.h2`
 const Subtitle = styled.h3`
   ${theme.headings}
   grid-column: 1 / 2;
+  padding: 0 10px;
 
   font-weight: 500;
   font-size: 18px;

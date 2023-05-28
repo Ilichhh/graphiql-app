@@ -18,6 +18,7 @@ const Title = styled.h1`
   grid-column: 1 / 2;
   align-self: end;
   margin-bottom: 24px;
+  padding: 0 10px;
 
   font-size: 50px;
   font-weight: 500;
@@ -29,6 +30,7 @@ const Subtitle = styled.h3`
   grid-column: 1 / 2;
   justify-self: center;
   max-width: 292px;
+  padding: 0 10px;
 
   font-size: 24px;
   font-weight: 400;
