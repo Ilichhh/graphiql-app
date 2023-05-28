@@ -1,0 +1,137 @@
+{
+  "header": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "toMain": "Go to Main Page"
+  },
+  "form": {
+    "register": {
+      "header": "Sign Up to GraphiQL",
+      "submit": "Sign Up",
+      "redirect": "Sign In"
+    },
+    "login": {
+      "header": "Sign In to GraphiQL",
+      "submit": "Sign In",
+      "redirect": "Sign Up"
+    },
+    "emailInput": "Enter email",
+    "passwordInput": "Enter password",
+    "passwordInputConfirm": "Confirm password",
+    "wrongPassword": "Incorrect password",
+    "userNotFound": "User with this email is not found. Please check your email or sign up for a new account",
+    "emptyEmail": "Please enter email",
+    "invalidEmail": "Invalid email address",
+    "emptyPassword": "Please enter password",
+    "simplePassword": "Password must be a minimum of 8 characters and include at least one letter, one digit, and one special character",
+    "emptyPasswordConfirm": "Please confirm password",
+    "wrongPasswordConfirm": "Passwords do not match",
+    "emailInUse": "The email provided is already registered. Please use a different email or proceed with the login",
+    "divider": "or"
+  },
+  "playground": {
+    "responsePlaceholder": "Hit the Play Button to get a response here",
+    "variablesTabHeader": "Query Variables",
+    "headersTabHeader": "HTTP Headers",
+    "endpointPlaceholder": "Enter an endpoint url...",
+    "endpointSubmit": "Use endpoint",
+    "chooseEndpoint": "or choose one of the following",
+    "operation": "Query",
+    "response": "Response",
+    "playBtn": "Run",
+    "paramsError": "Please provide valid parameters",
+    "saveOperation": "Save query",
+    "schemaError": "Failed to fetch schema. Please check your connection",
+    "cancel": "Cancel",
+    "prettify": "Prettify",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "renameQuery": "Rename query",
+    "deleteQuery": "Delete",
+    "queriesCollection": "Queries collection",
+    "runHistory": "Run history",
+    "emptyCollectionMessage": "You do not have any saved queries. Save a query to see it in the collection.",
+    "emptyHistoryMessage": "Request history is empty.",
+    "unnamedQuery": "(unnamed query)",
+    "newTab": "New Tab",
+    "clearHistory": "Clear history",
+    "modal": {
+      "save": {
+        "header": "Save Query",
+        "title": "Query Name",
+        "submit": "Save"
+      },
+      "rename": {
+        "header": "Rename Query",
+        "title": "Query Name",
+        "submit": "Rename"
+      },
+      "delete": {
+        "header": "Delete Query",
+        "title": "Are you sure you want to delete the {{name}} query?",
+        "submit": "Delete"
+      },
+      "clearHistory": {
+        "header": "Clear run history",
+        "title": "Are you sure you want to clear the entire run history? This action cannot be undone.",
+        "submit": "Clear History"
+      }
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "GraphQL IDE",
+      "subtitle": "a convenient way to run GraphQL queries"
+    },
+    "explore": {
+      "title": "Explore how to work with the app",
+      "subtitle": "This video is a quick overview of how to use the app"
+    },
+    "team": {
+      "title": "Meet the team"
+    }
+  },
+  "developers": {
+    "ilya": {
+      "firstName": "Ilya",
+      "secondName": "Shakurov",
+      "role": "Team Lead",
+      "info": "• Set up the development environment to get started\n• Implemented authorization with private routing, a header with navigation and language switching\n• Created the registration/login form page with validation\n• Implemented the functionality for the variables and headers sections\n• Added a modal window for the first login, allowing users to select an endpoint\n• Configured the Firebase database and implemented sidebar for saving query history, as well as saving and editing query templates\n• Promoted democratic principles within the team, occasionally disregarding task creation/editing on the board"
+    },
+    "artyom": {
+      "firstName": "Artyom",
+      "secondName": "Bagaev",
+      "role": "Frontend developer",
+      "info": "• Created the landing page utilising responsive design principles\n• Using codemirror library, implemented query, variables / headers editors and response viewer, with syntax highlighting and autocomplete\n• Set up Redux for state management and RTK Query for data fetching\n• Was in charge of error handling; set up error boundaries, made errors to appear as toast notifications\n• Bound prettier to 'Prettify' button to prettify queries\n• Fun fact: Pushed straight to 'develop' branch once"
+    },
+    "alena": {
+      "firstName": "Alena",
+      "secondName": "Deviatova",
+      "role": "Frontend developer",
+      "info": "• Implemented logic for getting GraphQL Schema through Introspection request\n• Was in charge of creating an easily navigable Documentation Explorer that supports various APIs\n• Added a search functionality within documentation for quick and convenient searching of specific terms\n• In the Query Editor, incorporated tab switching capabilities with default queries\n• Implemented state persistence by storing the application's state in local storage\n• Contributed to design and layout of the application\n• Fun fact: loves cat gifs so much that even made the team mates react to them in the chat! Spoiler: they were not so passionate about it, lol!"
+    }
+  },
+  "404": {
+    "header": "Looks like you're lost",
+    "toHome": "Home"
+  },
+  "global": {
+    "sessionError": "Your session has expired. Please sign in again",
+    "errorBoundaryMessage": "Something went wrong. Try to reload the page"
+  },
+  "sidebar": {
+    "fetchTemplatesError": "Failed to fetch saved query templates",
+    "deleteTemplateError": "Failed to delete query template",
+    "renameTemplateError": "Failed to rename query template",
+    "saveTemplateError": "Failed to save query template",
+    "fetchHistoryError": "Failed to fetch query history",
+    "saveHistoryError": "Failed to save query to history",
+    "clearHistoryError": "Failed to clear query run history"
+  },
+  "firebase": {
+    "signUpError": "Failed to sign up. Please, try again later",
+    "signInError": "Failed to sign in. Please, try again later",
+    "logOutError": "Failed to log out. Please, try again later"
+  }
+}

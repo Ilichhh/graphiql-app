@@ -1,0 +1,83 @@
+{
+  "name": "rs-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@codemirror/lang-json": "^6.0.1",
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/lab": "^5.0.0-alpha.129",
+    "@mui/material": "^5.13.0",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@uiw/codemirror-theme-vscode": "^4.19.16",
+    "@uiw/react-codemirror": "^4.19.16",
+    "cm6-graphql": "^0.0.5",
+    "dompurify": "^3.0.3",
+    "firebase": "^9.21.0",
+    "graphql": "^16.6.0",
+    "i18next": "^22.4.15",
+    "i18next-browser-languagedetector": "^7.0.1",
+    "localforage": "^1.10.0",
+    "markdown-it": "^13.0.1",
+    "match-sorter": "^6.3.1",
+    "normalize.css": "^8.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.4",
+    "react-firebase-hooks": "^5.1.1",
+    "react-hook-form": "^7.43.8",
+    "react-i18next": "^12.2.2",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.9.0",
+    "styled-components": "^5.3.10",
+    "styled-normalize": "^8.0.7"
+  },
+  "devDependencies": {
+    "@types/dompurify": "^3.0.2",
+    "@types/markdown-it": "^12.2.3",
+    "@types/prettier": "^2.7.2",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "jsdom": "^21.1.1",
+    "lint-staged": "^12.5.0",
+    "prettier": "^2.6.2",
+    "sass": "^1.59.3",
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0",
+    "vite-plugin-eslint": "^1.8.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.tsx": [
+      "npm run lint:fix",
+      "git add"
+    ]
+  }
+}
