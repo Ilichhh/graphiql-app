@@ -31,7 +31,13 @@ const Title = styled.h2`
   line-height: 47px;
 
   @media (max-width: ${theme.laptop}) {
+    margin-bottom: 40px;
+
     font-size: 32px;
+  }
+
+  @media (max-width: ${theme.tablet}) {
+    margin-bottom: 30px;
   }
 `;
 

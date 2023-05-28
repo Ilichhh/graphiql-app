@@ -51,6 +51,10 @@ const Title = styled.h2`
 
     margin-bottom: 0;
   }
+
+  @media (max-width: ${theme.mobileSmall}) {
+    font-size: 18px;
+  }
 `;
 
 const Subtitle = styled.h3`
@@ -71,6 +75,10 @@ const Subtitle = styled.h3`
     max-width: 100%;
 
     margin-bottom: 10px;
+  }
+
+  @media (max-width: ${theme.mobileSmall}) {
+    font-size: 10px;
   }
 `;
 

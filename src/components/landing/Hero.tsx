@@ -40,6 +40,10 @@ const Title = styled.h1`
   @media (max-width: ${theme.tablet}) {
     margin-bottom: 0;
   }
+
+  @media (max-width: ${theme.mobileSmall}) {
+    font-size: 40px;
+  }
 `;
 
 const Subtitle = styled.h3`
@@ -62,6 +66,10 @@ const Subtitle = styled.h3`
     width: 100%;
 
     margin-bottom: 10px;
+  }
+
+  @media (max-width: ${theme.mobileSmall}) {
+    font-size: 14px;
   }
 `;
 
