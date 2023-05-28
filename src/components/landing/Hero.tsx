@@ -80,7 +80,7 @@ export const Hero = React.memo(() => {
     <Container>
       <Title>{t('landing.hero.title')}</Title>
       <Subtitle>{t('landing.hero.subtitle')}</Subtitle>
-      <Img src="/hero.jpg" alt="App screenshot" width="491" height="230" />
+      <Img src="/hero.png" alt="App screenshot" width="560" height="315" />
     </Container>
   );
 });

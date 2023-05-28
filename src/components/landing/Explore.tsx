@@ -42,6 +42,8 @@ const Title = styled.h2`
   }
 
   @media (max-width: ${theme.tablet}) {
+    max-width: 100%;
+
     margin-bottom: 0;
   }
 `;
@@ -62,13 +64,12 @@ const Subtitle = styled.h3`
 
   @media (max-width: ${theme.tablet}) {
     max-width: 100%;
-    width: 100%;
 
     margin-bottom: 10px;
   }
 `;
 
-const Video = styled.video`
+const Video = styled.div`
   grid-column: 2 / 3;
   grid-row: 1 / 3;
 
@@ -83,6 +84,16 @@ const Video = styled.video`
   }
 `;
 
+const IFrame = styled.iframe<{ width: string; height: string }>`
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+
+  @media (max-width: 650px) {
+    width: 350px;
+    height: 200px;
+  }
+`;
+
 export const Explore = React.memo(() => {
   const { t } = useTranslation();
 
@@ -91,7 +102,17 @@ export const Explore = React.memo(() => {
       <Grid>
         <Title>{t('landing.explore.title')}</Title>
         <Subtitle>{t('landing.explore.subtitle')}</Subtitle>
-        <Video src="" poster="/video.jpg"></Video>
+        <Video>
+          <IFrame
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/ch1c4fIOB_c"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen={true}
+          ></IFrame>
+        </Video>
       </Grid>
     </Container>
   );
