@@ -55,6 +55,7 @@ export const Form = ({ mode }: FormProps) => {
     formState: { errors, isSubmitting },
     setError,
     watch,
+    reset,
   } = useForm();
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
@@ -72,6 +73,10 @@ export const Form = ({ mode }: FormProps) => {
   useEffect(() => {
     if (user) navigate('/playground');
   }, [user, navigate]);
+
+  useEffect(() => {
+    reset();
+  }, [mode, reset]);
 
   let passwordInputs;
 
