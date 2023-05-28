@@ -19,9 +19,15 @@ const Container = styled.footer<{ color: string }>`
   padding: 0 40px;
   background-color: ${({ color }) => color};
   user-select: none;
-  @media (max-width: 600px) {
-    padding: 0 12px;
+
+  @media (max-width: ${theme.tablet}) {
+    padding: 0 20px;
   }
+
+  @media (max-width: ${theme.mobile}) {
+    padding: 0 10px;
+  }
+
   @media (max-width: 400px) {
     padding: 0 6px;
   }

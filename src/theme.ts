@@ -35,6 +35,14 @@ const theme = {
   contentWidth: '1600px',
   headerHeight: '68px',
   footerHeight: '58px',
+  laptop: '1024px',
+  tablet: '900px',
+  mobile: '650px',
+  mobileSmall: '460px',
+  mediaContentMediumWidth: '350px',
+  mediaContentMediumHeight: '200px',
+  mediaContentSmallWidth: '300px',
+  mediaContentSmallHeight: '200px',
 };
 
 export default theme;

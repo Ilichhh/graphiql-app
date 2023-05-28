@@ -96,17 +96,20 @@
     "ilya": {
       "firstName": "Илья",
       "secondName": "Шакуров",
-      "info": "Lorem ipsum dolor sit amet, ne sit soluta audire assentior. Id dicta eloquentiam eam. Natum probo aliquip usu ex. Quo audiam saperet an, per agam clita et. Prima porro praesent cu eos, in quod minim possim eam, no eius patrioque splendide eos."
+      "role": "Тим лид",
+      "info": "• Настроил окружение для начала работы\n• Реализовал авторизацию с приватным роутингом, хэдер с навигацией и переключением языков\n• Сверстал страницу формы регистрации / логина с валидацией\n• Сделал функционал секции переменных и заголовков\n• Добавил модальное окно при первом входе в приложение с возможность выбора эндпоинта\n• Настроил базу данных firebase и реализовал сайдбар с возможностью сохранения истории запросов А так же сохранение и редактирование шаблонов запросов\n• Прививал демократические принципы внутри команды, временами игнорируя создание / редактирование задач на доске"
     },
     "artyom": {
       "firstName": "Артём",
       "secondName": "Багаев",
-      "info": "Lorem ipsum dolor sit amet, ne sit soluta audire assentior. Id dicta eloquentiam eam. Natum probo aliquip usu ex. Quo audiam saperet an, per agam clita et. Prima porro praesent cu eos, in quod minim possim eam, no eius patrioque splendide eos."
+      "role": "Фронтенд разработчик",
+      "info": "• Сверстал лендинг c применением принципов responsive design\n• С помощью библиотеки codemirror cделал редакторы запросов, пременных / заголовков и окно ответа, c подсветкой синтаксиса и автокомплитом\n• Настроил Redux для управления состояниями и RTK Query для получения данных\n• Был ответственным за обработку ошибок, настроил error boundaries, сделал вывод ошибок в виде всплывающих уведомлений\n• Повесил prettier на кнопку 'Форматировать', чтобы можно было делать красиво\n• Один раз запушил напрямую в 'develop'"
     },
     "alena": {
       "firstName": "Алёна",
       "secondName": "Девятова",
-      "info": "Lorem ipsum dolor sit amet, ne sit soluta audire assentior. Id dicta eloquentiam eam. Natum probo aliquip usu ex. Quo audiam saperet an, per agam clita et. Prima porro praesent cu eos, in quod minim possim eam, no eius patrioque splendide eos."
+      "role": "Фронтенд разработчик",
+      "info": "• Работала с логикой для получения схемы GraphQL через запрос к интроспекции\n• Отвечала за создание удобной секции документации, поддерживающей различные API\n• Добавила функционал поиска внутри документации\n• В редакторе запросов внедрила возможность переключения вкладок с дефолтными запросами\n• Реализовала сохранение состояния приложения в локальном хранилище\n• Внесла вклад в дизайн и верстку страниц приложения\n• Веселый факт: обожает гифки с котиками настолько, что даже заставила своих коллег реагировать на них в чате! Спойлер: они не разделяли такую страсть, ха-ха!"
     }
   },
   "404": {

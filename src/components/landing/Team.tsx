@@ -10,6 +10,15 @@ const Container = styled.section`
   max-width: ${theme.contentWidth};
 
   margin: 100px auto 50px;
+  padding: 0 40px;
+
+  @media (max-width: ${theme.tablet}) {
+    padding: 0 20px;
+  }
+
+  @media (max-width: ${theme.mobile}) {
+    padding: 0 10px;
+  }
 `;
 
 const Title = styled.h2`
@@ -20,10 +29,32 @@ const Title = styled.h2`
   font-weight: 500;
   font-size: 40px;
   line-height: 47px;
+
+  @media (max-width: ${theme.laptop}) {
+    margin-bottom: 40px;
+
+    font-size: 32px;
+  }
+
+  @media (max-width: ${theme.tablet}) {
+    margin-bottom: 30px;
+  }
 `;
 
 const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+
   list-style: none;
+
+  @media (max-width: ${theme.tablet}) {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
 `;
 
 const ListItem = styled.li`
@@ -35,6 +66,7 @@ export const Team = React.memo(() => {
   const cardContent = devs.map((dev) => ({
     id: dev.id,
     name: `${t(`developers.${dev.name}.firstName`)} ${t(`developers.${dev.name}.secondName`)}`,
+    role: `${t(`developers.${dev.name}.role`)}`,
     text: `${t(`developers.${dev.name}.info`)}`,
     image: `${dev.id}.jpg`,
   }));
