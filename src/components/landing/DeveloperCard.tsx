@@ -9,23 +9,35 @@ type DeveloperCardProps = {
 };
 
 const Card = styled.div`
-  display: grid;
-  grid-template-columns: min-content 1fr;
-  grid-template-rows: repeat(3, min-content);
-  gap: 9px 52px;
+  display: flex;
+  gap: 20px;
 
   max-width: 1200px;
   margin: 0 auto;
-  padding: 18px 36px;
 
-  border: 1px solid #000000;
+  border: 1px solid rgba(0, 0, 0, 0.3);
   box-shadow: 0px 4px 4px #172a3a;
   border-radius: 10px;
+`;
+const ImageBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 0;
+
+  text-align: center;
+
+  background-color: #ebebeb;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 `;
 
 const Image = styled.img`
   grid-column: 1 / 2;
   grid-row: 1 / 4;
+
+  margin: 18px 36px;
 
   border-radius: 50%;
 `;
@@ -45,20 +57,20 @@ const Title = styled.h4`
 
 const Role = styled.p`
   margin: 0;
-  padding-left: 5px;
+  padding: 0 5px;
 
   font: inherit;
   font-weight: 400;
   font-size: 16px;
   line-height: 21px;
 
-  color: #707070;
+  color: #545454;
 `;
 
 const Info = styled.pre`
-  grid-column: 2 / 3;
-
   margin: 0;
+  padding: 10px;
+  align-self: center;
 
   font: inherit;
   font-weight: 400;
@@ -71,11 +83,11 @@ const Info = styled.pre`
 export const DeveloperCard = React.memo(({ name, role, text, image }: DeveloperCardProps) => {
   return (
     <Card>
-      <Image src={image} alt="Profile picture" width="114" height="114" />
-      <Title>
-        {name}
+      <ImageBox>
+        <Title>{name}</Title>
+        <Image src={image} alt="Profile picture" width="114" height="114" />
         <Role>{role}</Role>
-      </Title>
+      </ImageBox>
       <Info>{text}</Info>
     </Card>
   );
