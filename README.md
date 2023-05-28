@@ -1,13 +1,12 @@
 # GraphiQL Playground
 
-![GraphiQL Playground](/public/screenshot.png)
+![GraphiQL Playground](/public/hero.png)
 
 Welcome to the GraphiQL Playground repository! This project is a web-based interactive GraphQL IDE, allowing you to explore and test your GraphQL APIs. It provides an intuitive interface for querying, exploring schemas, and inspecting responses, making it easier for developers to work with GraphQL.
 
 ## Deployment
 
 [GraphiQL Playground](https://graphiql-app.netlify.app/)
-
 
 ## Realized Features
 
@@ -52,11 +51,12 @@ To build and start the development environment locally, follow these steps:
    ```bash
    npm install
    ```
+
 4. Replace data in `firebase.ts` file with the configuration data from your project and add your key for firebase auth in `.env` file:
 
-    ```bash
-    VITE_FIREBASE_API_KEY=<your-api-key>
-    ```
+   ```bash
+   VITE_FIREBASE_API_KEY=<your-api-key>
+   ```
 
 5. Start the development server:
 
